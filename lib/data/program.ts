@@ -15,6 +15,8 @@ export type Stage = {
   order: number;
 };
 
+export type StageName = "Applied" | "Assessed" | "Shortlisted" | "Interview" | "Offer" | "Hired";
+
 export const stages: Stage[] = [
   { id: "applied", label: "Applied", order: 1 },
   { id: "assessed", label: "Assessed", order: 2 },
@@ -24,7 +26,7 @@ export const stages: Stage[] = [
   { id: "hired", label: "Hired", order: 6 },
 ];
 
-export const pipelineCounts = {
+export const pipelineCounts: Record<StageName, number> = {
   Applied: 187,
   Assessed: 142,
   Shortlisted: 43,

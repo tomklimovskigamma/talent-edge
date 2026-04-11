@@ -1,3 +1,5 @@
+import type { StageName } from "./program";
+
 export type PotentialDimensions = {
   adaptability: number;
   cognitiveAgility: number;
@@ -8,7 +10,7 @@ export type PotentialDimensions = {
 
 export type AssessmentEvent = {
   date: string;
-  stage: string;
+  stage: StageName;
   note: string;
 };
 
@@ -24,7 +26,7 @@ export type Candidate = {
   university: string;
   degree: string;
   graduationYear: number;
-  stage: string;
+  stage: StageName;
   appliedDate: string;
   daysInStage: number;
   potentialScore: number;
