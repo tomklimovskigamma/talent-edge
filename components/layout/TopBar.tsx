@@ -2,6 +2,7 @@ import { program } from "@/lib/data/program";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function TopBar() {
+  const managerInitials = program.manager.split(" ").map((n) => n[0]).join("");
   return (
     <header className="h-14 border-b bg-white flex items-center justify-between px-6">
       <div>
@@ -15,7 +16,7 @@ export function TopBar() {
           <p className="text-xs text-slate-400">{program.managerTitle}</p>
         </div>
         <Avatar className="h-8 w-8 bg-indigo-100">
-          <AvatarFallback className="text-indigo-700 text-xs font-semibold">SC</AvatarFallback>
+          <AvatarFallback className="text-indigo-700 text-xs font-semibold">{managerInitials}</AvatarFallback>
         </Avatar>
       </div>
     </header>
