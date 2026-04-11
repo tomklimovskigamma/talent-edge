@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Stage } from "./data/program";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -17,7 +18,7 @@ export function scoreLabel(score: number): string {
   return "Developing";
 }
 
-export function stageColor(stage: string): string {
+export function stageColor(stage: Stage): string {
   const map: Record<string, string> = {
     Applied: "bg-slate-100 text-slate-700",
     Assessed: "bg-blue-100 text-blue-700",
@@ -26,5 +27,5 @@ export function stageColor(stage: string): string {
     Offer: "bg-orange-100 text-orange-700",
     Hired: "bg-emerald-100 text-emerald-700",
   };
-  return map[stage] ?? "bg-slate-100 text-slate-700";
+  return map[stage.label] ?? "bg-slate-100 text-slate-700";
 }
