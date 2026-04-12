@@ -1,0 +1,44 @@
+import { candidates } from "@/lib/data/candidates";
+import { AppShell } from "@/components/layout/AppShell";
+import { ProfileHeader } from "@/components/profile/ProfileHeader";
+import { PotentialRadar } from "@/components/profile/PotentialRadar";
+import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
+import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+
+export default async function CandidateProfilePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const candidate = candidates.find((c) => c.id === id);
+  if (!candidate) notFound();
+
+  return (
+    <AppShell>
+      <div className="space-y-5 max-w-4xl">
+        <div className="flex items-center gap-2">
+          <Link href="/pipeline" className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors">
+            <ChevronLeft size={14} />
+            Pipeline
+          </Link>
+        </div>
+
+        <ProfileHeader candidate={candidate} />
+
+        <div className="grid grid-cols-2 gap-4">
+          <PotentialRadar dimensions={candidate.dimensions} />
+          <div className="space-y-4">
+            <AssessmentTimeline history={candidate.assessmentHistory} />
+            {candidate.developmentGoals && (
+              <DevelopmentTracker goals={candidate.developmentGoals} />
+            )}
+          </div>
+        </div>
+      </div>
+    </AppShell>
+  );
+}
