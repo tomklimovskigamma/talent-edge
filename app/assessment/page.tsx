@@ -5,7 +5,6 @@ import { useState } from "react";
 import {
   dimensionConfigs,
   dimensionOrder,
-  dimensionLabels,
   defaultRegistration,
   type RegistrationData,
   type Dimension,
@@ -16,7 +15,7 @@ import { RegistrationStep } from "@/components/assessment/RegistrationStep";
 import { DimensionStep } from "@/components/assessment/DimensionStep";
 import { ResultsScreen } from "@/components/assessment/ResultsScreen";
 import { ThankYouScreen } from "@/components/assessment/ThankYouScreen";
-import type { PotentialDimensions } from "@/lib/data/candidates";
+import { type PotentialDimensions, dimensionLabels } from "@/lib/data/candidates";
 
 type Step =
   | { kind: "registration" }

@@ -426,10 +426,4 @@ export const dimensionOrder: Dimension[] = [
   "drive",
 ];
 
-export const dimensionLabels: Record<Dimension, string> = {
-  adaptability: "Adaptability",
-  cognitiveAgility: "Cognitive Agility",
-  emotionalIntelligence: "Emotional Intelligence",
-  collaboration: "Collaboration",
-  drive: "Drive",
-};
+// dimensionLabels lives in lib/data/candidates.ts (shared with PotentialRadar)

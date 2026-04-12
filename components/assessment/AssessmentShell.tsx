@@ -3,14 +3,14 @@ import { Progress } from "@/components/ui/progress";
 
 type Props = {
   currentStep: number;   // 0 = registration, 1–5 = dimensions, 6 = results, 7 = thankyou
-  totalSteps: number;    // 5 (one per dimension section; results/thankyou are beyond this)
+  totalSteps: number;    // 7: registration(0)+5 dimensions+results(6); thankyou(7) hides progress
   stepLabel: string;
   children: React.ReactNode;
 };
 
 export function AssessmentShell({ currentStep, totalSteps, stepLabel, children }: Props) {
   const pct = currentStep === 0 ? 0 : Math.round((currentStep / totalSteps) * 100);
-  const showProgress = currentStep > 0 && currentStep <= totalSteps;
+  const showProgress = currentStep > 0 && currentStep < totalSteps;
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
