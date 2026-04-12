@@ -39,6 +39,7 @@ export type SequencePuzzleQuestion = {
   id: string;
   prompt: string;
   defaultOptionId: "A"; // A is always the correct answer
+  readonly correctScore: 5; // scorer awards this for A, 1 for all others
 };
 
 export type EmotionFaceQuestion = {
@@ -164,6 +165,7 @@ export const dimensionConfigs: DimensionConfig[] = [
         prompt:
           "Each row and column contains one of each colour (blue, amber, indigo) and one of each shape (circle, square, triangle). Which tile completes the grid?",
         defaultOptionId: "A",
+        correctScore: 5,
       },
       {
         type: "sjt",
