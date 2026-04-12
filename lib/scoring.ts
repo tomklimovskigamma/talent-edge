@@ -33,7 +33,7 @@ export function scoreQuestion(question: Question, answer: string | number): numb
 
 /**
  * Compute a 0–100 dimension score from raw question answers.
- * Returns null if any answer is missing.
+ * Unanswered questions (null) are treated as neutral (score 3).
  */
 export function scoreDimension(
   questions: Question[],
