@@ -3,14 +3,14 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLin
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const buckets = [
-  { range: "60–64", count: 4 },
-  { range: "65–69", count: 7 },
-  { range: "70–74", count: 11 },
-  { range: "75–79", count: 18 },
-  { range: "80–84", count: 24 },
-  { range: "85–89", count: 19 },
-  { range: "90–94", count: 12 },
-  { range: "95–100", count: 5 },
+  { range: "60–64", count: 6 },
+  { range: "65–69", count: 10 },
+  { range: "70–74", count: 16 },
+  { range: "75–79", count: 25 },
+  { range: "80–84", count: 34 },
+  { range: "85–89", count: 27 },
+  { range: "90–94", count: 17 },
+  { range: "95–100", count: 7 },
 ];
 
 export function ScoreDistribution() {
@@ -31,7 +31,7 @@ export function ScoreDistribution() {
               contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
               cursor={{ fill: "#F8FAFC" }}
             />
-            <ReferenceLine x="80–84" stroke="#4F46E5" strokeDasharray="4 2" label={{ value: "Shortlist threshold", fontSize: 10, fill: "#4F46E5", position: "insideTopRight" }} />
+            <ReferenceLine x="75–79" stroke="#4F46E5" strokeDasharray="4 2" label={{ value: "Shortlist threshold →", fontSize: 10, fill: "#4F46E5", position: "insideTopRight" }} />
             <Bar dataKey="count" fill="#818CF8" radius={[4, 4, 0, 0]} name="Candidates" />
           </BarChart>
         </ResponsiveContainer>

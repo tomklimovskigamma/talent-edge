@@ -8,11 +8,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 const recentActivity = [
-  { text: "Priya Nair received a verbal offer", time: "2 hours ago", type: "offer" },
-  { text: "James Thornton's interview confirmed for 7 April", time: "4 hours ago", type: "interview" },
-  { text: "12 new applications received overnight", time: "8 hours ago", type: "applications" },
-  { text: "Liam O'Brien accepted offer — start date confirmed", time: "Yesterday", type: "hired" },
-  { text: "AI assessment batch completed — 23 candidates scored", time: "Yesterday", type: "assessment" },
+  { text: "Priya Nair received a verbal offer", time: "2 hours ago" },
+  { text: "James Thornton's interview confirmed for 7 April", time: "4 hours ago" },
+  { text: "12 new applications received overnight", time: "8 hours ago" },
+  { text: "Liam O'Brien accepted offer — start date confirmed", time: "Yesterday" },
+  { text: "AI assessment batch completed — 23 candidates scored", time: "Yesterday" },
 ];
 
 export default function DashboardPage() {
