@@ -19,7 +19,7 @@ export default async function CandidateProfilePage({
 
   return (
     <AppShell>
-      <div className="space-y-5 max-w-4xl">
+      <div className="space-y-5 max-w-5xl">
         <div className="flex items-center gap-2">
           <Link href="/pipeline" className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors">
             <ChevronLeft size={14} />
@@ -29,7 +29,7 @@ export default async function CandidateProfilePage({
 
         <ProfileHeader candidate={candidate} />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PotentialRadar dimensions={candidate.dimensions} />
           <div className="space-y-4">
             <AssessmentTimeline history={candidate.assessmentHistory} />

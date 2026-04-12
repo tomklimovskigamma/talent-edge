@@ -11,7 +11,7 @@ const statusConfig = {
 
 export function DevelopmentTracker({ goals }: { goals: DevelopmentGoal[] }) {
   const complete = goals.filter((g) => g.status === "complete").length;
-  const pct = Math.round((complete / goals.length) * 100);
+  const pct = goals.length > 0 ? Math.round((complete / goals.length) * 100) : 0;
 
   return (
     <Card className="border shadow-sm border-dashed">

@@ -45,7 +45,7 @@ export function PotentialRadar({ dimensions }: Props) {
             />
           </RadarChart>
         </ResponsiveContainer>
-        <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid grid-cols-1 gap-1.5 mt-2">
           {(Object.keys(dimensions) as Array<keyof PotentialDimensions>).map((key) => (
             <div key={key} className="flex items-center justify-between text-xs">
               <span className="text-slate-500">{dimensionLabels[key]}</span>
