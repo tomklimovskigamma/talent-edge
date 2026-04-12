@@ -1,4 +1,5 @@
 // components/assessment/AssessmentShell.tsx
+import Link from "next/link";
 import { Progress } from "@/components/ui/progress";
 
 type Props = {
@@ -16,7 +17,9 @@ export function AssessmentShell({ currentStep, totalSteps, stepLabel, children }
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
       <header className="bg-[#1E1B4B] px-6 py-4 flex items-center justify-between">
-        <img src="/te-logo.svg" alt="Talent Edge" className="h-6 brightness-0 invert" />
+        <Link href="/dashboard">
+          <img src="/te-logo.svg" alt="Talent Edge" className="h-6 brightness-0 invert" />
+        </Link>
         {showProgress && (
           <span className="text-xs text-white/50">
             Section {currentStep} of {totalSteps}

@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, GitBranch } from "lucide-react";
+import { LayoutDashboard, GitBranch, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const nav = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pipeline", label: "Pipeline", icon: GitBranch },
+  { href: "/assessment", label: "Assessment", icon: ClipboardList },
 ];
 
 export function Sidebar() {

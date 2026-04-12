@@ -36,11 +36,18 @@ export function ThankYouScreen({ name }: Props) {
           </li>
         </ul>
       </div>
-      <Link href="/candidates/c019">
-        <Button variant="outline" className="gap-2 text-slate-600">
-          View Jordan&apos;s profile →
-        </Button>
-      </Link>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <Link href="/pipeline">
+          <Button variant="ghost" className="gap-2 text-slate-500">
+            ← Back to Pipeline
+          </Button>
+        </Link>
+        <Link href="/candidates/c019">
+          <Button variant="outline" className="gap-2 text-slate-600">
+            View Jordan&apos;s profile →
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

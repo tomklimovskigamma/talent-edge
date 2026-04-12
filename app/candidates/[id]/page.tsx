@@ -6,7 +6,8 @@ import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default async function CandidateProfilePage({
   params,
@@ -20,11 +21,19 @@ export default async function CandidateProfilePage({
   return (
     <AppShell>
       <div className="space-y-5 max-w-5xl">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between">
           <Link href="/pipeline" className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors">
             <ChevronLeft size={14} />
             Pipeline
           </Link>
+          {candidate.stage === "Applied" && (
+            <Link href="/assessment">
+              <Button size="sm" variant="outline" className="gap-1.5 text-indigo-600 border-indigo-200 hover:bg-indigo-50">
+                <Send size={13} />
+                Send Assessment
+              </Button>
+            </Link>
+          )}
         </div>
 
         <ProfileHeader candidate={candidate} />
