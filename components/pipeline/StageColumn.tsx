@@ -10,7 +10,7 @@ type Props = {
 
 export function StageColumn({ label, candidates, accentClass }: Props) {
   return (
-    <div className="flex flex-col min-w-[180px] max-w-[200px] flex-shrink-0">
+    <div className="flex flex-col min-w-[160px] max-w-[180px] flex-shrink-0">
       <div className={`flex items-center justify-between mb-3 pb-2 border-b-2 ${accentClass}`}>
         <span className="text-xs font-semibold text-slate-700 uppercase tracking-wide">{label}</span>
         <Badge variant="secondary" className="text-xs">{candidates.length}</Badge>
