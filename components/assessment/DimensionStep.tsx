@@ -13,6 +13,7 @@ import type { DimensionConfig, Track, Question } from "@/lib/data/assessment";
 type Props = {
   config: DimensionConfig;
   track: Track;
+  /** Must be produced by buildDefaultAnswers — slot types must align with config.questions types */
   initialAnswers: (string | number | null)[];
   onNext: (answers: (string | number | null)[]) => void;
 };
