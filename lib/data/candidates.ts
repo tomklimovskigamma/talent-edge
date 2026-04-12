@@ -496,4 +496,27 @@ export const candidates: Candidate[] = [
       { title: "First client-facing role", status: "not-started", dueDate: "2026-07-31" },
     ],
   },
+  {
+    id: "c019",
+    name: "Jordan Lee",
+    university: "University of Melbourne",
+    degree: "B. Commerce (Finance & Economics)",
+    graduationYear: 2026,
+    stage: "Assessed",
+    appliedDate: "2026-04-11",
+    daysInStage: 0,
+    potentialScore: 89,
+    avatarInitials: "JL",
+    dimensions: {
+      adaptability: 85,
+      cognitiveAgility: 90,
+      emotionalIntelligence: 85,
+      collaboration: 95,
+      drive: 90,
+    },
+    assessmentHistory: [
+      { date: "2026-04-11", stage: "Applied", note: "Application submitted via Talent Edge." },
+      { date: "2026-04-11", stage: "Assessed", note: "AI potential assessment completed via Talent Edge. Score: 89. High potential." },
+    ],
+  },
 ];
