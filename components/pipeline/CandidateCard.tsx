@@ -32,7 +32,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
       </Link>
       <Link
         href="/assessment"
-        className="opacity-0 group-hover:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-700 px-1"
+        className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-700 px-1"
       >
         <Send size={10} />
         Send assessment
