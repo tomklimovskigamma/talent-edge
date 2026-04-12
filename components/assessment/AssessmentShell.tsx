@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 
 type Props = {
   currentStep: number;   // 0 = registration, 1–5 = dimensions, 6 = results, 7 = thankyou
-  totalSteps: number;    // 7 (excludes thankyou from progress)
+  totalSteps: number;    // 5 (one per dimension section; results/thankyou are beyond this)
   stepLabel: string;
   children: React.ReactNode;
 };

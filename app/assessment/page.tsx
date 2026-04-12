@@ -59,9 +59,9 @@ export default function AssessmentPage() {
   }
 
   // Determine shell props
-  const totalSteps = 5; // 5 dimension sections
+  const totalSteps = 7; // registration(0) + 5 dimensions + results(6); thankyou(7) is beyond the bar
   let currentStep = 0;
-  let stepLabel = "About You";
+  let stepLabel = "";
 
   if (step.kind === "dimension") {
     currentStep = step.index + 1;
@@ -84,6 +84,7 @@ export default function AssessmentPage() {
       )}
       {step.kind === "dimension" && (
         <DimensionStep
+          key={step.index}
           config={dimensionConfigs[step.index]}
           track={registration.track}
           initialAnswers={answers[dimensionOrder[step.index]]}
@@ -92,13 +93,15 @@ export default function AssessmentPage() {
           }
         />
       )}
-      {step.kind === "results" && results && (
-        <ResultsScreen
-          name={registration.name}
-          dimensions={results.dimensions}
-          potentialScore={results.potentialScore}
-          onNext={handleResultsNext}
-        />
+      {step.kind === "results" && (
+        results
+          ? <ResultsScreen
+              name={registration.name}
+              dimensions={results.dimensions}
+              potentialScore={results.potentialScore}
+              onNext={handleResultsNext}
+            />
+          : <p className="text-center text-slate-500 py-8">Calculating results…</p>
       )}
       {step.kind === "thankyou" && (
         <ThankYouScreen name={registration.name} />
