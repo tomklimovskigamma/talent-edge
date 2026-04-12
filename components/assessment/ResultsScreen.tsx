@@ -4,7 +4,7 @@ import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tool
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { scoreColor, scoreLabel } from "@/lib/utils";
-import type { PotentialDimensions } from "@/lib/data/candidates";
+import { type PotentialDimensions, dimensionLabels } from "@/lib/data/candidates";
 
 type Props = {
   name: string;
@@ -13,17 +13,9 @@ type Props = {
   onNext: () => void;
 };
 
-const dimensionDisplayLabels: Record<keyof PotentialDimensions, string> = {
-  adaptability: "Adaptability",
-  cognitiveAgility: "Cognitive Agility",
-  emotionalIntelligence: "Emotional Intelligence",
-  collaboration: "Collaboration",
-  drive: "Drive",
-};
-
 export function ResultsScreen({ name, dimensions, potentialScore, onNext }: Props) {
   const radarData = (Object.keys(dimensions) as Array<keyof PotentialDimensions>).map((key) => ({
-    subject: dimensionDisplayLabels[key],
+    subject: dimensionLabels[key],
     score: dimensions[key],
     fullMark: 100,
   }));
@@ -33,6 +25,7 @@ export function ResultsScreen({ name, dimensions, potentialScore, onNext }: Prop
       {/* Hero */}
       <div className="text-center space-y-3">
         <p className="text-sm text-slate-500">Assessment complete, {name.split(" ")[0]}.</p>
+        {/* Thresholds (80, 65) intentionally mirror scoreColor in lib/utils.ts */}
         <div className={`inline-flex flex-col items-center justify-center w-24 h-24 rounded-full border-4 ${
           potentialScore >= 80 ? "border-emerald-400 bg-emerald-50" :
           potentialScore >= 65 ? "border-amber-400 bg-amber-50" :
@@ -77,7 +70,7 @@ export function ResultsScreen({ name, dimensions, potentialScore, onNext }: Prop
       <div className="grid grid-cols-1 gap-2">
         {(Object.keys(dimensions) as Array<keyof PotentialDimensions>).map((key) => (
           <div key={key} className="flex items-center justify-between bg-white border border-slate-100 rounded-lg px-4 py-2.5">
-            <span className="text-sm text-slate-600">{dimensionDisplayLabels[key]}</span>
+            <span className="text-sm text-slate-600">{dimensionLabels[key]}</span>
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${scoreColor(dimensions[key])}`}>
               {dimensions[key]}
             </span>

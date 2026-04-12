@@ -1,17 +1,9 @@
 "use client";
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PotentialDimensions } from "@/lib/data/candidates";
+import { PotentialDimensions, dimensionLabels } from "@/lib/data/candidates";
 
 type Props = { dimensions: PotentialDimensions };
-
-const dimensionLabels: Record<keyof PotentialDimensions, string> = {
-  adaptability: "Adaptability",
-  cognitiveAgility: "Cognitive Agility",
-  emotionalIntelligence: "Emotional Intelligence",
-  collaboration: "Collaboration",
-  drive: "Drive",
-};
 
 export function PotentialRadar({ dimensions }: Props) {
   const data = (Object.keys(dimensions) as Array<keyof PotentialDimensions>).map((key) => ({

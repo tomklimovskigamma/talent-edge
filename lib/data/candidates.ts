@@ -8,6 +8,14 @@ export type PotentialDimensions = {
   drive: number;
 };
 
+export const dimensionLabels: Record<keyof PotentialDimensions, string> = {
+  adaptability: "Adaptability",
+  cognitiveAgility: "Cognitive Agility",
+  emotionalIntelligence: "Emotional Intelligence",
+  collaboration: "Collaboration",
+  drive: "Drive",
+};
+
 export type AssessmentEvent = {
   date: string;
   stage: StageName;
