@@ -1,5 +1,4 @@
 // components/assessment/ForcedChoiceQuestion.tsx
-"use client";
 import { cn } from "@/lib/utils";
 import type { ForcedChoiceQuestion as FCQ } from "@/lib/data/assessment";
 
@@ -25,6 +24,7 @@ export function ForcedChoiceQuestion({ question, value, onChange, index }: Props
               type="button"
               key={choice}
               onClick={() => onChange(choice)}
+              aria-pressed={value === choice}
               className={cn(
                 "px-4 py-4 rounded-xl border-2 text-sm font-medium text-left transition-all",
                 value === choice

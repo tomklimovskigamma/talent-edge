@@ -1,5 +1,4 @@
 // components/assessment/SJTQuestion.tsx
-"use client";
 import { cn } from "@/lib/utils";
 import { resolveScenario } from "@/lib/data/assessment";
 import type { SJTQuestion as SJTQ, Track } from "@/lib/data/assessment";
@@ -32,6 +31,7 @@ export function SJTQuestion({ question, track, value, onChange, index }: Props) 
             type="button"
             key={opt.id}
             onClick={() => onChange(opt.id)}
+            aria-pressed={value === opt.id}
             className={cn(
               "w-full text-left px-4 py-3 rounded-lg border text-sm transition-all",
               value === opt.id

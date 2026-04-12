@@ -1,5 +1,4 @@
 // components/assessment/LikertQuestion.tsx
-"use client";
 import { cn } from "@/lib/utils";
 import type { LikertQuestion as LikertQ } from "@/lib/data/assessment";
 
@@ -25,6 +24,8 @@ export function LikertQuestion({ question, value, onChange, index }: Props) {
             type="button"
             key={v}
             onClick={() => onChange(v)}
+            aria-pressed={value === v}
+            aria-label={`${v} — ${scaleLabels[v - 1].replace("\n", " ").trim() || String(v)}`}
             className={cn(
               "flex flex-col items-center gap-1.5 flex-1",
             )}
