@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { defaultRegistration, trackLabels, type RegistrationData, type Track } from "@/lib/data/assessment";
+import { trackLabels, type RegistrationData, type Track } from "@/lib/data/assessment";
 import { GraduationCap, ArrowRight } from "lucide-react";
 
 type Props = {
@@ -12,6 +12,8 @@ type Props = {
 };
 
 const tracks: Track[] = ["finance", "technology", "people-culture"];
+
+const inputClass = "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400";
 
 export function RegistrationStep({ defaultData, onNext }: Props) {
   const [data, setData] = useState<RegistrationData>(defaultData);
@@ -41,47 +43,55 @@ export function RegistrationStep({ defaultData, onNext }: Props) {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-600">Full name</label>
+              <label htmlFor="reg-name" className="text-xs font-medium text-slate-600">Full name</label>
               <input
+                id="reg-name"
+                autoComplete="name"
                 value={data.name}
                 onChange={(e) => set("name", e.target.value)}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className={inputClass}
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-600">Email address</label>
+              <label htmlFor="reg-email" className="text-xs font-medium text-slate-600">Email address</label>
               <input
+                id="reg-email"
+                autoComplete="email"
                 value={data.email}
                 onChange={(e) => set("email", e.target.value)}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className={inputClass}
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-600">University</label>
+            <label htmlFor="reg-university" className="text-xs font-medium text-slate-600">University</label>
             <input
+              id="reg-university"
+              autoComplete="organization"
               value={data.university}
               onChange={(e) => set("university", e.target.value)}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className={inputClass}
             />
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-600">Degree</label>
+            <label htmlFor="reg-degree" className="text-xs font-medium text-slate-600">Degree</label>
             <input
+              id="reg-degree"
               value={data.degree}
               onChange={(e) => set("degree", e.target.value)}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className={inputClass}
             />
           </div>
 
           {/* Track selector */}
           <div className="space-y-2">
-            <label className="text-xs font-medium text-slate-600">Career track</label>
+            <span className="text-xs font-medium text-slate-600">Career track</span>
             <div className="grid grid-cols-3 gap-2">
               {tracks.map((track) => (
                 <button
+                  type="button"
                   key={track}
                   onClick={() => set("track", track)}
                   className={`px-3 py-2.5 rounded-lg text-sm font-medium border transition-colors text-center ${
