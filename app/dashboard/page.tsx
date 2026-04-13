@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { MetricsRow } from "@/components/dashboard/MetricsRow";
+import { LifecycleJourney } from "@/components/dashboard/LifecycleJourney";
 import { PipelineFunnel } from "@/components/dashboard/PipelineFunnel";
 import { ScoreDistribution } from "@/components/dashboard/ScoreDistribution";
 import { candidates } from "@/lib/data/candidates";
@@ -28,6 +29,8 @@ export default function DashboardPage() {
           <h1 className="text-xl font-bold text-slate-800">Program Dashboard</h1>
           <p className="text-sm text-slate-500 mt-0.5">Meridian Group · 2026 Graduate Intake · Last updated just now</p>
         </div>
+
+        <LifecycleJourney />
 
         <MetricsRow />
 
