@@ -1,6 +1,7 @@
 // components/assessment/AssessmentShell.tsx
 import Link from "next/link";
 import { Progress } from "@/components/ui/progress";
+import { ChatWidget } from "@/components/assessment/ChatWidget";
 
 type Props = {
   currentStep: number;   // 0 = registration, 1–5 = dimensions, 6 = results, 7 = thankyou
@@ -42,6 +43,8 @@ export function AssessmentShell({ currentStep, totalSteps, stepLabel, children }
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
         <div className="w-full max-w-2xl">{children}</div>
       </main>
+
+      <ChatWidget />
     </div>
   );
 }
