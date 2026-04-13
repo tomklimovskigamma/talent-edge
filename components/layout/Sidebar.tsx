@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 import { usePersona } from "@/lib/persona";
 
 const nav = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, adminOnly: false },
-  { href: "/pipeline", label: "Pipeline", icon: GitBranch, adminOnly: false },
-  { href: "/assessment", label: "Assessment", icon: ClipboardList, adminOnly: true },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, graduateOnly: false },
+  { href: "/pipeline", label: "Pipeline", icon: GitBranch, graduateOnly: false },
+  { href: "/assessment", label: "Assessment", icon: ClipboardList, graduateOnly: true },
 ];
 
 export function Sidebar() {
@@ -16,9 +16,9 @@ export function Sidebar() {
   const { persona } = usePersona();
 
   const visibleNav = nav.filter((item) => {
-    // Hide Assessment from admin persona — admin triggers assessments for candidates,
+    // Assessment is graduate-only — admin triggers assessments for candidates,
     // they don't complete them. Show all items when persona is unset (direct URL access).
-    if (item.adminOnly && persona === "admin") return false;
+    if (item.graduateOnly && persona === "admin") return false;
     return true;
   });
 
