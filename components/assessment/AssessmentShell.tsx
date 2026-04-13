@@ -17,7 +17,7 @@ export function AssessmentShell({ currentStep, totalSteps, stepLabel, children }
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
       <header className="bg-[#1E1B4B] px-6 py-4 flex items-center justify-between">
-        <Link href="/dashboard">
+        <Link href="/" aria-label="Return to home">
           <img src="/te-logo.svg" alt="Talent Edge" className="h-6 brightness-0 invert" />
         </Link>
         {showProgress && (
