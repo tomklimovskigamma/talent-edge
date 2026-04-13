@@ -3,6 +3,7 @@ import { MetricsRow } from "@/components/dashboard/MetricsRow";
 import { LifecycleJourney } from "@/components/dashboard/LifecycleJourney";
 import { PipelineFunnel } from "@/components/dashboard/PipelineFunnel";
 import { ScoreDistribution } from "@/components/dashboard/ScoreDistribution";
+import { IntegrationsPanel } from "@/components/dashboard/IntegrationsPanel";
 import { candidates } from "@/lib/data/candidates";
 import { scoreColor } from "@/lib/utils";
 import Link from "next/link";
@@ -39,7 +40,7 @@ export default function DashboardPage() {
           <ScoreDistribution />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           {/* Top candidates */}
           <div className="bg-white border rounded-xl shadow-sm p-5">
             <h2 className="text-sm font-semibold text-slate-700 mb-3">Top Potential Candidates</h2>
@@ -85,6 +86,9 @@ export default function DashboardPage() {
               ))}
             </div>
           </div>
+
+          {/* Integrations */}
+          <IntegrationsPanel />
         </div>
       </div>
     </AppShell>
