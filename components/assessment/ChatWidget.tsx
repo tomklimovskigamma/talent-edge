@@ -54,7 +54,7 @@ export function ChatWidget() {
           {/* FAQ list */}
           <div className="divide-y divide-slate-100 max-h-80 overflow-y-auto">
             {faqs.map((faq, i) => (
-              <div key={i}>
+              <div key={faq.q}>
                 <button
                   type="button"
                   onClick={() => setExpanded(expanded === i ? null : i)}
