@@ -73,6 +73,7 @@ export type RegistrationData = {
   university: string;
   degree: string;
   track: Track;
+  accessibilityNeeds?: string;
 };
 
 export const defaultRegistration: RegistrationData = {
@@ -81,6 +82,7 @@ export const defaultRegistration: RegistrationData = {
   university: "University of Melbourne",
   degree: "B. Commerce (Finance & Economics)",
   track: "finance",
+  accessibilityNeeds: "",
 };
 
 export const trackLabels: Record<Track, string> = {

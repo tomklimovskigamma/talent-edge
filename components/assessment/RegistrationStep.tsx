@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackLabels, type RegistrationData, type Track } from "@/lib/data/assessment";
-import { GraduationCap, ArrowRight } from "lucide-react";
+import { GraduationCap, ArrowRight, Accessibility } from "lucide-react";
 
 type Props = {
   defaultData: RegistrationData;
@@ -17,9 +17,19 @@ const inputClass = "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm 
 
 export function RegistrationStep({ defaultData, onNext }: Props) {
   const [data, setData] = useState<RegistrationData>(defaultData);
+  const [needsAdjustments, setNeedsAdjustments] = useState(
+    Boolean(defaultData.accessibilityNeeds)
+  );
 
   function set(field: keyof RegistrationData, value: string) {
     setData((prev) => ({ ...prev, [field]: value }));
+  }
+
+  function toggleAdjustments(checked: boolean) {
+    setNeedsAdjustments(checked);
+    if (!checked) {
+      setData((prev) => ({ ...prev, accessibilityNeeds: "" }));
+    }
   }
 
   return (
@@ -31,8 +41,8 @@ export function RegistrationStep({ defaultData, onNext }: Props) {
         </div>
         <h1 className="text-2xl font-bold text-slate-800">Welcome to your Talent Edge Assessment</h1>
         <p className="text-slate-500 text-sm max-w-md mx-auto">
-          This 15-minute assessment measures your potential across five dimensions — not your grades or experience.
-          There are no right answers. Just be yourself.
+          This 15-minute assessment measures your <strong className="text-slate-700">potential</strong> — not your grades, background, or connections.
+          We assess for potential, not privilege. There are no right answers. Just be yourself.
         </p>
       </div>
 
@@ -105,6 +115,52 @@ export function RegistrationStep({ defaultData, onNext }: Props) {
               ))}
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Accessibility accommodations */}
+      <Card className="border shadow-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-semibold text-slate-700 flex items-center gap-2">
+            <Accessibility size={16} className="text-indigo-500" />
+            Accessibility &amp; Adjustments
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              id="reg-accessibility"
+              checked={needsAdjustments}
+              onChange={(e) => toggleAdjustments(e.target.checked)}
+              className="mt-0.5 accent-indigo-600"
+            />
+            <span className="text-sm text-slate-600">
+              I require adjustments or accommodations to complete this assessment
+              <span className="block text-xs text-slate-400 mt-0.5">
+                e.g. extended time, screen reader support, neurodiversity accommodations
+              </span>
+            </span>
+          </label>
+
+          {needsAdjustments && (
+            <div className="space-y-2">
+              <label htmlFor="reg-accessibility-detail" className="text-xs font-medium text-slate-600">
+                Please describe your requirements
+              </label>
+              <textarea
+                id="reg-accessibility-detail"
+                rows={3}
+                value={data.accessibilityNeeds ?? ""}
+                onChange={(e) => set("accessibilityNeeds", e.target.value)}
+                placeholder="e.g. I have dyslexia and would benefit from extended time on reading-heavy questions."
+                className={`${inputClass} resize-none`}
+              />
+              <p className="text-xs text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-2">
+                Our team will review your request and contact you within 1 business day before the assessment begins.
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
