@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Talent Edge
 
-## Getting Started
+> Early careers recruitment, fully connected.
 
-First, run the development server:
+Talent Edge is a graduate recruitment and development platform built around one belief: **assess candidates for potential, not for privilege**.
+
+Most graduate recruitment tools cover selection and stop. Talent Edge covers the entire graduate journey in a single connected product — from the moment a candidate first hears about a program, all the way through to their first-year talent review.
+
+---
+
+## The demo
+
+This is a live demo environment built around a fictional client: **Meridian Group**, hiring 20 graduates into their 2026 program. No login or setup required.
+
+**[→ View live demo on Vercel](https://talent-edge-ten.vercel.app)**
+
+Two personas are available at the landing page — choose the one you want to explore:
+
+| Persona | What you experience |
+|---|---|
+| **Graduate** | The candidate-facing assessment flow: registration, 5-dimension psychometric test, AI chat assistant, accessibility accommodations, results |
+| **Admin** | The recruiter dashboard: pipeline kanban, candidate profiles, lifecycle journey view, ATS integrations, interview scheduling |
+
+For a full step-by-step walkthrough of both paths, see the **[Demo Guide →](docs/demo-guide.md)**.
+
+---
+
+## Documentation
+
+| Doc | What's in it |
+|---|---|
+| [Product Philosophy](docs/philosophy.md) | Why we assess for potential, the 5-dimension model, the full lifecycle view, the equity argument |
+| [Market Research & Competitor Analysis](docs/market-research.md) | Australian grad recruitment landscape, ATS ecosystem, Amberjack analysis, domain expert insights from Paula |
+| [Demo Guide](docs/demo-guide.md) | Step-by-step walkthrough of both the Graduate and Admin demo paths |
+
+---
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). No environment variables needed — all data is static demo data.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Requirements:** Node 18+
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech stack
 
-To learn more about Next.js, take a look at the following resources:
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Styling | Tailwind CSS v4 |
+| UI components | shadcn/ui |
+| Charts | Recharts (RadarChart) |
+| Icons | lucide-react |
+| Deployment | Vercel (auto-deploy from `main`) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+app/                  # Next.js App Router pages
+  page.tsx            # Landing page (persona selection)
+  dashboard/          # Admin dashboard
+  pipeline/           # Kanban pipeline board
+  candidates/[id]/    # Candidate profile
+  assessment/         # Graduate assessment flow
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+components/
+  layout/             # AppShell, Sidebar
+  dashboard/          # MetricsRow, PipelineFunnel, LifecycleJourney, IntegrationsPanel
+  pipeline/           # PipelineBoard, CandidateCard, ScheduleModal
+  assessment/         # AssessmentShell, RegistrationStep, DimensionStep, ResultsScreen, ChatWidget
+  profile/            # ProfileHeader, PotentialRadar, AssessmentTimeline
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+lib/
+  data/               # Static demo data (candidates, assessment questions, program config)
+  scoring.ts          # Pure scoring functions for the psychometric assessment
+  persona.tsx         # Persona context (graduate / admin) with localStorage persistence
+```
