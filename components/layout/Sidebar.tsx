@@ -3,22 +3,32 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, GitBranch, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePersona } from "@/lib/persona";
 
 const nav = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/pipeline", label: "Pipeline", icon: GitBranch },
-  { href: "/assessment", label: "Assessment", icon: ClipboardList },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, adminOnly: false },
+  { href: "/pipeline", label: "Pipeline", icon: GitBranch, adminOnly: false },
+  { href: "/assessment", label: "Assessment", icon: ClipboardList, adminOnly: true },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { persona } = usePersona();
+
+  const visibleNav = nav.filter((item) => {
+    // Hide Assessment from admin persona — admin triggers assessments for candidates,
+    // they don't complete them. Show all items when persona is unset (direct URL access).
+    if (item.adminOnly && persona === "admin") return false;
+    return true;
+  });
+
   return (
     <aside className="w-56 min-h-screen bg-[#1E1B4B] flex flex-col">
       <div className="px-5 py-6 border-b border-white/10">
         <img src="/te-logo.svg" alt="Talent Edge" className="h-7 brightness-0 invert" />
       </div>
       <nav aria-label="Main navigation" className="flex-1 px-3 py-4 space-y-1">
-        {nav.map(({ href, label, icon: Icon }) => {
+        {visibleNav.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
