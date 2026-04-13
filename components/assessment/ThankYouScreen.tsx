@@ -1,11 +1,16 @@
 // components/assessment/ThankYouScreen.tsx
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
+import { usePersona } from "@/lib/persona";
 
 type Props = { name: string };
 
 export function ThankYouScreen({ name }: Props) {
+  const { persona } = usePersona();
+  const isGraduate = persona === "graduate" || persona === null;
+
   return (
     <div className="text-center space-y-6 py-8">
       <div className="flex justify-center">
@@ -36,18 +41,27 @@ export function ThankYouScreen({ name }: Props) {
           </li>
         </ul>
       </div>
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <Link href="/pipeline">
-          <Button variant="ghost" className="gap-2 text-slate-500">
-            ← Back to Pipeline
-          </Button>
-        </Link>
-        <Link href="/candidates/c019">
+
+      {isGraduate ? (
+        <Link href="/">
           <Button variant="outline" className="gap-2 text-slate-600">
-            View Jordan&apos;s profile →
+            ← Back to Home
           </Button>
         </Link>
-      </div>
+      ) : (
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link href="/pipeline">
+            <Button variant="ghost" className="gap-2 text-slate-500">
+              ← Back to Pipeline
+            </Button>
+          </Link>
+          <Link href="/candidates/c019">
+            <Button variant="outline" className="gap-2 text-slate-600">
+              View Jordan&apos;s profile →
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
