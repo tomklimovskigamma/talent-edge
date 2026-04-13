@@ -1,13 +1,13 @@
 // lib/persona.tsx
 "use client";
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useState, useEffect, type ReactNode } from "react";
 
 export type Persona = "graduate" | "admin" | null;
 
 const PersonaContext = createContext<{
   persona: Persona;
   setPersona: (p: Persona) => void;
-}>({ persona: null, setPersona: () => {} });
+} | undefined>(undefined);
 
 export function PersonaProvider({ children }: { children: ReactNode }) {
   const [persona, setPersonaState] = useState<Persona>(null);
@@ -19,22 +19,28 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  function setPersona(p: Persona) {
+  const setPersona = useCallback((p: Persona) => {
     if (p) {
       localStorage.setItem("te-persona", p);
     } else {
       localStorage.removeItem("te-persona");
     }
     setPersonaState(p);
-  }
+  }, []);
+
+  const value = useMemo(() => ({ persona, setPersona }), [persona, setPersona]);
 
   return (
-    <PersonaContext.Provider value={{ persona, setPersona }}>
+    <PersonaContext.Provider value={value}>
       {children}
     </PersonaContext.Provider>
   );
 }
 
 export function usePersona() {
-  return useContext(PersonaContext);
+  const ctx = useContext(PersonaContext);
+  if (ctx === undefined) {
+    throw new Error("usePersona must be used within a PersonaProvider");
+  }
+  return ctx;
 }
