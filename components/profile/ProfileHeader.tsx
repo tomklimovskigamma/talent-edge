@@ -1,7 +1,7 @@
 import { Candidate } from "@/lib/data/candidates";
 import { scoreLabel, stageColor } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { GraduationCap, Calendar } from "lucide-react";
+import { GraduationCap, Calendar, Accessibility } from "lucide-react";
 
 export function ProfileHeader({ candidate }: { candidate: Candidate }) {
   return (
@@ -21,6 +21,16 @@ export function ProfileHeader({ candidate }: { candidate: Candidate }) {
             </div>
             <div className="flex items-center gap-2 mt-2">
               <Badge className={stageColor(candidate.stage)}>{candidate.stage}</Badge>
+              {candidate.accessibilityNeeds && (
+                <span
+                  title={candidate.accessibilityNeeds}
+                  className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 border border-violet-200"
+                  aria-label={`Accessibility note: ${candidate.accessibilityNeeds}`}
+                >
+                  <Accessibility size={11} />
+                  Accommodations requested
+                </span>
+              )}
               <div className="flex items-center gap-1 text-xs text-slate-400">
                 <Calendar size={12} />
                 Applied {new Date(candidate.appliedDate).toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" })}
