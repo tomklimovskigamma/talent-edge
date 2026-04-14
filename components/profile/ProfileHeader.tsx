@@ -23,12 +23,14 @@ export function ProfileHeader({ candidate }: { candidate: Candidate }) {
               <Badge className={stageColor(candidate.stage)}>{candidate.stage}</Badge>
               {candidate.accessibilityNeeds && (
                 <span
-                  title={candidate.accessibilityNeeds}
-                  className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 border border-violet-200"
+                  className="group/acc relative inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 border border-violet-200"
                   aria-label={`Accessibility note: ${candidate.accessibilityNeeds}`}
                 >
                   <Accessibility size={11} />
                   Accommodations requested
+                  <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-max max-w-[220px] rounded bg-slate-800 px-2 py-1 text-xs text-white opacity-0 group-hover/acc:opacity-100 transition-opacity whitespace-normal z-20">
+                    {candidate.accessibilityNeeds}
+                  </span>
                 </span>
               )}
               <div className="flex items-center gap-1 text-xs text-slate-400">
