@@ -12,7 +12,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Feedback report generation (admin-triggered)**
   "Generate Report" button on candidate profile opens a modal/drawer showing a structured PDF-style report: dimension scores with interpretations, strengths, development suggestions, next steps. Addresses Paula's explicit callout that auto-generated feedback reports are expected. Closes the loop on the ChatWidget promise ("report within 5 business days").
 
-- [ ] **Pipeline stage advancement**
+- [x] **Pipeline stage advancement**
   "Advance to [next stage]" action on candidate cards and/or profile. Even with no state persistence, showing the button and a success toast makes the pipeline interactive rather than a static board.
 
 ---
