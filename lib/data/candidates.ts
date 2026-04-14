@@ -51,6 +51,7 @@ export type Candidate = {
   developmentGoals?: DevelopmentGoal[];
   avatarInitials: string;
   startDate?: string;
+  accessibilityNeeds?: string;
 };
 
 export const candidates: Candidate[] = [
@@ -173,6 +174,7 @@ export const candidates: Candidate[] = [
     daysInStage: 8,
     potentialScore: 78,
     avatarInitials: "SW",
+    accessibilityNeeds: "Extended time required (dyslexia).",
     dimensions: {
       adaptability: 80,
       cognitiveAgility: 75,
@@ -220,6 +222,7 @@ export const candidates: Candidate[] = [
     daysInStage: 9,
     potentialScore: 71,
     avatarInitials: "EF",
+    accessibilityNeeds: "Neurodiversity accommodations requested.",
     dimensions: {
       adaptability: 74,
       cognitiveAgility: 68,
@@ -289,6 +292,7 @@ export const candidates: Candidate[] = [
     daysInStage: 5,
     potentialScore: 74,
     avatarInitials: "TN",
+    accessibilityNeeds: "Screen reader support required.",
     dimensions: {
       adaptability: 72,
       cognitiveAgility: 79,
