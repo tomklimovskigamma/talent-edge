@@ -1,0 +1,29 @@
+name: Sync Docs to Confluence
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'docs/**' ] # Only sync files in the docs folder
+
+jobs:
+  confluence-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Inject Confluence Warning
+        run: |
+          # Define the warning message
+          WARNING="> [!IMPORTANT]\n> **Automated Page:** This documentation is synced from GitHub. Inline comments will be deleted on update. Please use **Page Comments** at the bottom for feedback.\n\n"
+          
+          # Loop through markdown files and prepend the warning
+          find docs -name "*.md" -exec sed -i "1s|^|$WARNING|" {} +
+
+      - name: Publish to Confluence
+        uses: confluence-publisher/confluence-publisher-action@v1
+        with:
+          url: https://your-domain.atlassian.net/wiki
+          user: ${{ secrets.CONFLUENCE_USER }}
+          token: ${{ secrets.CONFLUENCE_TOKEN }}
+          cloud: true
