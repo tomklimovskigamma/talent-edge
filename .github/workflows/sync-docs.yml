@@ -23,7 +23,7 @@ jobs:
       - name: Publish to Confluence
         uses: confluence-publisher/confluence-publisher-action@v1
         with:
-          url: https://your-domain.atlassian.net/wiki
+          url: https://mastella.atlassian.net/wiki
           user: ${{ secrets.CONFLUENCE_USER }}
           token: ${{ secrets.CONFLUENCE_TOKEN }}
           cloud: true
