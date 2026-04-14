@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Candidate } from "@/lib/data/candidates";
 import { type StageName } from "@/lib/data/program";
 import { scoreColor } from "@/lib/utils";
-import { Clock, Send, CalendarPlus, ArrowRight } from "lucide-react";
+import { Clock, Send, CalendarPlus, ArrowRight, Accessibility } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
 import { usePersona } from "@/lib/persona";
 import { getNextStage } from "@/lib/pipeline";
@@ -35,6 +35,7 @@ export function CandidateCard({
   const nextStage = getNextStage(currentStage);
   const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
   const showCheckbox = mounted && persona === "admin" && currentStage === "Assessed" && !!onSelect;
+  const showAccessibility = mounted && persona === "admin" && !!candidate.accessibilityNeeds;
 
   return (
     <>
@@ -67,9 +68,20 @@ export function CandidateCard({
                   <p className="text-xs text-slate-400 leading-tight truncate max-w-[120px]">{candidate.university}</p>
                 </div>
               </div>
-              <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${scoreColor(candidate.potentialScore)}`}>
-                {candidate.potentialScore}
-              </span>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                {showAccessibility && (
+                  <span
+                    title={candidate.accessibilityNeeds}
+                    className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-100 text-violet-600"
+                    aria-label={`Accessibility note: ${candidate.accessibilityNeeds}`}
+                  >
+                    <Accessibility size={11} />
+                  </span>
+                )}
+                <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
+                  {candidate.potentialScore}
+                </span>
+              </div>
             </div>
             <p className="text-xs text-slate-500 truncate">{candidate.degree}</p>
             <div className="flex items-center gap-1 text-slate-400">
