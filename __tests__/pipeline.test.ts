@@ -53,6 +53,10 @@ const bob    = stub({ id: "b", name: "Bob Zhang",     university: "University of
 const carla  = stub({ id: "c", name: "Carla Nguyen",  university: "Monash University",   degree: "B. Science (Psychology)",  potentialScore: 60 });
 const all    = [alice, bob, carla];
 
+const atLow   = stub({ id: "d", name: "Low Edge",  potentialScore: 65 });  // emerging lower boundary
+const atHigh  = stub({ id: "e", name: "High Edge", potentialScore: 79 });  // emerging upper boundary
+const atFloor = stub({ id: "f", name: "Floor",     potentialScore: 80 });  // high lower boundary
+
 describe("filterCandidates", () => {
   it("returns all candidates when search is empty and band is all", () => {
     expect(filterCandidates(all, "", "all")).toEqual(all);
@@ -90,5 +94,17 @@ describe("filterCandidates", () => {
 
   it("trims whitespace from search string", () => {
     expect(filterCandidates(all, "  alice  ", "all")).toEqual([alice]);
+  });
+
+  it("emerging band includes potentialScore === 65 (lower boundary)", () => {
+    expect(filterCandidates([atLow], "", "emerging")).toEqual([atLow]);
+  });
+
+  it("emerging band includes potentialScore === 79 (upper boundary)", () => {
+    expect(filterCandidates([atHigh], "", "emerging")).toEqual([atHigh]);
+  });
+
+  it("high band includes potentialScore === 80 (lower boundary)", () => {
+    expect(filterCandidates([atFloor], "", "high")).toEqual([atFloor]);
   });
 });
