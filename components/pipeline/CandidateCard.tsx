@@ -1,14 +1,31 @@
 // components/pipeline/CandidateCard.tsx
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Candidate } from "@/lib/data/candidates";
+import { type StageName } from "@/lib/data/program";
 import { scoreColor } from "@/lib/utils";
-import { Clock, Send, CalendarPlus } from "lucide-react";
+import { Clock, Send, CalendarPlus, ArrowRight } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
+import { usePersona } from "@/lib/persona";
+import { getNextStage } from "@/lib/pipeline";
 
-export function CandidateCard({ candidate }: { candidate: Candidate }) {
+interface CandidateCardProps {
+  candidate: Candidate;
+  currentStage?: StageName;
+  onAdvance?: (candidateId: string, currentStage: StageName) => void;
+}
+
+export function CandidateCard({ candidate, currentStage: currentStageProp, onAdvance }: CandidateCardProps) {
   const [showSchedule, setShowSchedule] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { persona } = usePersona();
+
+  useEffect(() => setMounted(true), []);
+
+  const currentStage: StageName = currentStageProp ?? (candidate.stage as StageName);
+  const nextStage = getNextStage(currentStage);
+  const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
 
   return (
     <>
@@ -37,7 +54,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
           </div>
         </Link>
 
-        {candidate.stage === "Applied" && (
+        {currentStage === "Applied" && (
           <Link
             href="/assessment"
             className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-700 px-1"
@@ -47,7 +64,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
           </Link>
         )}
 
-        {candidate.stage === "Interview" && (
+        {currentStage === "Interview" && (
           <button
             type="button"
             onClick={() => setShowSchedule(true)}
@@ -55,6 +72,17 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
           >
             <CalendarPlus size={10} />
             Schedule interview
+          </button>
+        )}
+
+        {showAdvance && (
+          <button
+            type="button"
+            onClick={() => onAdvance!(candidate.id, currentStage)}
+            className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-800 px-1"
+          >
+            <ArrowRight size={10} />
+            Advance to {nextStage}
           </button>
         )}
       </div>
