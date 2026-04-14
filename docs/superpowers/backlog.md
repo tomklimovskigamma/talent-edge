@@ -19,7 +19,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 ## Tier 2 — Strong differentiator, moderate effort
 
-- [ ] **Keep Warm communication feed**
+- [x] **Keep Warm communication feed**
   For Hired candidates: a timeline of automated touchpoints — offer letter sent, welcome video, start-date countdown check-in, onboarding checklist link. Directly targets Grad-Engage. Paula named them as the competitive target; a 5-event static timeline on hired profiles lands hard in a demo.
 
 - [ ] **Self-service assessment config page**
