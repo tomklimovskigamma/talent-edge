@@ -6,6 +6,7 @@ import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
 import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
 import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
+import { KeepWarmFeed } from "@/components/profile/KeepWarmFeed";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Send } from "lucide-react";
@@ -54,6 +55,9 @@ export default async function CandidateProfilePage({
             )}
           </div>
         </div>
+
+        <KeepWarmFeed candidate={candidate} />
+
       </div>
     </AppShell>
   );
