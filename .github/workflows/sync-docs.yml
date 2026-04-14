@@ -36,4 +36,4 @@ jobs:
           token: ${{ secrets.CONFLUENCE_TOKEN }}
           modified-files: ${{ env.MODIFIED_FILES }}
           space-name: TAL
-          root-page-title: Product Doco
+          root-page-title: AcquiGen Technical Documentation
