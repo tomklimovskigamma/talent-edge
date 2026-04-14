@@ -11,7 +11,7 @@ export const program = {
 
 export type Stage = {
   id: string;
-  label: string;
+  label: StageName;
   order: number;
 };
 

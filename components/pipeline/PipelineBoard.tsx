@@ -24,6 +24,7 @@ export function PipelineBoard() {
     return true;
   });
 
+  // currentStage comes from the column label, which equals effectiveStage(id) by construction.
   function handleAdvance(candidateId: string, currentStage: StageName) {
     const next = getNextStage(currentStage);
     if (!next) return;
@@ -59,9 +60,9 @@ export function PipelineBoard() {
         {stages.map((stage, i) => (
           <StageColumn
             key={stage.id}
-            label={stage.label as StageName}
+            label={stage.label}
             candidates={filtered.filter(
-              (c) => effectiveStage(c.id, c.stage as StageName) === stage.label
+              (c) => effectiveStage(c.id, c.stage) === stage.label
             )}
             accentClass={accentClasses[i]}
             onAdvance={handleAdvance}
