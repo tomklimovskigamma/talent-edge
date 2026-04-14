@@ -3,7 +3,13 @@ name: Sync Docs to Confluence
 on:
   push:
     branches: [ main ]
-    paths: [ 'docs/**' ] # Only sync files in the docs folder
+    paths: [ 'docs/**' ]
+  workflow_dispatch:
+    inputs:
+      files-to-sync:
+        description: 'Space-separated list of files to synchronize'
+        required: true
+        type: string
 
 jobs:
   confluence-sync:
@@ -11,19 +17,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Inject Confluence Warning
-        run: |
-          # Define the warning message
-          WARNING="> [!IMPORTANT]\n> **Automated Page:** This documentation is synced from GitHub. Inline comments will be deleted on update. Please use **Page Comments** at the bottom for feedback.\n\n"
-          
-          # Loop through markdown files and prepend the warning
-          find docs -name "*.md" -exec sed -i "1s|^|$WARNING|" {} +
-
-      - name: Publish to Confluence
-        uses: confluence-publisher/confluence-publisher-action@v1
         with:
-          url: https://mastella.atlassian.net/wiki
+          fetch-depth: 2
+
+      - name: Get modified files from user input
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "MODIFIED_FILES=${{ github.event.inputs.files-to-sync }}" >> $GITHUB_ENV
+
+      - name: Get modified files from git diff
+        if: github.event_name != 'workflow_dispatch'
+        run: echo "MODIFIED_FILES=$(git diff HEAD^ --name-only | tr '\n' ' ')" >> $GITHUB_ENV
+
+      - name: Wiki Sync
+        uses: talkiq/confluence-wiki-sync@v1
+        with:
+          wiki-base-url: https://mastella.atlassian.net/wiki
           user: ${{ secrets.CONFLUENCE_USER }}
           token: ${{ secrets.CONFLUENCE_TOKEN }}
-          cloud: true
+          modified-files: ${{ env.MODIFIED_FILES }}
+          space-name: TAL
+          root-page-title: Product Doco
