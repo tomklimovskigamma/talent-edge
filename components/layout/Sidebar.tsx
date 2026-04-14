@@ -5,7 +5,15 @@ import { LayoutDashboard, GitBranch, ClipboardList, Settings } from "lucide-reac
 import { cn } from "@/lib/utils";
 import { usePersona } from "@/lib/persona";
 
-const nav = [
+type NavItem = {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  graduateOnly: boolean;
+  adminOnly: boolean;
+};
+
+const nav: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, graduateOnly: false, adminOnly: false },
   { href: "/pipeline", label: "Pipeline", icon: GitBranch, graduateOnly: false, adminOnly: false },
   { href: "/assessment", label: "Assessment", icon: ClipboardList, graduateOnly: true, adminOnly: false },
