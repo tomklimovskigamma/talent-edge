@@ -29,7 +29,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 ## Tier 3 — Polish and realism
 
-- [ ] **Bulk shortlisting on pipeline**
+- [x] **Bulk shortlisting on pipeline**
   Checkboxes on Assessed-stage candidate cards + "Shortlist selected (N)" action. Directly addresses the full-day manual screening pain Paula described.
 
 - [ ] **Accessibility flag visibility for admin**
