@@ -1,14 +1,16 @@
 import { Candidate } from "@/lib/data/candidates";
+import { StageName } from "@/lib/data/program";
 import { CandidateCard } from "./CandidateCard";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
-  label: string;
+  label: StageName;
   candidates: Candidate[];
   accentClass: string;
+  onAdvance?: (candidateId: string, currentStage: StageName) => void;
 };
 
-export function StageColumn({ label, candidates, accentClass }: Props) {
+export function StageColumn({ label, candidates, accentClass, onAdvance }: Props) {
   return (
     <div className="flex flex-col min-w-[160px] max-w-[180px] flex-shrink-0">
       <div className={`flex items-center justify-between mb-3 pb-2 border-b-2 ${accentClass}`}>
@@ -19,7 +21,14 @@ export function StageColumn({ label, candidates, accentClass }: Props) {
         {candidates.length === 0 ? (
           <p className="text-xs text-slate-300 text-center py-4">No candidates</p>
         ) : (
-          candidates.map((c) => <CandidateCard key={c.id} candidate={c} />)
+          candidates.map((c) => (
+            <CandidateCard
+              key={c.id}
+              candidate={c}
+              currentStage={label}
+              onAdvance={onAdvance}
+            />
+          ))
         )}
       </div>
     </div>
