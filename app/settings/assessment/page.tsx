@@ -1,10 +1,24 @@
+// app/settings/assessment/page.tsx
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/layout/AppShell";
 import { Settings } from "lucide-react";
 import { BrandingConfig } from "@/components/settings/BrandingConfig";
 import { CompetencyConfig } from "@/components/settings/CompetencyConfig";
 import { TrackConfig } from "@/components/settings/TrackConfig";
+import { usePersona } from "@/lib/persona";
 
 export default function AssessmentConfigPage() {
+  const { persona } = usePersona();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (persona !== null && persona !== "admin") {
+      router.replace("/dashboard");
+    }
+  }, [persona, router]);
+
   return (
     <AppShell>
       <div className="max-w-3xl space-y-8">

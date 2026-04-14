@@ -37,7 +37,7 @@ export function CompetencyConfig() {
       <div className="flex items-center gap-2 mb-5">
         <Brain size={15} className="text-indigo-500" aria-hidden="true" />
         <h2 className="text-sm font-semibold text-slate-700">Competency Labels</h2>
-        <span className="ml-auto text-xs text-slate-400">5 dimensions</span>
+        <span className="ml-auto text-xs text-slate-400">{rows.length} dimensions</span>
       </div>
 
       <div className="space-y-5">
