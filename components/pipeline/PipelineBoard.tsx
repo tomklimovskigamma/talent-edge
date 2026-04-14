@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { candidates as allCandidates } from "@/lib/data/candidates";
 import { stages, type StageName } from "@/lib/data/program";
 import { getNextStage } from "@/lib/pipeline";
 import { StageColumn } from "./StageColumn";
+import { usePersona } from "@/lib/persona";
+import { CheckSquare } from "lucide-react";
 
 const accentClasses = [
   "border-slate-300",
@@ -17,6 +19,11 @@ const accentClasses = [
 export function PipelineBoard() {
   const [filter, setFilter] = useState<"all" | "high" | "emerging">("all");
   const [stageOverrides, setStageOverrides] = useState<Record<string, StageName>>({});
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [mounted, setMounted] = useState(false);
+  const { persona } = usePersona();
+
+  useEffect(() => setMounted(true), []);
 
   const filtered = allCandidates.filter((c) => {
     if (filter === "high") return c.potentialScore >= 80;
@@ -31,8 +38,30 @@ export function PipelineBoard() {
     setStageOverrides((prev) => ({ ...prev, [candidateId]: next }));
   }
 
+  function handleSelect(candidateId: string, checked: boolean) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (checked) next.add(candidateId);
+      else next.delete(candidateId);
+      return next;
+    });
+  }
+
+  function handleBulkShortlist() {
+    setStageOverrides((prev) => {
+      const next = { ...prev };
+      for (const id of selectedIds) {
+        next[id] = "Shortlisted";
+      }
+      return next;
+    });
+    setSelectedIds(new Set());
+  }
+
   const effectiveStage = (candidateId: string, originalStage: StageName): StageName =>
     stageOverrides[candidateId] ?? originalStage;
+
+  const showBulkAction = mounted && persona === "admin" && selectedIds.size > 0;
 
   return (
     <div className="space-y-4">
@@ -52,7 +81,19 @@ export function PipelineBoard() {
             {f === "all" ? "All Candidates" : f === "high" ? "High Potential (80+)" : "Emerging (65–79)"}
           </button>
         ))}
-        <span className="ml-auto text-xs text-slate-400">{filtered.length} candidates shown</span>
+        <div className="ml-auto flex items-center gap-3">
+          {showBulkAction && (
+            <button
+              type="button"
+              onClick={handleBulkShortlist}
+              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-violet-600 text-white hover:bg-violet-700 transition-colors"
+            >
+              <CheckSquare size={12} aria-hidden="true" />
+              Shortlist selected ({selectedIds.size})
+            </button>
+          )}
+          <span className="text-xs text-slate-400">{filtered.length} candidates shown</span>
+        </div>
       </div>
 
       {/* Board */}
@@ -66,6 +107,8 @@ export function PipelineBoard() {
             )}
             accentClass={accentClasses[i]}
             onAdvance={handleAdvance}
+            selectedIds={selectedIds}
+            onSelect={handleSelect}
           />
         ))}
       </div>

@@ -14,9 +14,17 @@ interface CandidateCardProps {
   candidate: Candidate;
   currentStage?: StageName;
   onAdvance?: (candidateId: string, currentStage: StageName) => void;
+  selected?: boolean;
+  onSelect?: (candidateId: string, checked: boolean) => void;
 }
 
-export function CandidateCard({ candidate, currentStage: currentStageProp, onAdvance }: CandidateCardProps) {
+export function CandidateCard({
+  candidate,
+  currentStage: currentStageProp,
+  onAdvance,
+  selected = false,
+  onSelect,
+}: CandidateCardProps) {
   const [showSchedule, setShowSchedule] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { persona } = usePersona();
@@ -26,14 +34,31 @@ export function CandidateCard({ candidate, currentStage: currentStageProp, onAdv
   const currentStage: StageName = currentStageProp ?? (candidate.stage as StageName);
   const nextStage = getNextStage(currentStage);
   const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
+  const showCheckbox = mounted && persona === "admin" && currentStage === "Assessed" && !!onSelect;
 
   return (
     <>
       <div className="group relative">
+        {showCheckbox && (
+          <div className="absolute top-2 left-2 z-10">
+            <input
+              type="checkbox"
+              checked={selected}
+              onChange={(e) => onSelect?.(candidate.id, e.target.checked)}
+              aria-label={`Select ${candidate.name}`}
+              className="h-3.5 w-3.5 accent-indigo-600 cursor-pointer"
+            />
+          </div>
+        )}
+
         <Link href={`/candidates/${candidate.id}`}>
-          <div className="bg-white border border-slate-200 rounded-lg p-3 space-y-2 hover:shadow-md hover:border-indigo-200 transition-all cursor-pointer">
+          <div className={`bg-white border rounded-lg p-3 space-y-2 hover:shadow-md transition-all cursor-pointer ${
+            selected
+              ? "border-indigo-400 bg-indigo-50/30"
+              : "border-slate-200 hover:border-indigo-200"
+          }`}>
             <div className="flex items-start justify-between">
-              <div className="flex items-center gap-2">
+              <div className={`flex items-center gap-2 ${showCheckbox ? "pl-5" : ""}`}>
                 <div className="h-7 w-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700 flex-shrink-0">
                   {candidate.avatarInitials}
                 </div>
