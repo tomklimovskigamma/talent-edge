@@ -9,7 +9,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **AI screening summary on candidate profiles**
   Each profile gets a 2–3 sentence AI recommendation block generated from dimension scores (e.g. "Jordan's Cognitive Agility and Adaptability place them in the top 12% of assessed candidates. Collaboration is a development area. Recommended: advance to interview."). Static text keyed to score bands. Directly demonstrates the core value proposition of replacing manual shortlisting.
 
-- [ ] **Feedback report generation (admin-triggered)**
+- [x] **Feedback report generation (admin-triggered)**
   "Generate Report" button on candidate profile opens a modal/drawer showing a structured PDF-style report: dimension scores with interpretations, strengths, development suggestions, next steps. Addresses Paula's explicit callout that auto-generated feedback reports are expected. Closes the loop on the ChatWidget promise ("report within 5 business days").
 
 - [ ] **Pipeline stage advancement**
