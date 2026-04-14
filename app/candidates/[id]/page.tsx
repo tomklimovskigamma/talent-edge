@@ -5,6 +5,7 @@ import { PotentialRadar } from "@/components/profile/PotentialRadar";
 import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
 import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
+import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Send } from "lucide-react";
@@ -27,14 +28,17 @@ export default async function CandidateProfilePage({
             <ChevronLeft size={14} />
             Pipeline
           </Link>
-          {candidate.stage === "Applied" && (
-            <Link href="/assessment">
-              <Button size="sm" variant="outline" className="gap-1.5 text-indigo-600 border-indigo-200 hover:bg-indigo-50">
-                <Send size={13} />
-                Send Assessment
-              </Button>
-            </Link>
-          )}
+          <div className="flex items-center gap-2">
+            <FeedbackReportButton candidate={candidate} />
+            {candidate.stage === "Applied" && (
+              <Link href="/assessment">
+                <Button size="sm" variant="outline" className="gap-1.5 text-indigo-600 border-indigo-200 hover:bg-indigo-50">
+                  <Send size={13} />
+                  Send Assessment
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
 
         <ProfileHeader candidate={candidate} />
