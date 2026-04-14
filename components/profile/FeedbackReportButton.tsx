@@ -15,6 +15,15 @@ export function FeedbackReportButton({ candidate }: { candidate: Candidate }) {
 
   useEffect(() => setMounted(true), []);
 
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   if (!mounted || persona !== "admin") return null;
 
   const report = generateFeedbackReport(candidate);
@@ -36,18 +45,24 @@ export function FeedbackReportButton({ candidate }: { candidate: Candidate }) {
           className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
           onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}
         >
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="report-modal-title"
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+          >
 
             {/* Report header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
               <div>
                 <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wide">Talent Edge AI</p>
-                <h2 className="text-lg font-bold text-slate-800 mt-0.5">Potential Assessment Report</h2>
+                <h2 id="report-modal-title" className="text-lg font-bold text-slate-800 mt-0.5">Potential Assessment Report</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close report"
+                autoFocus
                 className="text-slate-400 hover:text-slate-600 transition-colors"
               >
                 <X size={20} />
