@@ -1,4 +1,4 @@
-import type { Candidate, PotentialDimensions } from "@/lib/data/candidates";
+import { type Candidate, type PotentialDimensions, dimensionLabels } from "@/lib/data/candidates";
 
 const strengthDescriptions: Record<keyof PotentialDimensions, string> = {
   adaptability: "capacity to adapt through change",
@@ -6,14 +6,6 @@ const strengthDescriptions: Record<keyof PotentialDimensions, string> = {
   emotionalIntelligence: "emotional intelligence and interpersonal awareness",
   collaboration: "collaborative instinct and team elevation",
   drive: "drive and self-imposed ambition",
-};
-
-const dimensionNames: Record<keyof PotentialDimensions, string> = {
-  adaptability: "Adaptability",
-  cognitiveAgility: "Cognitive Agility",
-  emotionalIntelligence: "Emotional Intelligence",
-  collaboration: "Collaboration",
-  drive: "Drive",
 };
 
 function percentileText(score: number): string {
@@ -54,7 +46,7 @@ export function generateScreeningSummary(candidate: Candidate): ScreeningSummary
 
   const text =
     `${firstName}'s ${strengthDescriptions[top1]} and ${strengthDescriptions[top2]} ` +
-    `${cohortPhrase}. ${dimensionNames[bottom]} is an area for development.`;
+    `${cohortPhrase}. ${dimensionLabels[bottom]} is an area for development.`;
 
   const recommendation: Recommendation =
     potentialScore >= 80

@@ -67,4 +67,20 @@ describe("generateScreeningSummary", () => {
     const result = generateScreeningSummary({ ...candidate, potentialScore: 89 });
     expect(result.text).toContain("top 15%");
   });
+
+  it("returns review recommendation at the lower boundary (score 65)", () => {
+    const result = generateScreeningSummary({ ...candidate, potentialScore: 65 });
+    expect(result.recommendation.variant).toBe("review");
+  });
+
+  it("returns hold recommendation just below the lower boundary (score 64)", () => {
+    const result = generateScreeningSummary({ ...candidate, potentialScore: 64 });
+    expect(result.recommendation.variant).toBe("hold");
+  });
+
+  it("uses a different cohort phrase for below-average candidates (score < 65)", () => {
+    const result = generateScreeningSummary({ ...candidate, potentialScore: 60 });
+    expect(result.text).toContain("below the cohort average");
+    expect(result.text).not.toContain("of assessed candidates");
+  });
 });
