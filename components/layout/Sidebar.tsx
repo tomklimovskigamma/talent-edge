@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, GitBranch, ClipboardList } from "lucide-react";
+import { LayoutDashboard, GitBranch, ClipboardList, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePersona } from "@/lib/persona";
 
 const nav = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, graduateOnly: false },
-  { href: "/pipeline", label: "Pipeline", icon: GitBranch, graduateOnly: false },
-  { href: "/assessment", label: "Assessment", icon: ClipboardList, graduateOnly: true },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, graduateOnly: false, adminOnly: false },
+  { href: "/pipeline", label: "Pipeline", icon: GitBranch, graduateOnly: false, adminOnly: false },
+  { href: "/assessment", label: "Assessment", icon: ClipboardList, graduateOnly: true, adminOnly: false },
+  { href: "/settings/assessment", label: "Settings", icon: Settings, graduateOnly: false, adminOnly: true },
 ];
 
 export function Sidebar() {
@@ -16,9 +17,8 @@ export function Sidebar() {
   const { persona } = usePersona();
 
   const visibleNav = nav.filter((item) => {
-    // Assessment is graduate-only — admin triggers assessments for candidates,
-    // they don't complete them. Show all items when persona is unset (direct URL access).
     if (item.graduateOnly && persona === "admin") return false;
+    if (item.adminOnly && persona !== "admin") return false;
     return true;
   });
 
