@@ -71,11 +71,13 @@ export function CandidateCard({
               <div className="flex items-center gap-1 flex-shrink-0">
                 {showAccessibility && (
                   <span
-                    title={candidate.accessibilityNeeds}
-                    className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-100 text-violet-600"
+                    className="group/acc relative flex items-center justify-center w-5 h-5 rounded-full bg-violet-100 text-violet-600"
                     aria-label={`Accessibility note: ${candidate.accessibilityNeeds}`}
                   >
                     <Accessibility size={11} />
+                    <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-max max-w-[160px] rounded bg-slate-800 px-2 py-1 text-xs text-white opacity-0 group-hover/acc:opacity-100 transition-opacity whitespace-normal z-20">
+                      {candidate.accessibilityNeeds}
+                    </span>
                   </span>
                 )}
                 <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
