@@ -78,7 +78,7 @@ export function CandidateCard({ candidate, currentStage: currentStageProp, onAdv
         {showAdvance && (
           <button
             type="button"
-            onClick={() => onAdvance!(candidate.id, currentStage)}
+            onClick={() => onAdvance?.(candidate.id, currentStage)}
             className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-800 px-1"
           >
             <ArrowRight size={10} />
