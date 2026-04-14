@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import { candidates as allCandidates } from "@/lib/data/candidates";
 import { stages, type StageName } from "@/lib/data/program";
-import { getNextStage } from "@/lib/pipeline";
+import { getNextStage, filterCandidates, type ScoreBand } from "@/lib/pipeline";
 import { StageColumn } from "./StageColumn";
 import { usePersona } from "@/lib/persona";
-import { CheckSquare } from "lucide-react";
+import { CheckSquare, Search, X } from "lucide-react";
 
 const accentClasses = [
   "border-slate-300",
@@ -17,7 +17,8 @@ const accentClasses = [
 ];
 
 export function PipelineBoard() {
-  const [filter, setFilter] = useState<"all" | "high" | "emerging">("all");
+  const [filter, setFilter] = useState<ScoreBand>("all");
+  const [search, setSearch] = useState("");
   const [stageOverrides, setStageOverrides] = useState<Record<string, StageName>>({});
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [mounted, setMounted] = useState(false);
@@ -25,13 +26,8 @@ export function PipelineBoard() {
 
   useEffect(() => setMounted(true), []);
 
-  const filtered = allCandidates.filter((c) => {
-    if (filter === "high") return c.potentialScore >= 80;
-    if (filter === "emerging") return c.potentialScore >= 65 && c.potentialScore < 80;
-    return true;
-  });
+  const filtered = filterCandidates(allCandidates, search, filter);
 
-  // currentStage comes from the column label, which equals effectiveStage(id) by construction.
   function handleAdvance(candidateId: string, currentStage: StageName) {
     const next = getNextStage(currentStage);
     if (!next) return;
@@ -64,7 +60,29 @@ export function PipelineBoard() {
   const showBulkAction = mounted && persona === "admin" && selectedIds.size > 0;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
+      {/* Search bar */}
+      <div className="relative">
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by name, university, or degree…"
+          className="w-full pl-8 pr-8 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+        />
+        {search && (
+          <button
+            type="button"
+            onClick={() => setSearch("")}
+            aria-label="Clear search"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+          >
+            <X size={14} />
+          </button>
+        )}
+      </div>
+
       {/* Filter bar */}
       <div className="flex items-center gap-2">
         <span className="text-xs text-slate-500 mr-1">Filter:</span>
