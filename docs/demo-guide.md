@@ -85,26 +85,67 @@ The dashboard is the command centre for the program. It contains:
 
 Navigate to **Pipeline** via the sidebar. The kanban board shows all candidates arranged by stage: Applied → Assessed → Shortlisted → Interview → Offer → Hired.
 
-**Hover interactions:**
+#### Search and filter
+
+- **Search bar** (top of the board) — type any part of a candidate's name, university, or degree. Results update instantly. An **✕** button clears the search.
+- **Score-band filters** — three toggle buttons: **All Candidates**, **High Potential (80+)**, and **Emerging (65–79)**. Search and band filter compose — e.g. "High Potential" + search "melbourne" shows only high-potential candidates from Melbourne universities.
+- The **N candidates shown** counter in the filter bar always reflects the active filters.
+
+#### Hover interactions
+
 - Hover a card in the **Applied** column → a **Send assessment** link appears (links to the assessment flow)
 - Hover a card in the **Interview** column → a **Schedule interview** button appears
+- Hover any card → an **Advance to [next stage]** button appears, moving the candidate to the next pipeline stage instantly
 
-**Scheduling demo:** Click **Schedule interview** on any Interview-stage card. A modal opens showing five available time slots across three days. Select a slot — the button activates. Click **Send Calendar Invite** — a confirmation screen shows the candidate's name and the booked slot with a success state.
+#### Bulk shortlisting
+
+When viewing the **Assessed** column as Admin:
+1. Each Assessed card shows a small checkbox in the top-left corner.
+2. Tick one or more checkboxes — selected cards get an indigo border/tint.
+3. A **Shortlist selected (N)** button appears in the filter bar.
+4. Click it — all selected candidates move to the Shortlisted column in one action and the selection clears.
+
+This replaces the full-day manual screening process described as a key pain point by program managers.
+
+#### Accessibility flags
+
+Candidates who requested accommodations during registration display a small violet **⊕** badge in the top-right of their pipeline card (Admin persona only). Hovering the badge reveals the candidate's specific accommodation request. This surfaces the request that would otherwise be lost in a registration form.
+
+#### Scheduling demo
+
+Click **Schedule interview** on any Interview-stage card. A modal opens showing five available time slots across three days. Select a slot — the button activates. Click **Send Calendar Invite** — a confirmation screen shows the candidate's name and the booked slot with a success state.
 
 ### 3. Candidate profile
 
 Click any candidate card to open their profile. The profile shows:
 
-- **Header:** Name, university, degree, stage, potential score, days in program
-- **Potential Radar:** A radar chart showing their scores across all five dimensions
-- **Assessment Timeline:** A log of their progression through the program stages
-- **Development Goals:** (for candidates in later stages) active development goals with status and due dates
+**Header** — Name, university, degree, stage badge, potential score ring, and applied date. Candidates with accessibility needs display a violet **Accommodations requested** badge next to the stage badge; hovering it reveals the full accommodation detail.
 
-For candidates in the **Applied** stage, a **Send Assessment** button appears in the top-right of the profile header — this is the admin-side trigger to send the assessment link to a candidate.
+**AI Screening Summary** — A 2–3 sentence AI-generated recommendation block derived from the candidate's dimension scores. Text is keyed to score bands and identifies top strengths, development areas, and a shortlisting recommendation. Visible to Admin only.
 
-**Jordan Lee's profile** (`/candidates/c019`) is the demo graduate who completed the assessment in the Graduate flow. Their potential score of 89 and dimension breakdown are pre-populated to reflect the default answers in the assessment demo.
+**Generate Report** — A button in the top-right opens a structured feedback report covering dimension scores with interpretations, strengths, development suggestions, and next steps. This is the auto-generated feedback report that program managers are expected to send post-assessment.
 
-### 4. Assessment preview (optional)
+**Potential Radar** — A radar chart showing scores across all five dimensions.
+
+**Assessment Timeline** — A log of the candidate's progression through the program stages.
+
+**Development Goals** — (for candidates in Hired stage) active development goals with status indicators and due dates.
+
+**Keep Warm feed** — (for Hired candidates) a timeline of automated touchpoints sent between offer acceptance and start date: offer letter sent, welcome video, start-date countdown check-in, and onboarding checklist link. Demonstrates the lifecycle phase that competes directly with Grad-Engage.
+
+**Jordan Lee's profile** (`/candidates/c019`) is the demo graduate who completed the assessment in the Graduate flow. Their potential score of 89 and dimension breakdown reflect the default answers in the assessment demo.
+
+### 4. Assessment Config
+
+Navigate to **Settings → Assessment Config** (or `/settings/assessment`). This page lets program managers view and mock-edit:
+
+- **Question language** — competency label names and track assignments
+- **Client branding** — logo, primary colour, header text
+- **Scoring weights** — dimension weighting per track
+
+This is the self-service configuration differentiator vs Amberjack, where equivalent customisation requires a paid bespoke engagement. Even cosmetically, showing it as a working interface makes the contrast concrete.
+
+### 5. Assessment preview (optional)
 
 Admins can navigate directly to `/assessment` to preview the candidate experience. After completing the assessment as Admin, the **Thank You** screen shows both the **← Back to Pipeline** and **View Jordan's profile →** exit options — rather than the Graduate's simpler "Back to Home."
 
@@ -112,7 +153,15 @@ Admins can navigate directly to `/assessment` to preview the candidate experienc
 
 ## Demo data
 
-All candidate data is static and defined in `lib/data/candidates.ts`. The demo includes 18 candidates spread across all pipeline stages, plus Jordan Lee (c019) as the assessment demo candidate.
+All candidate data is static and defined in `lib/data/candidates.ts`. The demo includes 19 candidates:
+
+- **c001–c018** — a spread across all pipeline stages (Applied through Hired)
+- **c019 — Jordan Lee** — the assessment demo candidate; pre-populated with default answers
+
+Three candidates have accessibility accommodation requests seeded:
+- **c005 Sophie Williams** (Assessed) — Extended time required (dyslexia)
+- **c007 Ella Fitzgerald** (Applied) — Neurodiversity accommodations requested
+- **c010 Tom Nguyen** (Assessed) — Screen reader support required
 
 Program configuration (client name, intake year, target hires) is in `lib/data/program.ts`.
 
