@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { Settings } from "lucide-react";
+import { BrandingConfig } from "@/components/settings/BrandingConfig";
 
 export default function AssessmentConfigPage() {
   return (
@@ -15,7 +16,7 @@ export default function AssessmentConfigPage() {
           </p>
         </div>
 
-        {/* Sections wired in later tasks */}
+        <BrandingConfig />
       </div>
     </AppShell>
   );
