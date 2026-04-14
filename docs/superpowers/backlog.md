@@ -35,7 +35,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Accessibility flag visibility for admin**
   Candidates who ticked the accommodation checkbox in Registration should surface a visible flag on their pipeline card and profile. Closes the loop — currently the accommodation request disappears into a form.
 
-- [ ] **Candidate search and filter on pipeline**
+- [x] **Candidate search and filter on pipeline**
   Search bar and score-range filter on the pipeline board. Makes the board feel like a real tool.
 
 ---
