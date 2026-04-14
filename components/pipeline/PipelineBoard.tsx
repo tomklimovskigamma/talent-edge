@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { candidates as allCandidates } from "@/lib/data/candidates";
-import { stages } from "@/lib/data/program";
+import { stages, type StageName } from "@/lib/data/program";
+import { getNextStage } from "@/lib/pipeline";
 import { StageColumn } from "./StageColumn";
 
 const accentClasses = [
@@ -15,12 +16,22 @@ const accentClasses = [
 
 export function PipelineBoard() {
   const [filter, setFilter] = useState<"all" | "high" | "emerging">("all");
+  const [stageOverrides, setStageOverrides] = useState<Record<string, StageName>>({});
 
   const filtered = allCandidates.filter((c) => {
     if (filter === "high") return c.potentialScore >= 80;
     if (filter === "emerging") return c.potentialScore >= 65 && c.potentialScore < 80;
     return true;
   });
+
+  function handleAdvance(candidateId: string, currentStage: StageName) {
+    const next = getNextStage(currentStage);
+    if (!next) return;
+    setStageOverrides((prev) => ({ ...prev, [candidateId]: next }));
+  }
+
+  const effectiveStage = (candidateId: string, originalStage: StageName): StageName =>
+    stageOverrides[candidateId] ?? originalStage;
 
   return (
     <div className="space-y-4">
@@ -48,9 +59,12 @@ export function PipelineBoard() {
         {stages.map((stage, i) => (
           <StageColumn
             key={stage.id}
-            label={stage.label}
-            candidates={filtered.filter((c) => c.stage === stage.label)}
+            label={stage.label as StageName}
+            candidates={filtered.filter(
+              (c) => effectiveStage(c.id, c.stage as StageName) === stage.label
+            )}
             accentClass={accentClasses[i]}
+            onAdvance={handleAdvance}
           />
         ))}
       </div>
