@@ -22,7 +22,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Keep Warm communication feed**
   For Hired candidates: a timeline of automated touchpoints — offer letter sent, welcome video, start-date countdown check-in, onboarding checklist link. Directly targets Grad-Engage. Paula named them as the competitive target; a 5-event static timeline on hired profiles lands hard in a demo.
 
-- [ ] **Self-service assessment config page**
+- [x] **Self-service assessment config page**
   A `/settings/assessment` page where program managers can see (and mock-edit) question language, competency labels, track assignments, and client branding. The anti-Amberjack feature. Paula described self-service config as a known Amberjack roadmap gap — showing it working (even cosmetically) directly addresses the "everything bespoke costs extra" pain.
 
 ---
