@@ -33,6 +33,21 @@ describe("generateFeedbackReport", () => {
     expect(report.potentialScore).toBe(89);
   });
 
+  it("uses the Assessed stage history entry date, not the last history entry", () => {
+    const hiredCandidate: Candidate = {
+      ...candidate,
+      stage: "Hired",
+      assessmentHistory: [
+        { date: "2026-01-01", stage: "Applied", note: "Applied." },
+        { date: "2026-01-10", stage: "Assessed", note: "Assessed." },
+        { date: "2026-02-01", stage: "Shortlisted", note: "Shortlisted." },
+        { date: "2026-03-01", stage: "Hired", note: "Hired." },
+      ],
+    };
+    const report = generateFeedbackReport(hiredCandidate);
+    expect(report.assessmentDate).toBe("2026-01-10"); // assessed date, NOT "2026-03-01"
+  });
+
   it("uses the most recent assessment history date as assessmentDate", () => {
     const report = generateFeedbackReport(candidate);
     expect(report.assessmentDate).toBe("2026-01-10");

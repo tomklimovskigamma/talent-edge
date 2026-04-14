@@ -132,10 +132,11 @@ export type FeedbackReport = {
 export function generateFeedbackReport(candidate: Candidate): FeedbackReport {
   const { dimensions, potentialScore, name, stage, assessmentHistory, appliedDate } = candidate;
 
+  const assessedEntry = assessmentHistory.find((e) => e.stage === "Assessed");
   const assessmentDate =
-    assessmentHistory.length > 0
-      ? assessmentHistory[assessmentHistory.length - 1].date
-      : appliedDate;
+    assessedEntry?.date ??
+    assessmentHistory.at(-1)?.date ??
+    appliedDate;
 
   const sorted = sortDimensionsByScore(dimensions);
 
