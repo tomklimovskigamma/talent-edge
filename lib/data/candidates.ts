@@ -50,6 +50,7 @@ export type Candidate = {
   assessmentHistory: AssessmentEvent[];
   developmentGoals?: DevelopmentGoal[];
   avatarInitials: string;
+  startDate?: string;
 };
 
 export const candidates: Candidate[] = [
@@ -139,6 +140,7 @@ export const candidates: Candidate[] = [
     daysInStage: 10,
     potentialScore: 90,
     avatarInitials: "LO",
+    startDate: "2026-02-23",
     dimensions: {
       adaptability: 91,
       cognitiveAgility: 94,
@@ -310,6 +312,7 @@ export const candidates: Candidate[] = [
     daysInStage: 12,
     potentialScore: 91,
     avatarInitials: "GH",
+    startDate: "2026-05-19",
     dimensions: {
       adaptability: 93,
       cognitiveAgility: 90,
@@ -323,7 +326,7 @@ export const candidates: Candidate[] = [
       { date: "2025-03-17", stage: "Shortlisted", note: "Shortlisted." },
       { date: "2025-03-24", stage: "Interview", note: "Outstanding interview." },
       { date: "2025-03-31", stage: "Offer", note: "Offer made." },
-      { date: "2025-04-08", stage: "Hired", note: "Accepted. Start date: 23 Feb 2026." },
+      { date: "2025-04-08", stage: "Hired", note: "Accepted. Start date: 19 May 2026." },
     ],
     developmentGoals: [
       { title: "Complete induction program", status: "not-started", dueDate: "2026-03-15" },
@@ -483,6 +486,7 @@ export const candidates: Candidate[] = [
     daysInStage: 14,
     potentialScore: 89,
     avatarInitials: "EB",
+    startDate: "2026-06-02",
     dimensions: {
       adaptability: 90,
       cognitiveAgility: 88,
@@ -496,7 +500,7 @@ export const candidates: Candidate[] = [
       { date: "2025-03-13", stage: "Shortlisted", note: "Shortlisted." },
       { date: "2025-03-20", stage: "Interview", note: "Excellent panel interview." },
       { date: "2025-03-28", stage: "Offer", note: "Offer made." },
-      { date: "2025-04-05", stage: "Hired", note: "Accepted. Start date: 23 Feb 2026." },
+      { date: "2025-04-05", stage: "Hired", note: "Accepted. Start date: 2 Jun 2026." },
     ],
     developmentGoals: [
       { title: "Complete induction program", status: "not-started", dueDate: "2026-03-15" },
