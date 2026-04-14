@@ -32,7 +32,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Bulk shortlisting on pipeline**
   Checkboxes on Assessed-stage candidate cards + "Shortlist selected (N)" action. Directly addresses the full-day manual screening pain Paula described.
 
-- [ ] **Accessibility flag visibility for admin**
+- [x] **Accessibility flag visibility for admin**
   Candidates who ticked the accommodation checkbox in Registration should surface a visible flag on their pipeline card and profile. Closes the loop — currently the accommodation request disappears into a form.
 
 - [ ] **Candidate search and filter on pipeline**
