@@ -16,6 +16,14 @@ export const dimensionLabels: Record<keyof PotentialDimensions, string> = {
   drive: "Drive",
 };
 
+export function sortDimensionsByScore(
+  dimensions: PotentialDimensions
+): [keyof PotentialDimensions, number][] {
+  return (Object.entries(dimensions) as [keyof PotentialDimensions, number][]).sort(
+    (a, b) => b[1] - a[1]
+  );
+}
+
 export type AssessmentEvent = {
   date: string;
   stage: StageName;

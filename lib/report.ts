@@ -1,5 +1,5 @@
-import { dimensionLabels, type Candidate, type PotentialDimensions } from "@/lib/data/candidates";
-import { type StageName } from "@/lib/data/program";
+import { dimensionLabels, type Candidate, type PotentialDimensions, sortDimensionsByScore } from "@/lib/data/candidates";
+import { type StageName, program } from "@/lib/data/program";
 import { scoreLabel } from "@/lib/utils";
 
 const highInterpretations: Record<keyof PotentialDimensions, string> = {
@@ -137,9 +137,7 @@ export function generateFeedbackReport(candidate: Candidate): FeedbackReport {
       ? assessmentHistory[assessmentHistory.length - 1].date
       : appliedDate;
 
-  const sorted = (Object.entries(dimensions) as [keyof PotentialDimensions, number][]).sort(
-    (a, b) => b[1] - a[1]
-  );
+  const sorted = sortDimensionsByScore(dimensions);
 
   const [top1Key, top1Score] = sorted[0];
   const [top2Key, top2Score] = sorted[1];
@@ -170,7 +168,7 @@ export function generateFeedbackReport(candidate: Candidate): FeedbackReport {
 
   return {
     candidateName: name,
-    programName: "Meridian Group · 2026 Graduate Intake",
+    programName: `${program.clientName} · ${program.intakeYear} Graduate Intake`,
     assessmentDate,
     potentialScore,
     potentialLabel: scoreLabel(potentialScore),

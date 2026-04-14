@@ -1,4 +1,4 @@
-import { type Candidate, type PotentialDimensions, dimensionLabels } from "@/lib/data/candidates";
+import { type Candidate, type PotentialDimensions, dimensionLabels, sortDimensionsByScore } from "@/lib/data/candidates";
 
 const strengthDescriptions: Record<keyof PotentialDimensions, string> = {
   adaptability: "capacity to adapt through change",
@@ -31,8 +31,7 @@ export function generateScreeningSummary(candidate: Candidate): ScreeningSummary
   const { dimensions, potentialScore, name } = candidate;
   const firstName = name.split(" ")[0];
 
-  const sorted = (Object.entries(dimensions) as [keyof PotentialDimensions, number][])
-    .sort((a, b) => b[1] - a[1]);
+  const sorted = sortDimensionsByScore(dimensions);
 
   const top1 = sorted[0][0];
   const top2 = sorted[1][0];

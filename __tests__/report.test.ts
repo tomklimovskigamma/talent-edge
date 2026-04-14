@@ -87,4 +87,44 @@ describe("generateFeedbackReport", () => {
       expect(strength.interpretation.length).toBeGreaterThan(20);
     }
   });
+
+  it("returns assessment link next steps for Applied candidates", () => {
+    const report = generateFeedbackReport({ ...candidate, stage: "Applied" });
+    const steps = report.nextSteps.join(" ");
+    expect(steps).toMatch(/assessment/i);
+  });
+
+  it("returns interview scheduling next steps for Shortlisted candidates", () => {
+    const report = generateFeedbackReport({ ...candidate, stage: "Shortlisted" });
+    const steps = report.nextSteps.join(" ");
+    expect(steps).toMatch(/interview/i);
+  });
+
+  it("returns debrief next steps for Interview-stage candidates", () => {
+    const report = generateFeedbackReport({ ...candidate, stage: "Interview" });
+    const steps = report.nextSteps.join(" ");
+    expect(steps).toMatch(/debrief/i);
+  });
+
+  it("returns offer/hire next steps for Hired candidates", () => {
+    const report = generateFeedbackReport({ ...candidate, stage: "Hired" });
+    const steps = report.nextSteps.join(" ");
+    expect(steps).toMatch(/offer/i);
+  });
+
+  it("potentialLabel matches the score band", () => {
+    const report = generateFeedbackReport({ ...candidate, potentialScore: 89 });
+    expect(report.potentialLabel).toBe("High Potential");
+  });
+
+  it("uses developing interpretation for a low-scoring dimension", () => {
+    const lowCandidate: Candidate = {
+      ...candidate,
+      dimensions: { adaptability: 50, cognitiveAgility: 55, emotionalIntelligence: 48, collaboration: 60, drive: 52 },
+      potentialScore: 53,
+    };
+    const report = generateFeedbackReport(lowCandidate);
+    // All dimensions are below 65, so interpretation should use developing tier language
+    expect(report.strengths[0].interpretation).toMatch(/development area|structured practice|deliberate|proactive|stretch goals/i);
+  });
 });
