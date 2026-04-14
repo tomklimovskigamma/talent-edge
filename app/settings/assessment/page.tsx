@@ -2,6 +2,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Settings } from "lucide-react";
 import { BrandingConfig } from "@/components/settings/BrandingConfig";
 import { CompetencyConfig } from "@/components/settings/CompetencyConfig";
+import { TrackConfig } from "@/components/settings/TrackConfig";
 
 export default function AssessmentConfigPage() {
   return (
@@ -19,6 +20,7 @@ export default function AssessmentConfigPage() {
 
         <BrandingConfig />
         <CompetencyConfig />
+        <TrackConfig />
       </div>
     </AppShell>
   );
