@@ -6,7 +6,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 ## Tier 1 — Decision intelligence
 
-- [ ] **Candidate comparison panel**
+- [x] **Candidate comparison panel**
   "Compare selected (N)" button in the pipeline filter bar when 2–3 candidates are checked. Opens a right-side drawer showing candidates side by side: name/score header, grouped bar chart of all five dimension scores, AI summary bullet. Admin only. No new routes — state lives in PipelineBoard. See spec: `docs/superpowers/specs/2026-04-15-feature-depth-backlog-design.md`.
 
 - [ ] **AI cohort insights on dashboard**
