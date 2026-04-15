@@ -1,5 +1,6 @@
 // components/pipeline/ComparisonDrawer.tsx
 "use client";
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import {
   BarChart,
@@ -12,7 +13,6 @@ import {
 } from "recharts";
 import type { Candidate, PotentialDimensions } from "@/lib/data/candidates";
 import { scoreColor, stageColor } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { generateScreeningSummary } from "@/lib/screening";
 
 const CANDIDATE_COLORS = ["#6366f1", "#8b5cf6", "#f59e0b"] as const;
@@ -39,6 +39,21 @@ type Props = {
 };
 
 export function ComparisonDrawer({ candidates, onClose }: Props) {
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    drawerRef.current?.focus();
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [onClose]);
+
   const chartData = DIM_KEYS.map((dim) => {
     const row: Record<string, string | number> = { dim: DIM_SHORT[dim] };
     candidates.forEach((c) => {
@@ -57,7 +72,14 @@ export function ComparisonDrawer({ candidates, onClose }: Props) {
       />
 
       {/* Drawer */}
-      <div className="fixed inset-y-0 right-0 w-[500px] bg-white shadow-2xl z-50 flex flex-col">
+      <div
+        ref={drawerRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Candidate comparison"
+        className="fixed inset-y-0 right-0 w-[500px] bg-white shadow-2xl z-50 flex flex-col"
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200">
           <h2 className="text-sm font-semibold text-slate-800">
@@ -95,7 +117,9 @@ export function ComparisonDrawer({ candidates, onClose }: Props) {
                   {c.potentialScore}
                 </span>
                 <div>
-                  <Badge className={`text-xs ${stageColor(c.stage)}`}>{c.stage}</Badge>
+                  <span className={`inline-block text-xs px-1.5 py-0.5 rounded-full ${stageColor(c.stage)}`}>
+                    {c.stage}
+                  </span>
                 </div>
               </div>
             ))}
@@ -154,7 +178,7 @@ export function ComparisonDrawer({ candidates, onClose }: Props) {
             </h3>
             {candidates.map((c, i) => {
               const { text } = generateScreeningSummary(c);
-              const firstSentence = text.split(".")[0] + ".";
+              const firstSentence = text.match(/^[^.]+\./)?.[0] ?? text;
               return (
                 <div key={c.id} className="flex gap-2.5">
                   <div
