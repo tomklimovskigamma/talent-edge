@@ -4,44 +4,55 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 ---
 
-## Tier 1 — High impact, demo-critical
+## Tier 1 — Decision intelligence
 
-- [x] **AI screening summary on candidate profiles**
-  Each profile gets a 2–3 sentence AI recommendation block generated from dimension scores (e.g. "Jordan's Cognitive Agility and Adaptability place them in the top 12% of assessed candidates. Collaboration is a development area. Recommended: advance to interview."). Static text keyed to score bands. Directly demonstrates the core value proposition of replacing manual shortlisting.
+- [ ] **Candidate comparison panel**
+  "Compare selected (N)" button in the pipeline filter bar when 2–3 candidates are checked. Opens a right-side drawer showing candidates side by side: name/score header, grouped bar chart of all five dimension scores, AI summary bullet. Admin only. No new routes — state lives in PipelineBoard. See spec: `docs/superpowers/specs/2026-04-15-feature-depth-backlog-design.md`.
 
-- [x] **Feedback report generation (admin-triggered)**
-  "Generate Report" button on candidate profile opens a modal/drawer showing a structured PDF-style report: dimension scores with interpretations, strengths, development suggestions, next steps. Addresses Paula's explicit callout that auto-generated feedback reports are expected. Closes the loop on the ChatWidget promise ("report within 5 business days").
+- [ ] **AI cohort insights on dashboard**
+  A "Cohort Intelligence" card on the dashboard showing 3 computed insight strings: strongest dimension across assessed candidates, weakest dimension, and a track comparison (Finance vs Technology vs People & Culture average potential score). Computed from real candidate data — not copy. New `CohortInsights` component below the metrics row.
 
-- [x] **Pipeline stage advancement**
-  "Advance to [next stage]" action on candidate cards and/or profile. Even with no state persistence, showing the button and a success toast makes the pipeline interactive rather than a static board.
-
----
-
-## Tier 2 — Strong differentiator, moderate effort
-
-- [x] **Keep Warm communication feed**
-  For Hired candidates: a timeline of automated touchpoints — offer letter sent, welcome video, start-date countdown check-in, onboarding checklist link. Directly targets Grad-Engage. Paula named them as the competitive target; a 5-event static timeline on hired profiles lands hard in a demo.
-
-- [x] **Self-service assessment config page**
-  A `/settings/assessment` page where program managers can see (and mock-edit) question language, competency labels, track assignments, and client branding. The anti-Amberjack feature. Paula described self-service config as a known Amberjack roadmap gap — showing it working (even cosmetically) directly addresses the "everything bespoke costs extra" pain.
+- [ ] **Score percentile display**
+  Show "Top 7% of cohort" alongside the raw score on pipeline cards (admin only) and the profile header. Computed by ranking the candidate's score against all assessed+ candidates and mapping onto the 142-candidate cohort from dashboard metrics. New `scorePercentile()` utility in `lib/utils.ts`.
 
 ---
 
-## Tier 3 — Polish and realism
+## Tier 2 — Workflow completeness
 
-- [x] **Bulk shortlisting on pipeline**
-  Checkboxes on Assessed-stage candidate cards + "Shortlist selected (N)" action. Directly addresses the full-day manual screening pain Paula described.
+- [ ] **Interview scorecard**
+  A collapsible "Interview Scorecard" section on candidate profiles for Interview-stage candidates (admin only). Four 1–5 star ratings (Communication, Cultural Fit, Problem Solving, Overall Impression), freeform notes, and a recommendation selector (Advance to Offer / Hold / Decline). Client-side state, success toast on save.
 
-- [x] **Accessibility flag visibility for admin**
-  Candidates who ticked the accommodation checkbox in Registration should surface a visible flag on their pipeline card and profile. Closes the loop — currently the accommodation request disappears into a form.
+- [ ] **Bulk reject with email preview**
+  Mirrors bulk shortlisting. "Reject selected (N)" button alongside "Shortlist selected" in the pipeline filter bar. Opens a modal with an editable rejection email (tokens replaced with candidate name/program). On confirm, moves selected candidates to a new `"Rejected"` stage (filtered off the board). New `RejectModal` component.
 
-- [x] **Candidate search and filter on pipeline**
-  Search bar and score-range filter on the pipeline board. Makes the board feel like a real tool.
+- [ ] **Candidate notes**
+  Collapsible "Notes" section at the bottom of every candidate profile (admin only). Textarea + "Save Note" button. Saved notes render as timestamped entries above the input. Multiple notes per session. New `CandidateNotes` component.
 
 ---
 
-## Completed
+## Tier 3 — Development phase
 
+- [ ] **AI-generated development plan**
+  For Hired candidates, generate development goals dynamically from dimension scores via a lookup table in `lib/development.ts`. Each dimension × score band maps to a specific activity. Generates 4–5 goals per candidate (weakest dimensions + one leverage goal). Replaces static seeded `developmentGoals`.
+
+- [ ] **Program analytics page**
+  New `/analytics` route with four recharts panels: pipeline funnel (count + % retained per stage), score distribution by track (grouped bar), time-in-stage averages, and score band breakdown (donut). Linked from sidebar.
+
+- [ ] **Offer acceptance tracking**
+  `offerStatus?: "pending" | "accepted" | "declined"` and `offerDeclineReason?` added to `Candidate` type. Offer-stage profiles show Mark Accepted / Mark Declined controls (admin only). Declined triggers a reason dropdown. Pipeline cards show a status chip; declined cards dim.
+
+---
+
+## Completed — original backlog
+
+- [x] AI screening summary on candidate profiles
+- [x] Feedback report generation (admin-triggered)
+- [x] Pipeline stage advancement
+- [x] Keep Warm communication feed
+- [x] Self-service assessment config page
+- [x] Bulk shortlisting on pipeline
+- [x] Accessibility flag visibility for admin
+- [x] Candidate search and filter on pipeline
 - [x] Lifecycle Journey banner on Dashboard
 - [x] ATS Integrations panel on Dashboard
 - [x] AI candidate chat FAQ widget on Assessment
