@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Candidate } from "@/lib/data/candidates";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -27,4 +28,14 @@ export function stageColor(stage: string): string {
     Hired: "bg-emerald-100 text-emerald-700",
   };
   return map[stage] ?? "bg-slate-100 text-slate-700";
+}
+
+const ASSESSED_PLUS_STAGES = new Set(["Assessed", "Shortlisted", "Interview", "Offer", "Hired"]);
+const FULL_COHORT_SIZE = 142;
+
+export function scorePercentile(score: number, allCandidates: Candidate[]): string {
+  const assessed = allCandidates.filter((c) => ASSESSED_PLUS_STAGES.has(c.stage));
+  const aboveCount = assessed.filter((c) => c.potentialScore > score).length;
+  const percentile = Math.max(1, Math.round((aboveCount / FULL_COHORT_SIZE) * 100));
+  return `Top ${percentile}% of cohort`;
 }
