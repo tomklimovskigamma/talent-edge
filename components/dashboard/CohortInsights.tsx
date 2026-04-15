@@ -20,14 +20,22 @@ export function CohortInsights() {
 
   const trackEntries = (["Finance", "Technology", "People & Culture"] as const)
     .map((t) => ({ track: t, avg: tracks[t] }))
+    .filter((e) => e.avg > 0)
     .sort((a, b) => b.avg - a.avg);
-  const [leader, second, third] = trackEntries;
-  const trackText = `${leader.track} track candidates lead on overall potential score (${leader.avg} avg) vs ${second.track} (${second.avg}) and ${third.track} (${third.avg}).`;
+
+  let trackText: string | null = null;
+  if (trackEntries.length === 3) {
+    const [leader, second, third] = trackEntries;
+    trackText = `${leader.track} track candidates lead on overall potential score (${leader.avg} avg) vs ${second.track} (${second.avg}) and ${third.track} (${third.avg}).`;
+  } else if (trackEntries.length === 2) {
+    const [leader, other] = trackEntries;
+    trackText = `${leader.track} track candidates lead on overall potential score (${leader.avg} avg) vs ${other.track} (${other.avg}).`;
+  }
 
   const bullets: { dotClass: string; text: string }[] = [
     { dotClass: "bg-indigo-500", text: strongestText },
     { dotClass: "bg-violet-500", text: weakestText },
-    { dotClass: "bg-amber-500", text: trackText },
+    ...(trackText ? [{ dotClass: "bg-amber-500", text: trackText }] : []),
   ];
 
   return (
