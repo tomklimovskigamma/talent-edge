@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { Candidate } from "@/lib/data/candidates";
+import type { StageName } from "@/lib/data/program";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -30,7 +31,7 @@ export function stageColor(stage: string): string {
   return map[stage] ?? "bg-slate-100 text-slate-700";
 }
 
-const ASSESSED_PLUS_STAGES = new Set(["Assessed", "Shortlisted", "Interview", "Offer", "Hired"]);
+const ASSESSED_PLUS_STAGES: ReadonlySet<StageName> = new Set<StageName>(["Assessed", "Shortlisted", "Interview", "Offer", "Hired"]);
 const FULL_COHORT_SIZE = 142;
 
 export function scorePercentile(score: number, allCandidates: Candidate[]): string {
