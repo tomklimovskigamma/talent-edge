@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/layout/AppShell";
+import { CohortInsights } from "@/components/dashboard/CohortInsights";
 import { MetricsRow } from "@/components/dashboard/MetricsRow";
 import { LifecycleJourney } from "@/components/dashboard/LifecycleJourney";
 import { PipelineFunnel } from "@/components/dashboard/PipelineFunnel";
@@ -34,6 +35,8 @@ export default function DashboardPage() {
         <LifecycleJourney />
 
         <MetricsRow />
+
+        <CohortInsights />
 
         <div className="grid grid-cols-2 gap-4">
           <PipelineFunnel />
