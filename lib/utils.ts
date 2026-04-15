@@ -41,3 +41,11 @@ export function scorePercentile(score: number, allCandidates: Candidate[]): stri
   const percentile = Math.max(1, Math.round((aboveCount / FULL_COHORT_SIZE) * 100));
   return `Top ${percentile}% of cohort`;
 }
+
+export function scorePercentileLabel(
+  candidate: Candidate,
+  allCandidates: Candidate[]
+): string | null {
+  if (candidate.stage === "Applied") return null;
+  return scorePercentile(candidate.potentialScore, allCandidates);
+}

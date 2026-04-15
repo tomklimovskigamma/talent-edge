@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { scorePercentile } from "@/lib/utils";
+import { scorePercentile, scorePercentileLabel } from "@/lib/utils";
 import type { Candidate } from "@/lib/data/candidates";
 
 const stub = (stage: string, potentialScore: number): Candidate =>
@@ -53,5 +53,17 @@ describe("scorePercentile", () => {
   it("returns Top 1% minimum even for the lowest scorer", () => {
     const single = [stub("Assessed", 80)];
     expect(scorePercentile(80, single)).toBe("Top 1% of cohort");
+  });
+});
+
+describe("scorePercentileLabel", () => {
+  it("returns null for Applied-stage candidates", () => {
+    const applied = stub("Applied", 90);
+    expect(scorePercentileLabel(applied, cohort)).toBeNull();
+  });
+
+  it("returns a Top N% label for Assessed+ candidates", () => {
+    const assessed = stub("Assessed", 85);
+    expect(scorePercentileLabel(assessed, cohort)).toBe("Top 2% of cohort");
   });
 });
