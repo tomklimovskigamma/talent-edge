@@ -28,6 +28,12 @@ export function PipelineBoard() {
 
   useEffect(() => setMounted(true), []);
 
+  // Auto-close the comparison drawer if selection drops below 2
+  // (e.g., after bulk shortlist clears selection, or manual deselection).
+  useEffect(() => {
+    if (selectedIds.size < 2) setCompareOpen(false);
+  }, [selectedIds]);
+
   const filtered = filterCandidates(allCandidates, search, filter);
 
   function handleAdvance(candidateId: string, currentStage: StageName) {
