@@ -9,7 +9,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Candidate comparison panel**
   "Compare selected (N)" button in the pipeline filter bar when 2–3 candidates are checked. Opens a right-side drawer showing candidates side by side: name/score header, grouped bar chart of all five dimension scores, AI summary bullet. Admin only. No new routes — state lives in PipelineBoard. See spec: `docs/superpowers/specs/2026-04-15-feature-depth-backlog-design.md`.
 
-- [ ] **AI cohort insights on dashboard**
+- [x] **AI cohort insights on dashboard**
   A "Cohort Intelligence" card on the dashboard showing 3 computed insight strings: strongest dimension across assessed candidates, weakest dimension, and a track comparison (Finance vs Technology vs People & Culture average potential score). Computed from real candidate data — not copy. New `CohortInsights` component below the metrics row.
 
 - [ ] **Score percentile display**
