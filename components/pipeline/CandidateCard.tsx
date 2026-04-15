@@ -2,9 +2,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Candidate } from "@/lib/data/candidates";
+import { Candidate, candidates as allCandidates } from "@/lib/data/candidates";
 import { type StageName } from "@/lib/data/program";
-import { scoreColor } from "@/lib/utils";
+import { scoreColor, scorePercentileLabel } from "@/lib/utils";
 import { Clock, Send, CalendarPlus, ArrowRight, Accessibility } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
 import { usePersona } from "@/lib/persona";
@@ -36,6 +36,9 @@ export function CandidateCard({
   const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
   const showCheckbox = mounted && persona === "admin" && currentStage === "Assessed" && !!onSelect;
   const showAccessibility = mounted && persona === "admin" && !!candidate.accessibilityNeeds;
+
+  const percentileLabel = scorePercentileLabel(candidate, allCandidates);
+  const showPercentile = mounted && persona === "admin" && percentileLabel !== null;
 
   return (
     <>
@@ -80,9 +83,16 @@ export function CandidateCard({
                     </span>
                   </span>
                 )}
-                <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
-                  {candidate.potentialScore}
-                </span>
+                <div className="flex flex-col items-end gap-0.5">
+                  <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
+                    {candidate.potentialScore}
+                  </span>
+                  {showPercentile && (
+                    <span className="text-[10px] text-slate-400 font-medium leading-tight">
+                      {percentileLabel}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             <p className="text-xs text-slate-500 truncate">{candidate.degree}</p>
