@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { candidates as allCandidates } from "@/lib/data/candidates";
 import { stages, type StageName } from "@/lib/data/program";
 import { getNextStage, filterCandidates, type ScoreBand } from "@/lib/pipeline";
+import { ComparisonDrawer } from "./ComparisonDrawer";
 import { StageColumn } from "./StageColumn";
 import { usePersona } from "@/lib/persona";
-import { CheckSquare, Search, X } from "lucide-react";
+import { CheckSquare, Layers, Search, X } from "lucide-react";
 
 const accentClasses = [
   "border-slate-300",
@@ -22,6 +23,7 @@ export function PipelineBoard() {
   const [stageOverrides, setStageOverrides] = useState<Record<string, StageName>>({});
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [mounted, setMounted] = useState(false);
+  const [compareOpen, setCompareOpen] = useState(false);
   const { persona } = usePersona();
 
   useEffect(() => setMounted(true), []);
@@ -58,6 +60,8 @@ export function PipelineBoard() {
     stageOverrides[candidateId] ?? originalStage;
 
   const showBulkAction = mounted && persona === "admin" && selectedIds.size > 0;
+  const showCompare = showBulkAction && selectedIds.size >= 2 && selectedIds.size <= 3;
+  const selectedCandidates = allCandidates.filter((c) => selectedIds.has(c.id));
 
   return (
     <div className="space-y-3">
@@ -100,6 +104,16 @@ export function PipelineBoard() {
           </button>
         ))}
         <div className="ml-auto flex items-center gap-3">
+          {showCompare && (
+            <button
+              type="button"
+              onClick={() => setCompareOpen(true)}
+              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+            >
+              <Layers size={12} aria-hidden="true" />
+              Compare ({selectedIds.size})
+            </button>
+          )}
           {showBulkAction && (
             <button
               type="button"
@@ -130,6 +144,14 @@ export function PipelineBoard() {
           />
         ))}
       </div>
+
+      {/* Comparison drawer */}
+      {compareOpen && (
+        <ComparisonDrawer
+          candidates={selectedCandidates}
+          onClose={() => setCompareOpen(false)}
+        />
+      )}
     </div>
   );
 }
