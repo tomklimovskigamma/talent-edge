@@ -12,7 +12,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **AI cohort insights on dashboard**
   A "Cohort Intelligence" card on the dashboard showing 3 computed insight strings: strongest dimension across assessed candidates, weakest dimension, and a track comparison (Finance vs Technology vs People & Culture average potential score). Computed from real candidate data — not copy. New `CohortInsights` component below the metrics row.
 
-- [ ] **Score percentile display**
+- [x] **Score percentile display**
   Show "Top 7% of cohort" alongside the raw score on pipeline cards (admin only) and the profile header. Computed by ranking the candidate's score against all assessed+ candidates and mapping onto the 142-candidate cohort from dashboard metrics. New `scorePercentile()` utility in `lib/utils.ts`.
 
 ---
