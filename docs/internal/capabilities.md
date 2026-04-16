@@ -33,7 +33,7 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 | Accessibility accommodations | Candidate self-declares adjustment needs at registration; surfaces to recruiters automatically | ✅ Live |
 | Self-service assessment config | Recruiters edit question language, client branding, and scoring weights without developer involvement | ✅ Live |
 | Score percentile display | Shows "Top X% of cohort" on pipeline cards and candidate profiles | ✅ Live |
-| Video interview capture | Candidates record responses; recruiters and AC assessors review in-platform | 📋 Planned |
+| Video interview capture | Candidates record responses against preset prompts; audio-only AI analysis produces 5-dimension scores; recruiters review in-platform | ✅ Live |
 
 ---
 
@@ -97,10 +97,9 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 
 ## What's next
 
-The original prioritised backlog has shipped end-to-end. The two remaining 📋 items are driven by Dave's positioning input — they close the credibility gap between what Dave pitches and what the demo shows:
+The original prioritised backlog has shipped end-to-end. The remaining 📋 item is driven by Dave's positioning input — it closes the credibility gap between what Dave pitches and what the demo shows:
 
-1. **Video interview capture** — platform-side video capture and playback. The credibility item for sales.
-2. **Assessment Centre scoring tool** — closes the loop between the services team and the platform; AC assessors enter scores that flow into candidate profiles.
+1. **Assessment Centre scoring tool** — closes the loop between the services team and the platform; AC assessors enter scores that flow into candidate profiles.
 
 ---
 

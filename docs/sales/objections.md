@@ -86,9 +86,7 @@ When prospects push back, use this. The goal isn't to "win" the objection — it
 
 **What's really going on:** They're verifying that the platform scope matches what's been promised — they've been burned before by vendors who oversell capabilities.
 
-**You say:** "Our platform captures video interview recordings and our services team facilitates the interviews. Video recording capability in the platform is shipping in our next release — for today's engagements we integrate with Modern Hire or HireVue if you use them, and our people handle the review."
-
-`[ENRICH: update this response once video MVP ships]`
+**You say:** "Yes — our platform captures video interview responses against structured prompts, and our AI analyses the audio to surface competency signals across adaptability, cognitive agility, emotional intelligence, collaboration, and drive. We deliberately don't analyse facial features — there's too much documented bias in that tech and it doesn't fit how we think about potential. The video is there for your team to review; the AI listens to what the candidate says, not how their face looks when they say it."
 
 ---
 

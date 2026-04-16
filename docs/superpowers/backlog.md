@@ -8,7 +8,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 Added after Dave confirmed Talent Edge sells as a platform + services hybrid (same model as Amberjack, differentiated on platform quality and lifecycle coverage). The platform is promised to cover video interviews and Assessment Centre data — these items close the credibility gap.
 
-- [ ] **Video interview capture (MVP)**
+- [x] **Video interview capture (MVP)**
   Candidates record short video responses to preset prompts; recruiters and AC assessors play back and leave structured feedback inside the candidate profile. Scope of MVP to be brainstormed — at minimum: record, store (placeholder or real storage), play back, attach to candidate record. See spec to be written.
 
 - [ ] **Assessment Centre scoring tool**
