@@ -6,15 +6,16 @@ import { Candidate, candidates as allCandidates } from "@/lib/data/candidates";
 import { type StageName } from "@/lib/data/program";
 import { scoreColor, scorePercentileLabel } from "@/lib/utils";
 import { getOfferState, type OfferStatus } from "@/lib/offer";
-import { Clock, Send, CalendarPlus, ArrowRight, Accessibility } from "lucide-react";
+import { Clock, Send, CalendarPlus, ArrowRight, ArrowLeft, Accessibility } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
 import { usePersona } from "@/lib/persona";
-import { getNextStage } from "@/lib/pipeline";
+import { getNextStage, getPreviousStage } from "@/lib/pipeline";
 
 interface CandidateCardProps {
   candidate: Candidate;
   currentStage?: StageName;
   onAdvance?: (candidateId: string, currentStage: StageName) => void;
+  onRevert?: (candidateId: string, currentStage: StageName) => void;
   selected?: boolean;
   onSelect?: (candidateId: string, checked: boolean) => void;
 }
@@ -23,6 +24,7 @@ export function CandidateCard({
   candidate,
   currentStage: currentStageProp,
   onAdvance,
+  onRevert,
   selected = false,
   onSelect,
 }: CandidateCardProps) {
@@ -34,7 +36,9 @@ export function CandidateCard({
 
   const currentStage: StageName = currentStageProp ?? (candidate.stage as StageName);
   const nextStage = getNextStage(currentStage);
+  const previousStage = getPreviousStage(currentStage);
   const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
+  const showRevert = mounted && persona === "admin" && !!onRevert && !!previousStage;
   const SELECTABLE_STAGES: StageName[] = ["Applied", "Assessed", "Shortlisted", "Interview"];
   const showCheckbox = mounted && persona === "admin" && SELECTABLE_STAGES.includes(currentStage) && !!onSelect;
   const showAccessibility = mounted && persona === "admin" && !!candidate.accessibilityNeeds;
@@ -140,6 +144,17 @@ export function CandidateCard({
           >
             <ArrowRight size={10} />
             Advance to {nextStage}
+          </button>
+        )}
+
+        {showRevert && (
+          <button
+            type="button"
+            onClick={() => onRevert?.(candidate.id, currentStage)}
+            className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700 px-1"
+          >
+            <ArrowLeft size={10} />
+            Move back to {previousStage}
           </button>
         )}
       </div>

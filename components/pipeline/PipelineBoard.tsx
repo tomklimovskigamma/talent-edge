@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { candidates as allCandidates } from "@/lib/data/candidates";
 import { stages, type StageName } from "@/lib/data/program";
-import { getNextStage, filterCandidates, type ScoreBand } from "@/lib/pipeline";
+import { getNextStage, getPreviousStage, filterCandidates, type ScoreBand } from "@/lib/pipeline";
 import { ComparisonDrawer } from "./ComparisonDrawer";
 import { StageColumn } from "./StageColumn";
 import { RejectModal } from "./RejectModal";
@@ -43,6 +43,12 @@ export function PipelineBoard() {
     const next = getNextStage(currentStage);
     if (!next) return;
     setStageOverrides((prev) => ({ ...prev, [candidateId]: next }));
+  }
+
+  function handleRevert(candidateId: string, currentStage: StageName) {
+    const prev = getPreviousStage(currentStage);
+    if (!prev) return;
+    setStageOverrides((previous) => ({ ...previous, [candidateId]: prev }));
   }
 
   function handleSelect(candidateId: string, checked: boolean) {
@@ -175,6 +181,7 @@ export function PipelineBoard() {
             )}
             accentClass={accentClasses[i]}
             onAdvance={handleAdvance}
+            onRevert={handleRevert}
             selectedIds={selectedIds}
             onSelect={handleSelect}
           />

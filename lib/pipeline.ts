@@ -17,6 +17,12 @@ export function getNextStage(current: StageName): StageName | null {
   return stageOrder[idx + 1];
 }
 
+export function getPreviousStage(current: StageName): StageName | null {
+  const idx = stageOrder.indexOf(current as (typeof stageOrder)[number]);
+  if (idx <= 0) return null;
+  return stageOrder[idx - 1];
+}
+
 export type ScoreBand = "all" | "high" | "emerging";
 
 export function filterCandidates(
