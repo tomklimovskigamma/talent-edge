@@ -49,6 +49,7 @@ export type VideoInterviewAnalysis = {
   strongestArea: string;
   probeInF2F: string;
   analysedAt: string;
+  transcript?: string;
 };
 
 export type VideoInterviewData = {
