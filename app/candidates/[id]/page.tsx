@@ -1,6 +1,7 @@
 import { candidates } from "@/lib/data/candidates";
 import { AppShell } from "@/components/layout/AppShell";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
+import { OfferStatus } from "@/components/profile/OfferStatus";
 import { PotentialRadar } from "@/components/profile/PotentialRadar";
 import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
@@ -46,6 +47,8 @@ export default async function CandidateProfilePage({
         </div>
 
         <ProfileHeader candidate={candidate} />
+
+        <OfferStatus candidate={candidate} />
 
         <AiScreeningSummary candidate={candidate} />
 
