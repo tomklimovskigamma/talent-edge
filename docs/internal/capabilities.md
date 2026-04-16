@@ -26,7 +26,7 @@
 | AI candidate chat assistant | Answers candidate FAQs during the assessment — duration, what's measured, accessibility, data privacy | ✅ Live |
 | Accessibility accommodations | Candidate self-declares adjustment needs at registration; surfaces to recruiters automatically | ✅ Live |
 | Self-service assessment config | Recruiters edit question language, client branding, and scoring weights without developer involvement | ✅ Live |
-| Score percentile display | Shows "Top X% of cohort" on pipeline cards and candidate profiles | 🔜 Next |
+| Score percentile display | Shows "Top X% of cohort" on pipeline cards and candidate profiles | ✅ Live |
 
 ---
 
@@ -44,9 +44,9 @@
 | Accessibility flag visibility | Candidates who requested accommodations show a badge on their pipeline card and profile | ✅ Live |
 | Pipeline stage advancement | Move any candidate to the next stage with one click | ✅ Live |
 | Self-booking interview scheduling | Candidates pick from available time slots; confirmation sent automatically | ✅ Live |
-| Interview scorecard | Rate interview candidates on Communication, Cultural Fit, Problem Solving, Overall Impression with notes | 📋 Planned |
-| Bulk reject with email preview | Select and reject multiple candidates with an editable email template | 📋 Planned |
-| Candidate notes | Add timestamped notes to any candidate profile | 📋 Planned |
+| Interview scorecard | Rate interview candidates on Communication, Cultural Fit, Problem Solving, Overall Impression with notes | ✅ Live |
+| Bulk reject with email preview | Select and reject multiple candidates with an editable email template | ✅ Live |
+| Candidate notes | Add timestamped notes to any candidate profile | ✅ Live |
 
 ---
 
@@ -54,7 +54,7 @@
 
 | Capability | What it does | Status |
 |---|---|---|
-| Offer acceptance tracking | Track pending/accepted/declined offers with decline reasons | 📋 Planned |
+| Offer acceptance tracking | Track pending/accepted/declined offers with decline reasons | 🔜 Next |
 
 ---
 
@@ -71,8 +71,8 @@
 | Capability | What it does | Status |
 |---|---|---|
 | Development goals | Active goals with status and due dates for hired candidates | ✅ Live |
-| AI-generated development plan | Auto-generate development goals from assessment scores — weakest dimensions get targeted activities | 📋 Planned |
-| Program analytics | Pipeline funnel, score distributions, time-in-stage averages, score band breakdowns | 📋 Planned |
+| AI-generated development plan | Auto-generate development goals from assessment scores — weakest dimensions get targeted activities | ✅ Live |
+| Program analytics | Pipeline funnel, score distributions, time-in-stage averages, score band breakdowns | ✅ Live |
 
 ---
 
@@ -91,13 +91,7 @@
 
 Prioritised list of everything in flight or on the roadmap:
 
-1. Score percentile display (🔜) — "Top X% of cohort" on pipeline cards and profiles
-2. Interview scorecard (📋) — structured rating form for candidates at the interview stage
-3. Bulk reject with email preview (📋) — reject multiple candidates with an editable rejection email
-4. Candidate notes (📋) — timestamped notes on any candidate profile
-5. Offer acceptance tracking (📋) — mark offers accepted or declined with decline reasons
-6. AI-generated development plans (📋) — auto-generate goals for hired candidates from their assessment results
-7. Program analytics page (📋) — funnel, score distribution, time-in-stage, and score band views
+1. Offer acceptance tracking (🔜) — mark offers accepted or declined with decline reasons
 
 ---
 
