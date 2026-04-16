@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Candidate, candidates as allCandidates } from "@/lib/data/candidates";
 import { type StageName } from "@/lib/data/program";
 import { scoreColor, scorePercentileLabel } from "@/lib/utils";
+import { getOfferState, type OfferStatus } from "@/lib/offer";
 import { Clock, Send, CalendarPlus, ArrowRight, Accessibility } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
 import { usePersona } from "@/lib/persona";
@@ -40,6 +41,9 @@ export function CandidateCard({
 
   const percentileLabel = scorePercentileLabel(candidate, allCandidates);
   const showPercentile = mounted && persona === "admin" && percentileLabel !== null;
+  const offerState = currentStage === "Offer" ? getOfferState(candidate.id) : null;
+  const showOfferChip = mounted && persona === "admin" && offerState !== null;
+  const offerDimmed = mounted && persona === "admin" && offerState?.status === "declined";
 
   return (
     <>
@@ -61,7 +65,7 @@ export function CandidateCard({
             selected
               ? "border-indigo-400 bg-indigo-50/30"
               : "border-slate-200 hover:border-indigo-200"
-          }`}>
+          } ${offerDimmed ? "opacity-60" : ""}`}>
             <div className="flex items-start justify-between">
               <div className={`flex items-center gap-2 ${showCheckbox ? "pl-5" : ""}`}>
                 <div className="h-7 w-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700 flex-shrink-0">
@@ -92,6 +96,9 @@ export function CandidateCard({
                     <span className="text-[10px] text-slate-400 font-medium leading-tight">
                       {percentileLabel}
                     </span>
+                  )}
+                  {showOfferChip && offerState && (
+                    <OfferChip status={offerState.status} />
                   )}
                 </div>
               </div>
@@ -144,5 +151,19 @@ export function CandidateCard({
         />
       )}
     </>
+  );
+}
+
+function OfferChip({ status }: { status: OfferStatus }) {
+  const config: Record<OfferStatus, { label: string; className: string }> = {
+    pending: { label: "Pending", className: "bg-amber-100 text-amber-800" },
+    accepted: { label: "Accepted", className: "bg-emerald-100 text-emerald-800" },
+    declined: { label: "Declined", className: "bg-rose-100 text-rose-800" },
+  };
+  const { label, className } = config[status];
+  return (
+    <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${className}`}>
+      {label}
+    </span>
   );
 }
