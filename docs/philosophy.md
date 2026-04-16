@@ -1,5 +1,17 @@
 # Product Philosophy
 
+## What Talent Edge is
+
+Talent Edge is a full-service graduate recruitment and development partner. We run your program end-to-end — from the first application through to the first-year talent review — powered by a modern platform built specifically for early careers.
+
+**What our platform handles:** applications, psychometric testing, video interviews, pipeline management, AI screening, reporting, Keep Warm communications, Assessment Centre data capture, and development tracking. Assessment configuration is self-service inside the engagement — clients change wording, branding, and scoring weights without a change request.
+
+**What our people deliver:** Assessment Centre design and delivery, face-to-face interview facilitation, and early careers advisory.
+
+Most of the graduate market doesn't have the in-house capability to run early careers well. They need a partner who brings both the expertise and the system. Our platform is the difference between a partner who runs your program on spreadsheets and phone calls, and one who runs it on modern infrastructure that the early careers industry has been missing.
+
+---
+
 ## Assess for potential, not for privilege
 
 The graduate recruitment industry has a problem it rarely names out loud: traditional assessment processes systematically favour candidates who have already been advantaged.
@@ -45,7 +57,7 @@ Talent Edge is built around the complete graduate journey:
 Attract → Assess → Select → Offer → Keep Warm → Onboard → Develop → Track Talent
 ```
 
-The first four stages are Recruitment. The last four are Development. Most tools handle one half or the other. Talent Edge connects them — because the insight you build about a candidate during assessment should inform how you develop them once they're hired.
+The first four stages are Recruitment. The last four are Development. Most providers handle one half or the other — and most platforms stop at Select. Talent Edge runs both halves, and the platform carries data across the whole journey. The insight you build about a candidate during assessment should inform how you develop them once they're hired.
 
 A candidate who scores high on Cognitive Agility but low on Collaboration needs a different development plan than one who's the inverse. That signal exists at assessment time. It shouldn't disappear the moment the offer is accepted.
 
