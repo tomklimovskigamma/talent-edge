@@ -12,6 +12,7 @@ const accentClasses = [
   "border-slate-300",
   "border-blue-400",
   "border-violet-400",
+  "border-cyan-400",
   "border-amber-400",
   "border-orange-400",
   "border-emerald-400",
