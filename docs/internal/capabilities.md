@@ -54,7 +54,7 @@
 
 | Capability | What it does | Status |
 |---|---|---|
-| Offer acceptance tracking | Track pending/accepted/declined offers with decline reasons | 🔜 Next |
+| Offer acceptance tracking | Track pending/accepted/declined offers with decline reasons | ✅ Live |
 
 ---
 
@@ -89,9 +89,7 @@
 
 ## What's next
 
-Prioritised list of everything in flight or on the roadmap:
-
-1. Offer acceptance tracking (🔜) — mark offers accepted or declined with decline reasons
+All items from the prioritised backlog are live. Next features will be added as they're identified.
 
 ---
 

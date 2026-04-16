@@ -38,7 +38,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Program analytics page**
   New `/analytics` route with four recharts panels: pipeline funnel (count + % retained per stage), score distribution by track (grouped bar), time-in-stage averages, and score band breakdown (donut). Linked from sidebar.
 
-- [ ] **Offer acceptance tracking**
+- [x] **Offer acceptance tracking**
   `offerStatus?: "pending" | "accepted" | "declined"` and `offerDeclineReason?` added to `Candidate` type. Offer-stage profiles show Mark Accepted / Mark Declined controls (admin only). Declined triggers a reason dropdown. Pipeline cards show a status chip; declined cards dim.
 
 ---
