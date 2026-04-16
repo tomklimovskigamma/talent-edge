@@ -23,6 +23,8 @@ These are the questions you ask in a first meeting. They do two things: qualify 
 | What do you use for psychometric assessment? | Identifies incumbent | Amberjack, Revelian, SHL, Aon (we replace) | "No psychometrics" (education sale) |
 | How many separate systems from application to day one? | Quantifies fragmentation | "At least 4 or 5" (strong pain) | "Just our ATS" (less pain) |
 | Who manages the tech — your team or a vendor? | Self-service appetite | "We rely on Amberjack to configure everything" (self-service resonates) | "Our IT team handles it" (different buyer) |
+| Do you run Assessment Centres, and how do you handle AC scoring today? | Probes whether we're replacing a provider for ACs, or adding a capability they don't have. Gauges AC scoring pain. | "We run ACs but the scoring is on paper and takes a week to collate" (opens our AC data capture story) | "We don't do ACs" (either too small a program, or our managed service can introduce them) |
+| Do you use video interviews today? If so, which platform? | Probes video scope. Video is on our roadmap — we need to know if they have an existing provider to integrate with or replace. | "We use Modern Hire / Hirevue / Spark Hire" (integration conversation) | "We don't use video" (may be opportunity to add it, or irrelevant if small program) |
 
 ---
 
@@ -44,6 +46,7 @@ These are the questions you ask in a first meeting. They do two things: qualify 
 | When does your next intake cycle start? | Timing/urgency | "In 6 months, planning now" | "Just finished this year's" (12-month cycle, park) |
 | Who else is involved in this decision? | Maps buying committee | Names 1–2 people | "Global procurement in London" (long sale) |
 | Are you mid-contract with your current assessment provider? | Switching barriers | "Up for renewal in 3 months" (trigger!) | "Just signed 3-year deal" (park, note renewal) |
+| Are you currently running your program in-house or with a managed service partner? | Positions us as a managed service alternative, not a tool. Identifies Amberjack incumbency or DIY situations. | "With a partner but they're not great" or "In-house and it's overwhelming" | "In-house and it works fine" (harder sale) |
 
 ---
 
