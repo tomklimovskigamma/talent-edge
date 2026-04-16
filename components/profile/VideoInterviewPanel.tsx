@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Video, Play, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Video, Play, Sparkles, FileText, X, Download } from "lucide-react";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
 } from "recharts";
@@ -86,6 +86,8 @@ function AnalysisBlock({
 }: {
   analysis: NonNullable<VideoInterviewData["analysis"]>;
 }) {
+  const [showTranscript, setShowTranscript] = useState(false);
+
   const chartData = (Object.keys(analysis.competencyScores) as Array<keyof PotentialDimensions>).map(
     (key) => ({
       subject: dimensionLabels[key],
@@ -94,53 +96,148 @@ function AnalysisBlock({
     })
   );
 
+  function downloadTranscript() {
+    if (!analysis.transcript) return;
+    const blob = new Blob([analysis.transcript], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "interview-transcript.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
-    <div className="border rounded-lg p-4 bg-slate-50 space-y-4">
-      <div className="flex items-center gap-2">
-        <Sparkles size={13} className="text-indigo-500" aria-hidden="true" />
-        <p className="text-xs font-semibold text-slate-700">Audio-only AI Analysis</p>
-        <span className="text-[10px] text-slate-400 ml-auto">
-          Transcript-based — no facial analysis
-        </span>
+    <>
+      <div className="border rounded-lg p-4 bg-slate-50 space-y-4">
+        <div className="flex items-center gap-2">
+          <Sparkles size={13} className="text-indigo-500" aria-hidden="true" />
+          <p className="text-xs font-semibold text-slate-700">Audio-only AI Analysis</p>
+          <span className="text-[10px] text-slate-400 ml-auto">
+            Transcript-based — no facial analysis
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ResponsiveContainer width="100%" height={200}>
+            <RadarChart data={chartData}>
+              <PolarGrid stroke="#E2E8F0" />
+              <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: "#64748B" }} />
+              <Radar
+                name="Score"
+                dataKey="score"
+                stroke="#0EA5E9"
+                fill="#0EA5E9"
+                fillOpacity={0.2}
+                strokeWidth={2}
+              />
+              <Tooltip
+                contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
+                formatter={(value) => [`${value}/100`, "Score"]}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+
+          <div className="space-y-3 text-sm">
+            <div>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Summary</p>
+              <p className="text-sm text-slate-700 leading-relaxed mt-1">{analysis.summary}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                Strongest signal
+              </p>
+              <p className="text-sm text-slate-700 mt-1">{analysis.strongestArea}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                Probe in F2F
+              </p>
+              <p className="text-sm text-slate-700 mt-1">{analysis.probeInF2F}</p>
+            </div>
+          </div>
+        </div>
+
+        {analysis.transcript && (
+          <div className="pt-1 border-t border-slate-200">
+            <button
+              onClick={() => setShowTranscript(true)}
+              className="flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+            >
+              <FileText size={12} aria-hidden="true" />
+              View transcript
+            </button>
+          </div>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ResponsiveContainer width="100%" height={200}>
-          <RadarChart data={chartData}>
-            <PolarGrid stroke="#E2E8F0" />
-            <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: "#64748B" }} />
-            <Radar
-              name="Score"
-              dataKey="score"
-              stroke="#0EA5E9"
-              fill="#0EA5E9"
-              fillOpacity={0.2}
-              strokeWidth={2}
-            />
-            <Tooltip
-              contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #E2E8F0" }}
-              formatter={(value) => [`${value}/100`, "Score"]}
-            />
-          </RadarChart>
-        </ResponsiveContainer>
+      {showTranscript && analysis.transcript && (
+        <TranscriptModal
+          transcript={analysis.transcript}
+          onClose={() => setShowTranscript(false)}
+          onDownload={downloadTranscript}
+        />
+      )}
+    </>
+  );
+}
 
-        <div className="space-y-3 text-sm">
-          <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Summary</p>
-            <p className="text-sm text-slate-700 leading-relaxed mt-1">{analysis.summary}</p>
+function TranscriptModal({
+  transcript,
+  onClose,
+  onDownload,
+}: {
+  transcript: string;
+  onClose: () => void;
+  onDownload: () => void;
+}) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b">
+          <div className="flex items-center gap-2">
+            <FileText size={15} className="text-indigo-500" aria-hidden="true" />
+            <h2 className="text-sm font-semibold text-slate-700">Interview Transcript</h2>
           </div>
-          <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-              Strongest signal
-            </p>
-            <p className="text-sm text-slate-700 mt-1">{analysis.strongestArea}</p>
-          </div>
-          <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-              Probe in F2F
-            </p>
-            <p className="text-sm text-slate-700 mt-1">{analysis.probeInF2F}</p>
-          </div>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600 transition-colors"
+            aria-label="Close transcript"
+          >
+            <X size={16} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-5 py-4">
+          <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{transcript}</p>
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between px-5 py-3 border-t bg-slate-50 rounded-b-xl">
+          <p className="text-xs text-slate-400">
+            {transcript.split(/\s+/).filter(Boolean).length} words
+          </p>
+          <button
+            onClick={onDownload}
+            className="flex items-center gap-1.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-md transition-colors"
+          >
+            <Download size={12} aria-hidden="true" />
+            Download .txt
+          </button>
         </div>
       </div>
     </div>
