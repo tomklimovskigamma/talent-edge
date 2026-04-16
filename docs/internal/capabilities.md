@@ -7,6 +7,12 @@
 
 ---
 
+## How we deliver
+
+Talent Edge is a full-service graduate recruitment partner. Our platform handles the parts that benefit from software. Our people deliver Assessment Centres, F2F interviews, and advisory. This page describes what the platform does.
+
+---
+
 ## Attract
 
 | Capability | What it does | Status |
@@ -27,6 +33,7 @@
 | Accessibility accommodations | Candidate self-declares adjustment needs at registration; surfaces to recruiters automatically | ✅ Live |
 | Self-service assessment config | Recruiters edit question language, client branding, and scoring weights without developer involvement | ✅ Live |
 | Score percentile display | Shows "Top X% of cohort" on pipeline cards and candidate profiles | ✅ Live |
+| Video interview capture | Candidates record responses; recruiters and AC assessors review in-platform | 📋 Planned |
 
 ---
 
@@ -47,6 +54,7 @@
 | Interview scorecard | Rate interview candidates on Communication, Cultural Fit, Problem Solving, Overall Impression with notes | ✅ Live |
 | Bulk reject with email preview | Select and reject multiple candidates with an editable email template | ✅ Live |
 | Candidate notes | Add timestamped notes to any candidate profile | ✅ Live |
+| Assessment Centre scoring tool | AC assessors enter structured scores via a form; scores flow into the candidate profile alongside psych data | 📋 Planned |
 
 ---
 
@@ -89,7 +97,21 @@
 
 ## What's next
 
-All items from the prioritised backlog are live. Next features will be added as they're identified.
+The original prioritised backlog has shipped end-to-end. The two remaining 📋 items are driven by Dave's positioning input — they close the credibility gap between what Dave pitches and what the demo shows:
+
+1. **Video interview capture** — platform-side video capture and playback. The credibility item for sales.
+2. **Assessment Centre scoring tool** — closes the loop between the services team and the platform; AC assessors enter scores that flow into candidate profiles.
+
+---
+
+## What the services team delivers
+
+The following are delivered by our people, not the platform:
+
+- Assessment Centre design and delivery (face-to-face)
+- F2F interview facilitation
+- Early careers advisory
+- Client-side training and support
 
 ---
 

@@ -10,11 +10,11 @@ Three versions. Read them out loud before using them.
 
 ---
 
-"Most graduate recruitment tools cover selection and stop. The assessment data disappears the moment the offer is accepted. Meanwhile, program managers are stitching together four or five disconnected systems just to run a single intake.
+"Most companies don't have the in-house expertise to run early careers well. They need a partner. Talent Edge is that partner — we run the program end to end, from the first application through to the first-year talent review, on a modern platform built specifically for the job.
 
-Talent Edge is a graduate recruitment and development platform that covers the entire journey — from the first application through to the first-year talent review — in one connected product.
+Everything in one place — applications, assessments, video interviews, the pipeline, offers, keeping candidates warm between offer and start date, onboarding, development. Our people design and run the Assessment Centres, facilitate the interviews, and bring the early careers advisory. The platform does the rest.
 
-And the thing I'm most proud of: we assess candidates for their potential, not their polish. The student who worked 30 hours a week through uni shouldn't lose to the one who had a gap year in Europe. Our platform is built around that idea."
+And the thing I'm most proud of: we assess candidates for their potential, not their polish. The student who worked 30 hours a week through uni shouldn't lose to the one who had a gap year in Europe. That's the philosophy behind everything we've built."
 
 ---
 
@@ -30,23 +30,25 @@ Right now, a typical graduate program runs on four or five separate tools. There
 
 The result? Program managers spend an entire day just to generate an initial shortlist. Manual screening, manual data transfer, manual everything. And the insight they built about candidates during assessment — the scores, the dimensions, what each person is actually good at — that all disappears the moment the offer goes out. The development team never sees it.
 
-The industry has focused on Attract and Select for decades. Everything after the offer letter is an afterthought.
+Here's the thing: 90% of the graduate market doesn't have the in-house IP to run this themselves. They need a partner — the question is who, and what platform is underneath.
 
 **What Talent Edge does**
 
-We cover the full lifecycle — eight stages, from Attract through to Track Talent — in one product. No integration tax. No data disappearing between systems.
+We're a full-service graduate recruitment and development partner. We run the program end to end — powered by a modern platform built specifically for early careers.
 
-The assessment is AI-powered, measures five validated dimensions of potential, and the scoring carries through into development planning after hire. The platform is self-service, so program managers can configure questions, branding, and scoring weights themselves — no developer involvement, no change request to a vendor.
+The platform covers applications, psychometric testing, video interviews, the pipeline, AI screening, reporting, Keep Warm communications, Assessment Centre data capture, and development tracking. Assessment configuration is self-service inside the engagement — your team changes wording, branding, and scoring weights without raising a change request.
 
-Candidate engagement is automated from assessment through to onboarding. Candidates get what they need. Program managers stop fielding the same questions 200 times.
+Our people design and deliver the Assessment Centres, facilitate face-to-face interviews, and bring the early careers advisory. That's the full picture — platform and people, together.
+
+The assessment measures five validated dimensions of potential. And because it's measuring potential rather than polish, it levels the playing field for candidates who haven't had the same starting point.
 
 **Why it's different**
 
-Against Amberjack: they're bespoke and managed-service only. Every change costs money and takes time. We're self-service, full lifecycle, and built with equity at the centre.
+Against Amberjack: same delivery model — managed service, platform and people. But we cover the full lifecycle, not just selection. And inside our engagement, your team controls assessment config without a change request or an invoice for it.
 
-Against Grad-Engage: they do one thing — keep candidates warm between offer and start date. We do that too, as part of a connected platform that handles everything else as well.
+Against Grad-Engage: they do one thing — keep candidates warm between offer and start date. We do that too, as a connected lifecycle stage, alongside everything else.
 
-Against building it yourself with five tools: one platform, one place, one source of truth. The assessment data informs the development plan. That connection is the whole point.
+Against building it yourself with five tools: most teams don't have the in-house IP to do this well anyway. We bring both the expertise and the system. Assessment data informs the development plan. That connection is the whole point.
 
 ---
 
@@ -82,11 +84,9 @@ In Talent Edge, the attraction stage is part of the platform. Candidates land on
 
 ### Stage 2 — Assess
 
-Your assessment is probably run by a third-party platform. And every time you want to change anything — the wording of a question, the competency labels in a report, the way the scoring is weighted — you raise a ticket and wait.
+Your assessment is probably run by a third-party platform. And every time you want to change anything — the wording of a question, the competency labels in a report, the way the scoring is weighted — you raise a ticket and wait. If you're with a managed service provider, that change might come with an invoice attached.
 
-If you're with Amberjack, the cheap option is a logo slapped on a generic test. The expensive option is a fully custom build. There's nothing in between.
-
-We built self-service configuration into the core of the platform. Program managers edit questions, adjust branding, change scoring weights themselves, without involving us. No tickets. No waiting. No invoices for a change that took ten minutes.
+Inside a Talent Edge engagement, your team controls assessment config directly. Change the wording, swap the branding, adjust scoring weights — no change request, no bill. We run the program end to end, but you stay in the driver's seat on the things that should move fast.
 
 The assessment itself measures five dimensions: Adaptability, Cognitive Agility, Emotional Intelligence, Collaboration, and Drive. Scenario-based questions, Likert scales, forced choice, cognitive tasks. Validated methodology. And because it's measuring potential, not performance history, it levels the playing field for candidates who haven't had the same starting point.
 
@@ -110,11 +110,11 @@ And candidates who declared accessibility needs at registration? They're flagged
 
 You make the offers. Then nothing. The candidate accepts, gets a confirmation email, and then doesn't hear from you for three months. That's where you lose them. They accept another offer. They go cold. They show up on day one with half their enthusiasm already gone.
 
-There's a whole product in the market — Grad-Engage — that exists solely to solve this problem. It gets traction because nothing else does it properly.
+That's where Grad-Engage is eating the market — a whole product that exists solely to solve this one problem, because nothing else does it properly.
 
 Keep Warm in Talent Edge is a first-class lifecycle stage. Automated touchpoints between offer acceptance and start date. A welcome video. A countdown to their start date. An onboarding checklist. All automated, all tracked, all visible to the program manager in one place.
 
-You don't need a separate tool for this. It's part of the platform.
+You don't need a separate tool for this. It's part of what we run for you.
 
 ---
 
@@ -132,8 +132,8 @@ Development goals, progress tracking, manager visibility — it's all there. And
 
 ### Close
 
-That's the full picture. One platform, eight stages, no integration tax.
+That's the full picture. One platform, eight stages, no integration tax. Our people run it end to end — Assessment Centres, interviews, advisory — and the platform carries the data through the whole lifecycle.
 
-The philosophy — assess for potential, not privilege — runs through everything. The self-service configuration means your team isn't waiting on us every time something needs to change. And the connection from assessment to development is the thing nobody else has built.
+The philosophy — assess for potential, not privilege — runs through everything. Your team controls assessment config inside the engagement without waiting on us. And the connection from assessment to development is the thing nobody else has built.
 
 Want to see it? I can show you what this looks like in fifteen minutes.

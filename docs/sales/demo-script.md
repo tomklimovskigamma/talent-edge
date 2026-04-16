@@ -118,15 +118,35 @@ Now she clicks Compare. Side by side: their dimension scores on a grouped bar ch
 
 **You say:** "Now here's the one I most enjoy showing people. Navigate to Settings, then Assessment Config.
 
-This is the page that would cost you a bespoke engagement with Amberjack. Your team changes the competency labels themselves — you want to call it 'Strategic Thinking' instead of 'Cognitive Agility', you do it here. Different wording for Finance versus Technology track — done here. Logo, brand colour, header text — here. Scoring weights per track — here.
+This is the page that would cost you a bespoke engagement with Amberjack. Inside our managed engagement, your team controls this config without ever raising a change request. You want to call it 'Strategic Thinking' instead of 'Cognitive Agility' — you do it here. Different wording for Finance versus Technology track — done here. Logo, brand colour, header text — here. Scoring weights per track — here.
 
-No change request. No waiting two weeks. No invoice for a change that took ten minutes. Your program manager does it herself on a Tuesday afternoon."
+No change request. No waiting two weeks. No invoice for a change that took ten minutes. Your program manager does it herself on a Tuesday afternoon — your team stays in the driver's seat inside the engagement, without the vendor bottleneck."
 
-**The point:** Self-service configuration is the clearest differentiator against Amberjack. This is the screen that makes the contrast concrete. Don't rush past it.
+**The point:** Config control inside a managed engagement is the clearest differentiator against Amberjack. With Amberjack, every change goes through a bespoke request and a bill. With us, the same managed service gives your team direct control. Don't rush past this screen.
 
 **If they ask:**
 - "Can we use our own competency framework entirely?" — "Yes — you type your labels right here. The underlying psychometric model stays the same, but everything the candidate and recruiter sees uses your language."
 - "What about changing the actual questions?" — "Question wording is editable. Adding entirely new questions is a deeper change — we'd work with you on that."
+
+---
+
+### Closing the loop: video and assessment centres
+
+**This is not a separate slide — weave this into the demo naturally before you close.** It's how Dave stays ahead of questions that would otherwise land as gaps.
+
+**On video interviews:**
+
+"Our platform covers application, psychometric testing, and video interview capture. Video is on our next release — for now, we integrate with existing video tools if you use Modern Hire or HireVue, and our services team handles the initial screening conversations. So the workflow is already there — it just moves through the integration point until the native capability ships."
+
+**On Assessment Centres:**
+
+"ACs are where human judgment matters most. Our people design and run the AC face-to-face — that's part of what you get in the managed engagement. The platform captures the scores from AC assessors back into the candidate profile — so your psych data, AC ratings, and interview feedback all live in one place. That's how you end up with a complete picture for the offer decision. One profile, full picture, no spreadsheet in the middle."
+
+**The point:** Be the one who names the gaps before they ask. Prospects trust a partner who's honest about where the roadmap sits over one who gets caught out.
+
+**If they ask:**
+- "When does native video land?" — "It's the headline item on our next release. I don't want to give you a date I can't stand behind, but it's not far out."
+- "So the AC data actually comes back into the system?" — "Yes — AC assessor scores feed directly into the candidate profile alongside the psych data. So when you're making the offer decision, you're looking at one complete record."
 
 ---
 
@@ -192,14 +212,16 @@ This is a small thing but it meaningfully reduces the volume of candidate querie
 
 After Path 1 (and Path 2 if you ran it), close with this:
 
-"That's the product today — everything I showed you is live. And here's what's coming next."
+"What you've seen is the platform. But Talent Edge isn't a software sale — it's a managed engagement. Our services team runs the face-to-face work: Assessment Centre design and delivery, interview facilitation, and early careers advisory. The platform is what makes the managed service better than anything else in the market — modern infrastructure, live data, AI screening, full lifecycle coverage. You get the partner and the system."
 
-Then walk through the top items from the roadmap:
+Then move to what's coming next:
+
+"Here's what's on the roadmap. The headline item: video interview capability built natively into the platform. Right now we integrate with Modern Hire and HireVue — the next release brings it home. And alongside that:
 
 1. Score percentile display — "Top X% of cohort" on every pipeline card and profile, so Sarah can see at a glance how each candidate ranks against the cohort.
 2. Interview scorecard — structured rating form for candidates at interview stage. Communication, Cultural Fit, Problem Solving — consistent scoring across every interviewer.
 3. Bulk reject with email preview — select the candidates you're not progressing, edit the rejection email, send them all at once. One action instead of 200 individual emails.
-4. AI-generated development plans — when a candidate is hired, the system auto-generates their development goals from their assessment results. Weakest dimension gets a targeted activity plan. The data from screening finally informs what happens after hire.
+4. AI-generated development plans — when a candidate is hired, the system auto-generates their development goals from their assessment results. Weakest dimension gets a targeted activity plan. The data from screening finally informs what happens after hire."
 
 "The assessment insight you built during selection doesn't disappear when someone signs the offer. That's the thing no one else has built. And that's where we're going."
 
@@ -223,7 +245,9 @@ The following screens exist in the product but are not part of the primary demo 
 
 See `docs/sales/objections.md` for full handling. Quick reference for what comes up mid-demo:
 
-- **"We already use Amberjack"** — "Amberjack is solid for assessment delivery. Where we're different: self-service config, and the lifecycle doesn't stop at selection."
+- **"We already use Amberjack"** — "Amberjack is a strong managed service — same delivery model as us. The question is which platform you want underneath the engagement. Ours covers more of the lifecycle, assessment config moves without a change request, and the screening intelligence is built in."
 - **"We just renewed our ATS"** — "We're not replacing your ATS — we integrate with it. PageUp and Workday are already shown as connected on the dashboard."
 - **"Psychometrics don't predict performance"** — "You're right that traditional behavioural assessments often don't. We're not measuring performance history — we're measuring potential. Different question, different answer."
 - **"This looks early-stage"** — "You're right that we're early. What you're seeing is a working product, not a slide deck. Early partners shape what we build next."
+- **"Do you offer Assessment Centres?"** — "Yes, we run them face-to-face. Assessment Centre design and delivery is part of the managed engagement — our people run the day. The platform captures the assessor scores back into the candidate profile so the data lives alongside the psych results and interview feedback."
+- **"Do you do video interviews?"** — "Platform captures the video, our people review it. Native video recording in the platform ships on our next release — for today's integrations we use Modern Hire or HireVue. The workflow is already there."

@@ -4,6 +4,18 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 ---
 
+## Tier 0 — Sales demo readiness (Dave demos week of 11 May 2026)
+
+Added after Dave confirmed Talent Edge sells as a platform + services hybrid (same model as Amberjack, differentiated on platform quality and lifecycle coverage). The platform is promised to cover video interviews and Assessment Centre data — these items close the credibility gap.
+
+- [ ] **Video interview capture (MVP)**
+  Candidates record short video responses to preset prompts; recruiters and AC assessors play back and leave structured feedback inside the candidate profile. Scope of MVP to be brainstormed — at minimum: record, store (placeholder or real storage), play back, attach to candidate record. See spec to be written.
+
+- [ ] **Assessment Centre scoring tool**
+  Assessor-facing form for face-to-face Assessment Centre days. Structured scoring across criteria we define (to be specced with Paula's AC expertise), freeform observation notes, multi-assessor support, writes scores into the candidate profile alongside psychometric data. Displays AC scores + psych scores side-by-side on the profile.
+
+---
+
 ## Tier 1 — Decision intelligence
 
 - [x] **Candidate comparison panel**
