@@ -1,15 +1,15 @@
 import type { NextRequest } from "next/server";
 
 // Server-side endpoint for real video analysis.
-// Accepts multipart/form-data with a video Blob; transcribes with Whisper;
+// Accepts multipart/form-data with a video Blob; transcribes with Groq Whisper (free tier);
 // runs competency analysis with Claude; returns structured JSON.
 // Only called when NEXT_PUBLIC_VIDEO_ANALYSIS_MODE=real and keys are set.
 
 export async function POST(req: NextRequest) {
-  const OPENAI_KEY = process.env.OPENAI_API_KEY;
+  const GROQ_KEY = process.env.GROQ_API_KEY;
   const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
 
-  if (!OPENAI_KEY || !ANTHROPIC_KEY) {
+  if (!GROQ_KEY || !ANTHROPIC_KEY) {
     return Response.json(
       { error: "Analysis API keys not configured." },
       { status: 500 }
@@ -23,19 +23,19 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: "Missing video or candidateId." }, { status: 400 });
   }
 
-  // Step A: Whisper transcription
+  // Step A: Groq Whisper transcription (whisper-large-v3, free tier)
   const whisperBody = new FormData();
   whisperBody.append("file", videoFile);
-  whisperBody.append("model", "whisper-1");
+  whisperBody.append("model", "whisper-large-v3");
   whisperBody.append("response_format", "text");
 
-  const whisperRes = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+  const whisperRes = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
     method: "POST",
-    headers: { Authorization: `Bearer ${OPENAI_KEY}` },
+    headers: { Authorization: `Bearer ${GROQ_KEY}` },
     body: whisperBody,
   });
   if (!whisperRes.ok) {
-    return Response.json({ error: "Whisper transcription failed." }, { status: 502 });
+    return Response.json({ error: "Groq Whisper transcription failed." }, { status: 502 });
   }
   const transcript = await whisperRes.text();
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-5",
+      model: "claude-sonnet-4-6",
       max_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
     }),
