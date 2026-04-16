@@ -62,3 +62,40 @@ export function runMockAnalysis(candidateId: string): VideoInterviewAnalysis {
     analysedAt: new Date().toISOString(),
   };
 }
+
+export type AnalysisMode = "mock" | "real";
+
+export function getAnalysisMode(): AnalysisMode {
+  // Client-safe env var only — NEXT_PUBLIC_*.
+  if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_VIDEO_ANALYSIS_MODE === "real") {
+    return "real";
+  }
+  return "mock";
+}
+
+export async function runRealAnalysis(
+  candidateId: string,
+  videoBlob: Blob
+): Promise<VideoInterviewAnalysis> {
+  const form = new FormData();
+  form.append("video", videoBlob, "interview.webm");
+  form.append("candidateId", candidateId);
+  const res = await fetch("/api/video-analysis", { method: "POST", body: form });
+  if (!res.ok) throw new Error("Video analysis request failed");
+  return (await res.json()) as VideoInterviewAnalysis;
+}
+
+export async function runAnalysis(
+  candidateId: string,
+  videoBlob?: Blob
+): Promise<VideoInterviewAnalysis> {
+  if (getAnalysisMode() === "real" && videoBlob) {
+    try {
+      return await runRealAnalysis(candidateId, videoBlob);
+    } catch (err) {
+      console.warn("Real analysis failed; falling back to mock.", err);
+      return runMockAnalysis(candidateId);
+    }
+  }
+  return runMockAnalysis(candidateId);
+}
