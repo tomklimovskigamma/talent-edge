@@ -1,21 +1,51 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Video, Play, Sparkles, FileText, X, Download } from "lucide-react";
+import { Video, Play, Sparkles, FileText, X, Download, RefreshCw } from "lucide-react";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Candidate, VideoInterviewData, PotentialDimensions } from "@/lib/data/candidates";
+import type { Candidate, VideoInterviewData, VideoInterviewAnalysis, PotentialDimensions } from "@/lib/data/candidates";
 import { dimensionLabels } from "@/lib/data/candidates";
 import { getPromptById } from "@/lib/data/video-prompts";
 import { getSessionVideoInterview } from "@/lib/video/storage";
+import { getAnalysisMode } from "@/lib/video-analysis";
 
 export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
   const seededData = candidate.videoInterview;
   const sessionData = typeof window !== "undefined" ? getSessionVideoInterview(candidate.id) : undefined;
   const data = sessionData ?? seededData;
+
+  const [liveAnalysis, setLiveAnalysis] = useState<VideoInterviewAnalysis | null>(null);
+  const [analysing, setAnalysing] = useState(false);
+  const [analyseError, setAnalyseError] = useState<string | null>(null);
+
+  const isRealMode = getAnalysisMode() === "real";
+
+  async function runLiveAnalysis() {
+    if (!data?.responses[0]?.videoUrl) return;
+    setAnalysing(true);
+    setAnalyseError(null);
+    try {
+      const videoRes = await fetch(data.responses[0].videoUrl);
+      const blob = await videoRes.blob();
+      const form = new FormData();
+      form.append("video", blob, "interview.webm");
+      form.append("candidateId", candidate.id);
+      const res = await fetch("/api/video-analysis", { method: "POST", body: form });
+      if (!res.ok) throw new Error(await res.text());
+      setLiveAnalysis((await res.json()) as VideoInterviewAnalysis);
+    } catch (err) {
+      setAnalyseError(err instanceof Error ? err.message : "Analysis failed.");
+    } finally {
+      setAnalysing(false);
+    }
+  }
+
   if (!data) return null;
+
+  const displayAnalysis = liveAnalysis ?? data.analysis;
 
   return (
     <Card className="border shadow-sm">
@@ -23,16 +53,31 @@ export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
         <div className="flex items-center gap-2">
           <Video size={15} className="text-indigo-500" aria-hidden="true" />
           <CardTitle className="text-sm font-semibold text-slate-700">Video Interview</CardTitle>
-          {data.completedAt && (
-            <span className="text-xs text-slate-400 ml-auto">
-              Completed {new Date(data.completedAt).toLocaleDateString()}
-            </span>
-          )}
+          <div className="ml-auto flex items-center gap-3">
+            {isRealMode && (
+              <button
+                onClick={() => void runLiveAnalysis()}
+                disabled={analysing}
+                className="flex items-center gap-1 text-[11px] text-indigo-500 hover:text-indigo-700 font-medium transition-colors disabled:opacity-50"
+              >
+                <RefreshCw size={11} className={analysing ? "animate-spin" : ""} aria-hidden="true" />
+                {analysing ? "Analysing…" : liveAnalysis ? "Re-analyse" : "Analyse with Groq"}
+              </button>
+            )}
+            {data.completedAt && (
+              <span className="text-xs text-slate-400">
+                Completed {new Date(data.completedAt).toLocaleDateString()}
+              </span>
+            )}
+          </div>
         </div>
+        {analyseError && (
+          <p className="text-xs text-rose-500 mt-1">{analyseError}</p>
+        )}
       </CardHeader>
       <CardContent className="space-y-5">
         <ResponsesRow data={data} />
-        {data.analysis && <AnalysisBlock analysis={data.analysis} />}
+        {displayAnalysis && <AnalysisBlock analysis={displayAnalysis} />}
       </CardContent>
     </Card>
   );
