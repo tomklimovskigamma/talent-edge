@@ -3,7 +3,7 @@ name: Sync Docs to Confluence
 on:
   push:
     branches: [ main ]
-    paths: [ 'docs/*.md' ]
+    paths: [ 'docs/*.md', 'docs/sales/*.md', 'docs/internal/*.md', 'README.md' ]
   workflow_dispatch:
     inputs:
       files-to-sync:
