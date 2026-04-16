@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
     body: whisperBody,
   });
   if (!whisperRes.ok) {
+    const errBody = await whisperRes.text();
+    console.error("Groq Whisper error", whisperRes.status, errBody);
     return Response.json({ error: "Groq Whisper transcription failed." }, { status: 502 });
   }
   const transcript = await whisperRes.text();
@@ -63,6 +65,8 @@ export async function POST(req: NextRequest) {
     }),
   });
   if (!claudeRes.ok) {
+    const errBody = await claudeRes.text();
+    console.error("Claude analysis error", claudeRes.status, errBody);
     return Response.json({ error: "Claude analysis failed." }, { status: 502 });
   }
   const claudeData = (await claudeRes.json()) as { content: Array<{ text: string }> };
@@ -72,7 +76,12 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: "Could not parse Claude response." }, { status: 502 });
   }
 
-  const parsed = JSON.parse(jsonMatch[0]);
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = JSON.parse(jsonMatch[0]);
+  } catch {
+    return Response.json({ error: "Could not parse Claude response." }, { status: 502 });
+  }
   return Response.json({
     ...parsed,
     analysedAt: new Date().toISOString(),
