@@ -96,16 +96,18 @@ function AnalysisBlock({
     })
   );
 
-  function downloadTranscript() {
+  const downloadTranscript = useCallback(() => {
     if (!analysis.transcript) return;
     const blob = new Blob([analysis.transcript], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "interview-transcript.txt";
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
-  }
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+  }, [analysis.transcript]);
 
   const handleClose = useCallback(() => setShowTranscript(false), []);
 
@@ -212,6 +214,9 @@ function TranscriptModal({
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="transcript-modal-title"
         className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
@@ -219,7 +224,7 @@ function TranscriptModal({
         <div className="flex items-center justify-between px-5 py-4 border-b">
           <div className="flex items-center gap-2">
             <FileText size={15} className="text-indigo-500" aria-hidden="true" />
-            <h2 className="text-sm font-semibold text-slate-700">Interview Transcript</h2>
+            <h2 id="transcript-modal-title" className="text-sm font-semibold text-slate-700">Interview Transcript</h2>
           </div>
           <button
             ref={closeRef}
