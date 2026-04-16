@@ -22,7 +22,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Interview scorecard**
   A collapsible "Interview Scorecard" section on candidate profiles for Interview-stage candidates (admin only). Four 1–5 star ratings (Communication, Cultural Fit, Problem Solving, Overall Impression), freeform notes, and a recommendation selector (Advance to Offer / Hold / Decline). Client-side state, success toast on save.
 
-- [ ] **Bulk reject with email preview**
+- [x] **Bulk reject with email preview**
   Mirrors bulk shortlisting. "Reject selected (N)" button alongside "Shortlist selected" in the pipeline filter bar. Opens a modal with an editable rejection email (tokens replaced with candidate name/program). On confirm, moves selected candidates to a new `"Rejected"` stage (filtered off the board). New `RejectModal` component.
 
 - [ ] **Candidate notes**
