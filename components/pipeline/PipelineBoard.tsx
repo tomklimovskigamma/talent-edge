@@ -26,6 +26,7 @@ export function PipelineBoard() {
   const [mounted, setMounted] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [rejectOpen, setRejectOpen] = useState(false);
+  const [recentMove, setRecentMove] = useState<{ id: string; direction: "forward" | "back" } | null>(null);
   const { persona } = usePersona();
 
   useEffect(() => setMounted(true), []);
@@ -39,16 +40,25 @@ export function PipelineBoard() {
   const effectiveStage = (candidateId: string, originalStage: StageName): StageName =>
     stageOverrides[candidateId] ?? originalStage;
 
+  function flashMove(candidateId: string, direction: "forward" | "back") {
+    setRecentMove({ id: candidateId, direction });
+    setTimeout(() => {
+      setRecentMove((current) => (current?.id === candidateId ? null : current));
+    }, 900);
+  }
+
   function handleAdvance(candidateId: string, currentStage: StageName) {
     const next = getNextStage(currentStage);
     if (!next) return;
     setStageOverrides((prev) => ({ ...prev, [candidateId]: next }));
+    flashMove(candidateId, "forward");
   }
 
   function handleRevert(candidateId: string, currentStage: StageName) {
     const prev = getPreviousStage(currentStage);
     if (!prev) return;
     setStageOverrides((previous) => ({ ...previous, [candidateId]: prev }));
+    flashMove(candidateId, "back");
   }
 
   function handleSelect(candidateId: string, checked: boolean) {
@@ -182,6 +192,7 @@ export function PipelineBoard() {
             accentClass={accentClasses[i]}
             onAdvance={handleAdvance}
             onRevert={handleRevert}
+            recentMove={recentMove}
             selectedIds={selectedIds}
             onSelect={handleSelect}
           />

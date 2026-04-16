@@ -16,6 +16,7 @@ interface CandidateCardProps {
   currentStage?: StageName;
   onAdvance?: (candidateId: string, currentStage: StageName) => void;
   onRevert?: (candidateId: string, currentStage: StageName) => void;
+  recentMove?: { id: string; direction: "forward" | "back" } | null;
   selected?: boolean;
   onSelect?: (candidateId: string, checked: boolean) => void;
 }
@@ -25,6 +26,7 @@ export function CandidateCard({
   currentStage: currentStageProp,
   onAdvance,
   onRevert,
+  recentMove,
   selected = false,
   onSelect,
 }: CandidateCardProps) {
@@ -49,6 +51,13 @@ export function CandidateCard({
   const showOfferChip = mounted && persona === "admin" && offerState !== null;
   const offerDimmed = mounted && persona === "admin" && offerState?.status === "declined";
 
+  const isJustMoved = recentMove?.id === candidate.id;
+  const moveAnimationClass = isJustMoved
+    ? recentMove?.direction === "forward"
+      ? "animate-in slide-in-from-left-8 fade-in duration-500 ring-2 ring-indigo-300"
+      : "animate-in slide-in-from-right-8 fade-in duration-500 ring-2 ring-slate-300"
+    : "";
+
   return (
     <>
       <div className="group relative">
@@ -69,7 +78,7 @@ export function CandidateCard({
             selected
               ? "border-indigo-400 bg-indigo-50/30"
               : "border-slate-200 hover:border-indigo-200"
-          } ${offerDimmed ? "opacity-60" : ""}`}>
+          } ${offerDimmed ? "opacity-60" : ""} ${moveAnimationClass}`}>
             <div className="flex items-start justify-between gap-2">
               <div className={`flex items-center gap-2 min-w-0 flex-1 ${showCheckbox ? "pl-5" : ""}`}>
                 <div className="h-7 w-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700 flex-shrink-0">
