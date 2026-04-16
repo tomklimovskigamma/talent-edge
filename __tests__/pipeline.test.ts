@@ -13,8 +13,12 @@ describe("getNextStage", () => {
     expect(getNextStage("Assessed")).toBe("Shortlisted");
   });
 
-  it("Shortlisted → Interview", () => {
-    expect(getNextStage("Shortlisted")).toBe("Interview");
+  it("Shortlisted → Video Interview", () => {
+    expect(getNextStage("Shortlisted")).toBe("Video Interview");
+  });
+
+  it("Video Interview → Interview", () => {
+    expect(getNextStage("Video Interview")).toBe("Interview");
   });
 
   it("Interview → Offer", () => {

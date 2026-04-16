@@ -6,6 +6,7 @@ const stageOrder = [
   "Applied",
   "Assessed",
   "Shortlisted",
+  "Video Interview",
   "Interview",
   "Offer",
   "Hired",
