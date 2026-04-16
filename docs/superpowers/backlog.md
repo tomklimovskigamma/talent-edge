@@ -25,7 +25,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 - [x] **Bulk reject with email preview**
   Mirrors bulk shortlisting. "Reject selected (N)" button alongside "Shortlist selected" in the pipeline filter bar. Opens a modal with an editable rejection email (tokens replaced with candidate name/program). On confirm, moves selected candidates to a new `"Rejected"` stage (filtered off the board). New `RejectModal` component.
 
-- [ ] **Candidate notes**
+- [x] **Candidate notes**
   Collapsible "Notes" section at the bottom of every candidate profile (admin only). Textarea + "Save Note" button. Saved notes render as timestamped entries above the input. Multiple notes per session. New `CandidateNotes` component.
 
 ---
