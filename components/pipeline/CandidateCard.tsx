@@ -34,7 +34,8 @@ export function CandidateCard({
   const currentStage: StageName = currentStageProp ?? (candidate.stage as StageName);
   const nextStage = getNextStage(currentStage);
   const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
-  const showCheckbox = mounted && persona === "admin" && currentStage === "Assessed" && !!onSelect;
+  const SELECTABLE_STAGES: StageName[] = ["Applied", "Assessed", "Shortlisted", "Interview"];
+  const showCheckbox = mounted && persona === "admin" && SELECTABLE_STAGES.includes(currentStage) && !!onSelect;
   const showAccessibility = mounted && persona === "admin" && !!candidate.accessibilityNeeds;
 
   const percentileLabel = scorePercentileLabel(candidate, allCandidates);
