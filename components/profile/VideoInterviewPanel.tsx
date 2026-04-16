@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Video, Play, Sparkles, FileText, X, Download } from "lucide-react";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
@@ -107,6 +107,8 @@ function AnalysisBlock({
     URL.revokeObjectURL(url);
   }
 
+  const handleClose = useCallback(() => setShowTranscript(false), []);
+
   return (
     <>
       <div className="border rounded-lg p-4 bg-slate-50 space-y-4">
@@ -174,7 +176,7 @@ function AnalysisBlock({
       {showTranscript && analysis.transcript && (
         <TranscriptModal
           transcript={analysis.transcript}
-          onClose={() => setShowTranscript(false)}
+          onClose={handleClose}
           onDownload={downloadTranscript}
         />
       )}
@@ -191,10 +193,17 @@ function TranscriptModal({
   onClose: () => void;
   onDownload: () => void;
 }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
+    closeRef.current?.focus();
+    document.body.style.overflow = "hidden";
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handler);
+    };
   }, [onClose]);
 
   return (
@@ -213,6 +222,7 @@ function TranscriptModal({
             <h2 className="text-sm font-semibold text-slate-700">Interview Transcript</h2>
           </div>
           <button
+            ref={closeRef}
             onClick={onClose}
             className="text-slate-400 hover:text-slate-600 transition-colors"
             aria-label="Close transcript"
