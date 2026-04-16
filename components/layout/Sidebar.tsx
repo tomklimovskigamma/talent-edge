@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, GitBranch, ClipboardList, Settings } from "lucide-react";
+import { LayoutDashboard, GitBranch, ClipboardList, Settings, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePersona } from "@/lib/persona";
 
@@ -16,6 +16,7 @@ type NavItem = {
 const nav: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, graduateOnly: false, adminOnly: false },
   { href: "/pipeline", label: "Pipeline", icon: GitBranch, graduateOnly: false, adminOnly: false },
+  { href: "/analytics", label: "Analytics", icon: BarChart3, graduateOnly: false, adminOnly: true },
   { href: "/assessment", label: "Assessment", icon: ClipboardList, graduateOnly: true, adminOnly: false },
   { href: "/settings/assessment", label: "Settings", icon: Settings, graduateOnly: false, adminOnly: true },
 ];
