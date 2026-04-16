@@ -8,6 +8,7 @@ import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
 import { InterviewScorecard } from "@/components/profile/InterviewScorecard";
 import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
 import { KeepWarmFeed } from "@/components/profile/KeepWarmFeed";
+import { CandidateNotes } from "@/components/profile/CandidateNotes";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Send } from "lucide-react";
@@ -60,6 +61,8 @@ export default async function CandidateProfilePage({
         </div>
 
         <KeepWarmFeed candidate={candidate} />
+
+        <CandidateNotes candidate={candidate} />
 
       </div>
     </AppShell>
