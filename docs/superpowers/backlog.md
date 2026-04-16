@@ -32,7 +32,7 @@ Items are ordered by priority within each tier. Pick the top unchecked item when
 
 ## Tier 3 — Development phase
 
-- [ ] **AI-generated development plan**
+- [x] **AI-generated development plan**
   For Hired candidates, generate development goals dynamically from dimension scores via a lookup table in `lib/development.ts`. Each dimension × score band maps to a specific activity. Generates 4–5 goals per candidate (weakest dimensions + one leverage goal). Replaces static seeded `developmentGoals`.
 
 - [ ] **Program analytics page**
