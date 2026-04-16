@@ -5,8 +5,9 @@ import { stages, type StageName } from "@/lib/data/program";
 import { getNextStage, filterCandidates, type ScoreBand } from "@/lib/pipeline";
 import { ComparisonDrawer } from "./ComparisonDrawer";
 import { StageColumn } from "./StageColumn";
+import { RejectModal } from "./RejectModal";
 import { usePersona } from "@/lib/persona";
-import { CheckSquare, Layers, Search, X } from "lucide-react";
+import { Ban, CheckSquare, Layers, Search, X } from "lucide-react";
 
 const accentClasses = [
   "border-slate-300",
@@ -24,17 +25,19 @@ export function PipelineBoard() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [mounted, setMounted] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
+  const [rejectOpen, setRejectOpen] = useState(false);
   const { persona } = usePersona();
 
   useEffect(() => setMounted(true), []);
 
-  // Auto-close the comparison drawer if selection drops below 2
-  // (e.g., after bulk shortlist clears selection, or manual deselection).
   useEffect(() => {
     if (selectedIds.size < 2) setCompareOpen(false);
   }, [selectedIds]);
 
   const filtered = filterCandidates(allCandidates, search, filter);
+
+  const effectiveStage = (candidateId: string, originalStage: StageName): StageName =>
+    stageOverrides[candidateId] ?? originalStage;
 
   function handleAdvance(candidateId: string, currentStage: StageName) {
     const next = getNextStage(currentStage);
@@ -55,23 +58,36 @@ export function PipelineBoard() {
     setStageOverrides((prev) => {
       const next = { ...prev };
       for (const id of selectedIds) {
-        next[id] = "Shortlisted";
+        const candidate = allCandidates.find((c) => c.id === id);
+        if (!candidate) continue;
+        if (effectiveStage(candidate.id, candidate.stage) === "Assessed") {
+          next[id] = "Shortlisted";
+        }
       }
       return next;
     });
     setSelectedIds(new Set());
   }
 
-  const effectiveStage = (candidateId: string, originalStage: StageName): StageName =>
-    stageOverrides[candidateId] ?? originalStage;
+  function handleBulkReject() {
+    setStageOverrides((prev) => {
+      const next = { ...prev };
+      for (const id of selectedIds) next[id] = "Rejected";
+      return next;
+    });
+    setSelectedIds(new Set());
+    setRejectOpen(false);
+  }
 
   const showBulkAction = mounted && persona === "admin" && selectedIds.size > 0;
   const showCompare = showBulkAction && selectedIds.size >= 2 && selectedIds.size <= 3;
   const selectedCandidates = allCandidates.filter((c) => selectedIds.has(c.id));
+  const shortlistableCount = selectedCandidates.filter(
+    (c) => effectiveStage(c.id, c.stage) === "Assessed"
+  ).length;
 
   return (
     <div className="space-y-3">
-      {/* Search bar */}
       <div className="relative">
         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         <input
@@ -93,7 +109,6 @@ export function PipelineBoard() {
         )}
       </div>
 
-      {/* Filter bar */}
       <div className="flex items-center gap-2">
         <span className="text-xs text-slate-500 mr-1">Filter:</span>
         {(["all", "high", "emerging"] as const).map((f) => (
@@ -121,20 +136,35 @@ export function PipelineBoard() {
             </button>
           )}
           {showBulkAction && (
-            <button
-              type="button"
-              onClick={handleBulkShortlist}
-              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-violet-600 text-white hover:bg-violet-700 transition-colors"
-            >
-              <CheckSquare size={12} aria-hidden="true" />
-              Shortlist selected ({selectedIds.size})
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={handleBulkShortlist}
+                disabled={shortlistableCount === 0}
+                title={shortlistableCount === 0 ? "Only Assessed candidates can be shortlisted" : undefined}
+                className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-violet-600 text-white transition-colors ${
+                  shortlistableCount === 0
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-violet-700"
+                }`}
+              >
+                <CheckSquare size={12} aria-hidden="true" />
+                Shortlist selected ({shortlistableCount})
+              </button>
+              <button
+                type="button"
+                onClick={() => setRejectOpen(true)}
+                className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-rose-600 text-white hover:bg-rose-700 transition-colors"
+              >
+                <Ban size={12} aria-hidden="true" />
+                Reject selected ({selectedIds.size})
+              </button>
+            </>
           )}
           <span className="text-xs text-slate-400">{filtered.length} candidates shown</span>
         </div>
       </div>
 
-      {/* Board */}
       <div className="flex gap-4 overflow-x-auto pb-4">
         {stages.map((stage, i) => (
           <StageColumn
@@ -151,11 +181,18 @@ export function PipelineBoard() {
         ))}
       </div>
 
-      {/* Comparison drawer */}
       {compareOpen && (
         <ComparisonDrawer
           candidates={selectedCandidates}
           onClose={() => setCompareOpen(false)}
+        />
+      )}
+
+      {rejectOpen && (
+        <RejectModal
+          candidates={selectedCandidates}
+          onCancel={() => setRejectOpen(false)}
+          onConfirm={handleBulkReject}
         />
       )}
     </div>
