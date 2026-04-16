@@ -52,6 +52,8 @@ export type Candidate = {
   avatarInitials: string;
   startDate?: string;
   accessibilityNeeds?: string;
+  offerStatus?: "pending" | "accepted" | "declined";
+  offerDeclineReason?: string;
 };
 
 export const candidates: Candidate[] = [
