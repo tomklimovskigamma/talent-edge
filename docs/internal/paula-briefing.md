@@ -7,7 +7,8 @@
 
 ## What Talent Edge is today
 
-Talent Edge is a working platform you can open in a browser right now — not a concept deck or a prototype that falls over.
+Talent Edge is a full-service graduate recruitment and development partner. We run programs end-to-end — our platform handles applications, psych testing, pipeline management, reporting, Keep Warm, and development tracking. Our services team delivers Assessment Centres, F2F interviews, and advisory. The live demo shows the platform side; services delivery is what our team brings.
+
 Live demo: **https://talent-edge-ten.vercel.app**
 
 There are two entry points: a **Graduate** path (the candidate's assessment experience) and an **Admin** path (the recruiter dashboard, candidate pipeline, profiles, and reporting).
@@ -52,6 +53,9 @@ We have this on record. Don't re-cover it unless you're correcting something.
 - Our 5-dimension model: Adaptability, Cognitive Agility, Emotional Intelligence, Collaboration, Drive
 - Amberjack's model for comparison: Digital Mindset, Applied Intellect, Creative Force, Grit
 
+**Positioning:**
+- Paula's Amberjack-era model is a platform + services hybrid. That's now our model too — we're not a self-service tool, we're a managed service partner with better platform infrastructure underneath.
+
 ---
 
 ## Your 6 items — where they land
@@ -60,10 +64,16 @@ We have this on record. Don't re-cover it unless you're correcting something.
 |---|---|---|---|
 | **End-to-end process map** | Lifecycle model with all 8 stages documented | Detail within each stage — handoffs, decision points, who does what, employer side vs candidate side | Validates our capabilities against the full journey; gaps become roadmap items |
 | **Tools & systems** | ATS landscape with 15 platforms documented | Non-ATS tools — scheduling software, spreadsheets, email templates, reporting tools, video platforms | Strengthens integration story and competitive positioning |
-| **Assessment types** | 5-dimension model and question formats (scenario-based, self-report scales, forced choice, sequence puzzles, emotion recognition) | Methods beyond psychometric — video interview, group exercises, case studies, Assessment Centres. What each one measures, how it's scored, what data it produces | Product direction for future features; deepens the demo script |
+| **Assessment types** | 5-dimension model and question formats (scenario-based, self-report scales, forced choice, sequence puzzles, emotion recognition) | Methods beyond psychometric — video interview, group exercises, case studies, Assessment Centres. What each one measures, how it's scored, what data it produces. Note: Assessment Centres specifically matter — we're building an AC scoring tool that captures data from AC assessors into the platform. Your AC expertise feeds directly into that tooling design. | Product direction for future features; deepens the demo script |
 | **Pain points** | Top 5 pain points from our first conversation | Expand to 10+. Split them: what clients complained about vs what was painful on the ops and delivery side | Directly feeds objection handling and discovery questions for sales conversations |
 | **Real program examples** | One demo scenario (Meridian Group, 20 hires, Finance) | 3–5 anonymised real examples at different scales — different industry, intake size, program complexity | Builds additional demo scenarios; gives Dave concrete stories to use in conversations |
-| **Amberjack tech review** | Gaps documented (inflexibility, bespoke costs, not self-service) | What did their platform do well? Where did it fall short day-to-day? What would you build differently if you were starting from scratch? | Single biggest input to the competitive battle card |
+| **Amberjack tech review** | Gaps documented (inflexibility, bespoke costs, not self-service) | What did their platform do well? Where did it fall short day-to-day? What would you build differently if you were starting from scratch? | Critical input. We're now positioning as platform+services just like Amberjack. Your insider view of where their platform and service delivery fell short is the single biggest differentiator we have. |
+
+---
+
+## What changed recently
+
+Positioning update — we initially framed Talent Edge as a self-service platform competing AGAINST managed services like Amberjack. We've since clarified that we're actually a managed service ourselves, with a better platform underneath. This probably matches what you intuitively assumed from day one. Your insights on how Amberjack delivers — what works, what doesn't — are now even more central to how we compete.
 
 ---
 
