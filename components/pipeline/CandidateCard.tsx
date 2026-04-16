@@ -61,19 +61,19 @@ export function CandidateCard({
         )}
 
         <Link href={`/candidates/${candidate.id}`}>
-          <div className={`bg-white border rounded-lg p-3 space-y-2 hover:shadow-md transition-all cursor-pointer ${
+          <div className={`bg-white border rounded-lg p-3 space-y-2 hover:shadow-md transition-all cursor-pointer overflow-hidden ${
             selected
               ? "border-indigo-400 bg-indigo-50/30"
               : "border-slate-200 hover:border-indigo-200"
           } ${offerDimmed ? "opacity-60" : ""}`}>
-            <div className="flex items-start justify-between">
-              <div className={`flex items-center gap-2 ${showCheckbox ? "pl-5" : ""}`}>
+            <div className="flex items-start justify-between gap-2">
+              <div className={`flex items-center gap-2 min-w-0 flex-1 ${showCheckbox ? "pl-5" : ""}`}>
                 <div className="h-7 w-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700 flex-shrink-0">
                   {candidate.avatarInitials}
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-slate-800 leading-tight">{candidate.name}</p>
-                  <p className="text-xs text-slate-400 leading-tight truncate max-w-[120px]">{candidate.university}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold text-slate-800 leading-tight truncate">{candidate.name}</p>
+                  <p className="text-xs text-slate-400 leading-tight truncate">{candidate.university}</p>
                 </div>
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -92,9 +92,9 @@ export function CandidateCard({
                   <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
                     {candidate.potentialScore}
                   </span>
-                  {showPercentile && (
-                    <span className="text-[10px] text-slate-400 font-medium leading-tight">
-                      {percentileLabel}
+                  {showPercentile && percentileLabel && (
+                    <span className="text-[10px] text-slate-400 font-medium leading-tight whitespace-nowrap">
+                      {percentileLabel.replace(" of cohort", "")}
                     </span>
                   )}
                   {showOfferChip && offerState && (
