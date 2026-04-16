@@ -36,6 +36,28 @@ export type DevelopmentGoal = {
   dueDate: string;
 };
 
+export type VideoInterviewResponse = {
+  questionId: string;
+  videoUrl: string;
+  transcript?: string;
+  durationSeconds: number;
+};
+
+export type VideoInterviewAnalysis = {
+  competencyScores: PotentialDimensions;
+  summary: string;
+  strongestArea: string;
+  probeInF2F: string;
+  analysedAt: string;
+};
+
+export type VideoInterviewData = {
+  invitedAt?: string;
+  completedAt?: string;
+  responses: VideoInterviewResponse[];
+  analysis?: VideoInterviewAnalysis;
+};
+
 export type Candidate = {
   id: string;
   name: string;
@@ -52,6 +74,7 @@ export type Candidate = {
   avatarInitials: string;
   startDate?: string;
   accessibilityNeeds?: string;
+  videoInterview?: VideoInterviewData;
 };
 
 export const candidates: Candidate[] = [
