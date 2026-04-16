@@ -7,9 +7,9 @@ import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   const GROQ_KEY = process.env.GROQ_API_KEY;
-  const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+  const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? "";
 
-  if (!GROQ_KEY || !ANTHROPIC_KEY) {
+  if (!GROQ_KEY) {
     return Response.json(
       { error: "Analysis API keys not configured." },
       { status: 500 }
