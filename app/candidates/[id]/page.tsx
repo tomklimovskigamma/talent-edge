@@ -5,6 +5,7 @@ import { PotentialRadar } from "@/components/profile/PotentialRadar";
 import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
 import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
+import { VideoInterviewPanel } from "@/components/profile/VideoInterviewPanel";
 import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
 import { KeepWarmFeed } from "@/components/profile/KeepWarmFeed";
 import { notFound } from "next/navigation";
@@ -45,6 +46,8 @@ export default async function CandidateProfilePage({
         <ProfileHeader candidate={candidate} />
 
         <AiScreeningSummary candidate={candidate} />
+
+        {candidate.videoInterview && <VideoInterviewPanel candidate={candidate} />}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PotentialRadar dimensions={candidate.dimensions} />
