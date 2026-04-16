@@ -157,11 +157,6 @@ export const candidates: Candidate[] = [
       { date: "2025-04-01", stage: "Offer", note: "Offer made." },
       { date: "2025-04-09", stage: "Hired", note: "Offer accepted. Start date: 23 Feb 2026." },
     ],
-    developmentGoals: [
-      { title: "Complete induction program", status: "not-started", dueDate: "2026-03-15" },
-      { title: "Shadow senior analyst for 4 weeks", status: "not-started", dueDate: "2026-04-30" },
-      { title: "First solo client deliverable", status: "not-started", dueDate: "2026-06-30" },
-    ],
   },
   {
     id: "c005",
@@ -332,10 +327,6 @@ export const candidates: Candidate[] = [
       { date: "2025-03-31", stage: "Offer", note: "Offer made." },
       { date: "2025-04-08", stage: "Hired", note: "Accepted. Start date: 19 May 2026." },
     ],
-    developmentGoals: [
-      { title: "Complete induction program", status: "not-started", dueDate: "2026-03-15" },
-      { title: "Lead first team project", status: "not-started", dueDate: "2026-05-31" },
-    ],
   },
   {
     id: "c012",
@@ -505,11 +496,6 @@ export const candidates: Candidate[] = [
       { date: "2025-03-20", stage: "Interview", note: "Excellent panel interview." },
       { date: "2025-03-28", stage: "Offer", note: "Offer made." },
       { date: "2025-04-05", stage: "Hired", note: "Accepted. Start date: 2 Jun 2026." },
-    ],
-    developmentGoals: [
-      { title: "Complete induction program", status: "not-started", dueDate: "2026-03-15" },
-      { title: "Assigned mentor", status: "not-started", dueDate: "2026-03-20" },
-      { title: "First client-facing role", status: "not-started", dueDate: "2026-07-31" },
     ],
   },
   {
