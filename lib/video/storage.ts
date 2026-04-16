@@ -27,3 +27,15 @@ export function recordingUrlFor(id: string): string | undefined {
   if (!rec) return undefined;
   return URL.createObjectURL(rec.blob);
 }
+
+import type { VideoInterviewData } from "@/lib/data/candidates";
+
+const sessionCompleted = new Map<string, VideoInterviewData>();
+
+export function markVideoInterviewComplete(candidateId: string, data: VideoInterviewData) {
+  sessionCompleted.set(candidateId, data);
+}
+
+export function getSessionVideoInterview(candidateId: string): VideoInterviewData | undefined {
+  return sessionCompleted.get(candidateId);
+}

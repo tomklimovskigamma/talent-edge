@@ -9,9 +9,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Candidate, VideoInterviewData, PotentialDimensions } from "@/lib/data/candidates";
 import { dimensionLabels } from "@/lib/data/candidates";
 import { getPromptById } from "@/lib/data/video-prompts";
+import { getSessionVideoInterview } from "@/lib/video/storage";
 
 export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
-  const data = candidate.videoInterview;
+  const seededData = candidate.videoInterview;
+  const sessionData = typeof window !== "undefined" ? getSessionVideoInterview(candidate.id) : undefined;
+  const data = sessionData ?? seededData;
   if (!data) return null;
 
   return (

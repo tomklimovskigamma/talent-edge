@@ -9,6 +9,8 @@ import { PromptStep } from "./PromptStep";
 import { RecordingStep } from "./RecordingStep";
 import { CompleteStep } from "./CompleteStep";
 import type { Candidate } from "@/lib/data/candidates";
+import { getRecording, markVideoInterviewComplete } from "@/lib/video/storage";
+import { runAnalysis } from "@/lib/video-analysis";
 
 type PhaseState =
   | { phase: "intro" }
@@ -31,6 +33,30 @@ export function VideoInterviewShell({ candidate }: { candidate: Candidate }) {
       : Math.round(((currentQuestionIndex + (state.phase === "recording" ? 0.5 : 0)) / totalQuestions) * 100);
 
   const showProgress = state.phase !== "intro" && state.phase !== "complete";
+
+  async function finaliseInterview(candidateId: string) {
+    const responses = videoPrompts.map((prompt) => {
+      const id = `${candidateId}-${prompt.id}`;
+      const rec = getRecording(id);
+      return {
+        questionId: prompt.id,
+        videoUrl: rec ? URL.createObjectURL(rec.blob) : "",
+        durationSeconds: rec?.durationSeconds ?? prompt.recordSeconds,
+      };
+    });
+
+    // MVP: for live recording, always use mock analysis (no blob passed).
+    // The real pipeline in Task 8 is wired for future use but not called from here —
+    // sending 3 separate blobs to Whisper requires orchestration beyond MVP scope.
+    const analysis = await runAnalysis(candidateId);
+
+    markVideoInterviewComplete(candidateId, {
+      invitedAt: new Date().toISOString(),
+      completedAt: new Date().toISOString(),
+      responses,
+      analysis,
+    });
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -76,6 +102,7 @@ export function VideoInterviewShell({ candidate }: { candidate: Candidate }) {
               onComplete={() => {
                 const nextIndex = state.questionIndex + 1;
                 if (nextIndex >= totalQuestions) {
+                  void finaliseInterview(candidate.id);
                   setState({ phase: "complete" });
                 } else {
                   setState({ phase: "prompt", questionIndex: nextIndex });
