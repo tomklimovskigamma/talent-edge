@@ -8,6 +8,7 @@ import { scoreColor, scorePercentileLabel } from "@/lib/utils";
 import { getOfferState, type OfferStatus } from "@/lib/offer";
 import { Clock, Send, CalendarPlus, ArrowRight, ArrowLeft, Accessibility } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
+import { InviteToVideoInterviewButton } from "@/components/pipeline/InviteToVideoInterviewButton";
 import { usePersona } from "@/lib/persona";
 import { getNextStage, getPreviousStage } from "@/lib/pipeline";
 
@@ -143,6 +144,12 @@ export function CandidateCard({
             <CalendarPlus size={10} />
             Schedule interview
           </button>
+        )}
+
+        {currentStage === "Shortlisted" && (
+          <div className="opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity mt-2">
+            <InviteToVideoInterviewButton candidateId={candidate.id} />
+          </div>
         )}
 
         {showAdvance && (

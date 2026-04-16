@@ -36,6 +36,28 @@ export type DevelopmentGoal = {
   dueDate: string;
 };
 
+export type VideoInterviewResponse = {
+  questionId: string;
+  videoUrl: string;
+  transcript?: string;
+  durationSeconds: number;
+};
+
+export type VideoInterviewAnalysis = {
+  competencyScores: PotentialDimensions;
+  summary: string;
+  strongestArea: string;
+  probeInF2F: string;
+  analysedAt: string;
+};
+
+export type VideoInterviewData = {
+  invitedAt?: string;
+  completedAt?: string;
+  responses: VideoInterviewResponse[];
+  analysis?: VideoInterviewAnalysis;
+};
+
 export type Candidate = {
   id: string;
   name: string;
@@ -54,6 +76,7 @@ export type Candidate = {
   accessibilityNeeds?: string;
   offerStatus?: "pending" | "accepted" | "declined";
   offerDeclineReason?: string;
+  videoInterview?: VideoInterviewData;
 };
 
 export const candidates: Candidate[] = [
@@ -166,7 +189,7 @@ export const candidates: Candidate[] = [
     university: "Australian National University",
     degree: "B. Politics & Economics",
     graduationYear: 2025,
-    stage: "Assessed",
+    stage: "Video Interview",
     appliedDate: "2025-03-18",
     daysInStage: 8,
     potentialScore: 78,
@@ -182,7 +205,32 @@ export const candidates: Candidate[] = [
     assessmentHistory: [
       { date: "2025-03-18", stage: "Applied", note: "Application submitted." },
       { date: "2025-03-27", stage: "Assessed", note: "Score: 78. Emerging potential." },
+      { date: "2025-03-28", stage: "Shortlisted", note: "Progressed to shortlist." },
+      { date: "2025-03-30", stage: "Video Interview", note: "Video interview completed. AI analysis ready." },
     ],
+    videoInterview: {
+      invitedAt: "2025-03-28",
+      completedAt: "2025-03-30",
+      responses: [
+        { questionId: "vq1", videoUrl: "/demo-videos/c005-q1.webm", durationSeconds: 58 },
+        { questionId: "vq2", videoUrl: "/demo-videos/c005-q2.webm", durationSeconds: 60 },
+        { questionId: "vq3", videoUrl: "/demo-videos/c005-q3.webm", durationSeconds: 54 },
+      ],
+      analysis: {
+        competencyScores: {
+          adaptability: 82,
+          cognitiveAgility: 93,
+          emotionalIntelligence: 85,
+          collaboration: 87,
+          drive: 86,
+        },
+        summary:
+          "Clear and specific in each response. Demonstrated strong cognitive agility in question 2 by articulating their diagnostic approach before settling on an answer. Showed genuine reflection on what drove the self-initiated work in question 3.",
+        strongestArea: "Cognitive Agility",
+        probeInF2F: "Probe how they know when they have enough information to decide — the response hinted at a tendency to want more data than needed.",
+        analysedAt: "2025-03-30T14:22:00Z",
+      },
+    },
   },
   {
     id: "c006",
@@ -214,7 +262,7 @@ export const candidates: Candidate[] = [
     university: "RMIT University",
     degree: "B. Design (Communication)",
     graduationYear: 2025,
-    stage: "Applied",
+    stage: "Video Interview",
     appliedDate: "2025-04-02",
     daysInStage: 9,
     potentialScore: 71,
@@ -229,7 +277,32 @@ export const candidates: Candidate[] = [
     },
     assessmentHistory: [
       { date: "2025-04-02", stage: "Applied", note: "Application submitted. Awaiting assessment." },
+      { date: "2025-03-28", stage: "Shortlisted", note: "Progressed to shortlist." },
+      { date: "2025-03-30", stage: "Video Interview", note: "Video interview completed. AI analysis ready." },
     ],
+    videoInterview: {
+      invitedAt: "2025-03-28",
+      completedAt: "2025-03-30",
+      responses: [
+        { questionId: "vq1", videoUrl: "/demo-videos/c007-q1.webm", durationSeconds: 60 },
+        { questionId: "vq2", videoUrl: "/demo-videos/c007-q2.webm", durationSeconds: 55 },
+        { questionId: "vq3", videoUrl: "/demo-videos/c007-q3.webm", durationSeconds: 58 },
+      ],
+      analysis: {
+        competencyScores: {
+          adaptability: 84,
+          cognitiveAgility: 80,
+          emotionalIntelligence: 94,
+          collaboration: 91,
+          drive: 83,
+        },
+        summary:
+          "Responses centred on people and relationships. In the first question, the candidate identified emotional dynamics behind the change in approach — not just the mechanics. Collaboration signal was consistent throughout, especially the framing of shared ownership in question 3.",
+        strongestArea: "Emotional Intelligence",
+        probeInF2F: "Explore how they handle disagreement with a senior — the responses skewed toward harmony; test the edges.",
+        analysedAt: "2025-03-30T15:10:00Z",
+      },
+    },
   },
   {
     id: "c008",
@@ -284,7 +357,7 @@ export const candidates: Candidate[] = [
     university: "Deakin University",
     degree: "B. IT (Cybersecurity)",
     graduationYear: 2025,
-    stage: "Assessed",
+    stage: "Video Interview",
     appliedDate: "2025-03-22",
     daysInStage: 5,
     potentialScore: 74,
@@ -300,7 +373,32 @@ export const candidates: Candidate[] = [
     assessmentHistory: [
       { date: "2025-03-22", stage: "Applied", note: "Application submitted." },
       { date: "2025-04-01", stage: "Assessed", note: "Score: 74." },
+      { date: "2025-03-28", stage: "Shortlisted", note: "Progressed to shortlist." },
+      { date: "2025-03-30", stage: "Video Interview", note: "Video interview completed. AI analysis ready." },
     ],
+    videoInterview: {
+      invitedAt: "2025-03-28",
+      completedAt: "2025-03-30",
+      responses: [
+        { questionId: "vq1", videoUrl: "/demo-videos/c010-q1.webm", durationSeconds: 59 },
+        { questionId: "vq2", videoUrl: "/demo-videos/c010-q2.webm", durationSeconds: 60 },
+        { questionId: "vq3", videoUrl: "/demo-videos/c010-q3.webm", durationSeconds: 60 },
+      ],
+      analysis: {
+        competencyScores: {
+          adaptability: 85,
+          cognitiveAgility: 86,
+          emotionalIntelligence: 78,
+          collaboration: 82,
+          drive: 95,
+        },
+        summary:
+          "Drive came through clearly in question 3 — the self-initiated work example was substantive and the rationale was personal. Structured thinking in question 2 was competent but standard. Less reflection on the emotional or relational aspects of their examples.",
+        strongestArea: "Drive",
+        probeInF2F: "Explore how they handle feedback they disagree with — emotional intelligence signal was the weakest of the three.",
+        analysedAt: "2025-03-30T16:05:00Z",
+      },
+    },
   },
   {
     id: "c011",

@@ -31,7 +31,7 @@ const stub = (overrides: Partial<Candidate>): Candidate =>
 describe("computeFunnelMetrics", () => {
   it("first stage has retainedPct === 100", () => {
     const counts: Record<StageName, number> = {
-      Applied: 200, Assessed: 150, Shortlisted: 80, Interview: 40, Offer: 20, Hired: 10, Rejected: 0,
+      Applied: 200, Assessed: 150, Shortlisted: 80, "Video Interview": 60, Interview: 40, Offer: 20, Hired: 10, Rejected: 0,
     };
     const result = computeFunnelMetrics(counts);
     expect(result[0].retainedPct).toBe(100);
@@ -39,7 +39,7 @@ describe("computeFunnelMetrics", () => {
 
   it("percentages are integers and monotonically non-increasing", () => {
     const counts: Record<StageName, number> = {
-      Applied: 200, Assessed: 150, Shortlisted: 80, Interview: 40, Offer: 20, Hired: 10, Rejected: 0,
+      Applied: 200, Assessed: 150, Shortlisted: 80, "Video Interview": 60, Interview: 40, Offer: 20, Hired: 10, Rejected: 0,
     };
     const result = computeFunnelMetrics(counts);
     for (const r of result) expect(Number.isInteger(r.retainedPct)).toBe(true);
@@ -50,11 +50,11 @@ describe("computeFunnelMetrics", () => {
 
   it("excludes Rejected from output", () => {
     const counts: Record<StageName, number> = {
-      Applied: 10, Assessed: 8, Shortlisted: 6, Interview: 4, Offer: 2, Hired: 1, Rejected: 99,
+      Applied: 10, Assessed: 8, Shortlisted: 6, "Video Interview": 5, Interview: 4, Offer: 2, Hired: 1, Rejected: 99,
     };
     const result = computeFunnelMetrics(counts);
     expect(result.find((r) => r.stage === "Rejected")).toBeUndefined();
-    expect(result).toHaveLength(6);
+    expect(result).toHaveLength(7);
   });
 });
 

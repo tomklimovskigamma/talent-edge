@@ -8,6 +8,7 @@ import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
 import { generateDevelopmentGoals } from "@/lib/development";
 import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
 import { InterviewScorecard } from "@/components/profile/InterviewScorecard";
+import { VideoInterviewPanel } from "@/components/profile/VideoInterviewPanel";
 import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
 import { KeepWarmFeed } from "@/components/profile/KeepWarmFeed";
 import { CandidateNotes } from "@/components/profile/CandidateNotes";
@@ -51,6 +52,8 @@ export default async function CandidateProfilePage({
         <OfferStatus candidate={candidate} />
 
         <AiScreeningSummary candidate={candidate} />
+
+        {candidate.videoInterview && <VideoInterviewPanel candidate={candidate} />}
 
         <InterviewScorecard candidate={candidate} />
 
