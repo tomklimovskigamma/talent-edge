@@ -33,9 +33,9 @@ export function Sidebar() {
 
   return (
     <aside className="w-56 min-h-screen bg-[#1E1B4B] flex flex-col">
-      <div className="px-5 py-6 border-b border-white/10">
+      <Link href="/" className="px-5 py-6 border-b border-white/10 block">
         <img src="/te-logo.svg" alt="Talent Edge" className="h-7 brightness-0 invert" />
-      </div>
+      </Link>
       <nav aria-label="Main navigation" className="flex-1 px-3 py-4 space-y-1">
         {visibleNav.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");
