@@ -4,6 +4,7 @@ import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { PotentialRadar } from "@/components/profile/PotentialRadar";
 import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
+import { generateDevelopmentGoals } from "@/lib/development";
 import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
 import { InterviewScorecard } from "@/components/profile/InterviewScorecard";
 import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
@@ -54,8 +55,8 @@ export default async function CandidateProfilePage({
           <PotentialRadar dimensions={candidate.dimensions} />
           <div className="space-y-4">
             <AssessmentTimeline history={candidate.assessmentHistory} />
-            {candidate.developmentGoals && (
-              <DevelopmentTracker goals={candidate.developmentGoals} />
+            {candidate.stage === "Hired" && (
+              <DevelopmentTracker goals={generateDevelopmentGoals(candidate)} />
             )}
           </div>
         </div>
