@@ -9,12 +9,45 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Candidate, VideoInterviewData, VideoInterviewAnalysis, PotentialDimensions } from "@/lib/data/candidates";
 import { dimensionLabels } from "@/lib/data/candidates";
 import { getPromptById } from "@/lib/data/video-prompts";
-import { getSessionVideoInterview } from "@/lib/video/storage";
+import { getSessionVideoInterview, getRecording } from "@/lib/video/storage";
 import { getAnalysisMode } from "@/lib/video-analysis";
 
 export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
   const seededData = candidate.videoInterview;
-  const sessionData = typeof window !== "undefined" ? getSessionVideoInterview(candidate.id) : undefined;
+  const [sessionData, setSessionData] = useState<VideoInterviewData | undefined>();
+  const [liveUrls, setLiveUrls] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let revoked = false;
+    const created: string[] = [];
+
+    (async () => {
+      const session = await getSessionVideoInterview(candidate.id);
+      if (!session || revoked) return;
+      setSessionData(session);
+
+      const entries = await Promise.all(
+        session.responses.map(async (r) => {
+          const rec = await getRecording(`${candidate.id}-${r.questionId}`);
+          if (!rec) return [r.questionId, ""] as const;
+          const url = URL.createObjectURL(rec.blob);
+          created.push(url);
+          return [r.questionId, url] as const;
+        }),
+      );
+      if (revoked) {
+        created.forEach((u) => URL.revokeObjectURL(u));
+        return;
+      }
+      setLiveUrls(Object.fromEntries(entries));
+    })();
+
+    return () => {
+      revoked = true;
+      created.forEach((u) => URL.revokeObjectURL(u));
+    };
+  }, [candidate.id]);
+
   const data = sessionData ?? seededData;
 
   const [liveAnalysis, setLiveAnalysis] = useState<VideoInterviewAnalysis | null>(null);
@@ -23,16 +56,24 @@ export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
 
   const isRealMode = getAnalysisMode() === "real";
 
-  async function runLiveAnalysis() {
-    if (!data?.responses[0]?.videoUrl) return;
+  const runLiveAnalysis = useCallback(async () => {
+    if (!data) return;
     setAnalysing(true);
     setAnalyseError(null);
     try {
-      const videoRes = await fetch(data.responses[0].videoUrl);
-      const blob = await videoRes.blob();
       const form = new FormData();
-      form.append("video", blob, "interview.webm");
       form.append("candidateId", candidate.id);
+
+      for (let i = 0; i < data.responses.length; i++) {
+        const response = data.responses[i];
+        const src = liveUrls[response.questionId] || response.videoUrl;
+        if (!src) continue;
+        const videoRes = await fetch(src);
+        const blob = await videoRes.blob();
+        form.append("videos", blob, `interview-q${i + 1}.webm`);
+        form.append("questionIds", response.questionId);
+      }
+
       const res = await fetch("/api/video-analysis", { method: "POST", body: form });
       if (!res.ok) throw new Error(await res.text());
       setLiveAnalysis((await res.json()) as VideoInterviewAnalysis);
@@ -41,7 +82,7 @@ export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
     } finally {
       setAnalysing(false);
     }
-  }
+  }, [candidate.id, data, liveUrls]);
 
   if (!data) return null;
 
@@ -53,37 +94,39 @@ export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
         <div className="flex items-center gap-2">
           <Video size={15} className="text-indigo-500" aria-hidden="true" />
           <CardTitle className="text-sm font-semibold text-slate-700">Video Interview</CardTitle>
-          <div className="ml-auto flex items-center gap-3">
-            {isRealMode && (
-              <button
-                onClick={() => void runLiveAnalysis()}
-                disabled={analysing}
-                className="flex items-center gap-1 text-[11px] text-indigo-500 hover:text-indigo-700 font-medium transition-colors disabled:opacity-50"
-              >
-                <RefreshCw size={11} className={analysing ? "animate-spin" : ""} aria-hidden="true" />
-                {analysing ? "Analysing…" : liveAnalysis ? "Re-analyse" : "Analyse with Groq"}
-              </button>
-            )}
-            {data.completedAt && (
-              <span className="text-xs text-slate-400">
-                Completed {new Date(data.completedAt).toLocaleDateString()}
-              </span>
-            )}
-          </div>
+          {data.completedAt && (
+            <span className="text-xs text-slate-400 ml-auto">
+              Completed {new Date(data.completedAt).toLocaleDateString()}
+            </span>
+          )}
         </div>
         {analyseError && (
           <p className="text-xs text-rose-500 mt-1">{analyseError}</p>
         )}
       </CardHeader>
       <CardContent className="space-y-5">
-        <ResponsesRow data={data} />
-        {displayAnalysis && <AnalysisBlock analysis={displayAnalysis} />}
+        <ResponsesRow data={data} liveUrls={liveUrls} />
+        {displayAnalysis && (
+          <AnalysisBlock
+            analysis={displayAnalysis}
+            showAnalyseButton={isRealMode}
+            analysing={analysing}
+            hasRun={liveAnalysis !== null}
+            onAnalyse={runLiveAnalysis}
+          />
+        )}
       </CardContent>
     </Card>
   );
 }
 
-function ResponsesRow({ data }: { data: VideoInterviewData }) {
+function ResponsesRow({
+  data,
+  liveUrls,
+}: {
+  data: VideoInterviewData;
+  liveUrls: Record<string, string>;
+}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
@@ -93,11 +136,12 @@ function ResponsesRow({ data }: { data: VideoInterviewData }) {
         {data.responses.map((response, i) => {
           const prompt = getPromptById(response.questionId);
           const isActive = activeIndex === i;
+          const src = liveUrls[response.questionId] || response.videoUrl;
           return (
             <div key={response.questionId} className="border rounded-lg overflow-hidden">
-              {isActive ? (
+              {isActive && src ? (
                 <video
-                  src={response.videoUrl}
+                  src={src}
                   controls
                   autoPlay
                   className="w-full aspect-video bg-black"
@@ -128,8 +172,16 @@ function ResponsesRow({ data }: { data: VideoInterviewData }) {
 
 function AnalysisBlock({
   analysis,
+  showAnalyseButton,
+  analysing,
+  hasRun,
+  onAnalyse,
 }: {
   analysis: NonNullable<VideoInterviewData["analysis"]>;
+  showAnalyseButton: boolean;
+  analysing: boolean;
+  hasRun: boolean;
+  onAnalyse: () => void;
 }) {
   const [showTranscript, setShowTranscript] = useState(false);
 
@@ -207,15 +259,27 @@ function AnalysisBlock({
           </div>
         </div>
 
-        {analysis.transcript && (
-          <div className="pt-1 border-t border-slate-200">
-            <button
-              onClick={() => setShowTranscript(true)}
-              className="flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
-            >
-              <FileText size={12} aria-hidden="true" />
-              View transcript
-            </button>
+        {(analysis.transcript || showAnalyseButton) && (
+          <div className="pt-1 border-t border-slate-200 flex items-center gap-4">
+            {analysis.transcript && (
+              <button
+                onClick={() => setShowTranscript(true)}
+                className="flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+              >
+                <FileText size={12} aria-hidden="true" />
+                View transcript
+              </button>
+            )}
+            {showAnalyseButton && (
+              <button
+                onClick={onAnalyse}
+                disabled={analysing}
+                className="flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors disabled:opacity-50"
+              >
+                <RefreshCw size={12} className={analysing ? "animate-spin" : ""} aria-hidden="true" />
+                {analysing ? "Analysing…" : hasRun ? "Re-analyse" : "Analyse with AI"}
+              </button>
+            )}
           </div>
         )}
       </div>

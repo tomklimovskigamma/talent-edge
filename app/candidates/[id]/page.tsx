@@ -53,7 +53,7 @@ export default async function CandidateProfilePage({
 
         <AiScreeningSummary candidate={candidate} />
 
-        {candidate.videoInterview && <VideoInterviewPanel candidate={candidate} />}
+        <VideoInterviewPanel candidate={candidate} />
 
         <InterviewScorecard candidate={candidate} />
 
