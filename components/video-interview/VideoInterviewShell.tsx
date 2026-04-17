@@ -35,22 +35,22 @@ export function VideoInterviewShell({ candidate }: { candidate: Candidate }) {
   const showProgress = state.phase !== "intro" && state.phase !== "complete";
 
   async function finaliseInterview(candidateId: string) {
-    const responses = videoPrompts.map((prompt) => {
-      const id = `${candidateId}-${prompt.id}`;
-      const rec = getRecording(id);
-      return {
-        questionId: prompt.id,
-        videoUrl: rec ? URL.createObjectURL(rec.blob) : "",
-        durationSeconds: rec?.durationSeconds ?? prompt.recordSeconds,
-      };
-    });
+    const responses = await Promise.all(
+      videoPrompts.map(async (prompt) => {
+        const rec = await getRecording(`${candidateId}-${prompt.id}`);
+        return {
+          questionId: prompt.id,
+          // Blob URL left empty — cross-tab object URLs don't resolve.
+          // The profile panel rebuilds URLs from IndexedDB on mount.
+          videoUrl: "",
+          durationSeconds: rec?.durationSeconds ?? prompt.recordSeconds,
+        };
+      }),
+    );
 
-    // MVP: for live recording, always use mock analysis (no blob passed).
-    // The real pipeline in Task 8 is wired for future use but not called from here —
-    // sending 3 separate blobs to Whisper requires orchestration beyond MVP scope.
     const analysis = await runAnalysis(candidateId);
 
-    markVideoInterviewComplete(candidateId, {
+    await markVideoInterviewComplete(candidateId, {
       invitedAt: new Date().toISOString(),
       completedAt: new Date().toISOString(),
       responses,

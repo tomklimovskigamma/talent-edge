@@ -59,7 +59,7 @@ export function RecordingStep({
       const handle = handleRef.current;
       handleRef.current = null;
       const blob = await handle.stop();
-      storeRecording(`${candidateId}-${prompt.id}`, {
+      await storeRecording(`${candidateId}-${prompt.id}`, {
         candidateId,
         questionId: prompt.id,
         blob,
@@ -85,7 +85,7 @@ export function RecordingStep({
     const handle = handleRef.current;
     handleRef.current = null;
     const blob = await handle.stop();
-    storeRecording(`${candidateId}-${prompt.id}`, {
+    await storeRecording(`${candidateId}-${prompt.id}`, {
       candidateId,
       questionId: prompt.id,
       blob,

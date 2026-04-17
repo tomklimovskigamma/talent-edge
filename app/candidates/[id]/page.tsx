@@ -47,7 +47,7 @@ export default async function CandidateProfilePage({
 
         <AiScreeningSummary candidate={candidate} />
 
-        {candidate.videoInterview && <VideoInterviewPanel candidate={candidate} />}
+        <VideoInterviewPanel candidate={candidate} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PotentialRadar dimensions={candidate.dimensions} />

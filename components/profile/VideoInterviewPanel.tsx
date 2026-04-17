@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Video, Play, Sparkles } from "lucide-react";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
@@ -9,11 +9,44 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Candidate, VideoInterviewData, PotentialDimensions } from "@/lib/data/candidates";
 import { dimensionLabels } from "@/lib/data/candidates";
 import { getPromptById } from "@/lib/data/video-prompts";
-import { getSessionVideoInterview } from "@/lib/video/storage";
+import { getSessionVideoInterview, getRecording } from "@/lib/video/storage";
 
 export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
   const seededData = candidate.videoInterview;
-  const sessionData = typeof window !== "undefined" ? getSessionVideoInterview(candidate.id) : undefined;
+  const [sessionData, setSessionData] = useState<VideoInterviewData | undefined>();
+  const [liveUrls, setLiveUrls] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let revoked = false;
+    const created: string[] = [];
+
+    (async () => {
+      const session = await getSessionVideoInterview(candidate.id);
+      if (!session || revoked) return;
+      setSessionData(session);
+
+      const entries = await Promise.all(
+        session.responses.map(async (r) => {
+          const rec = await getRecording(`${candidate.id}-${r.questionId}`);
+          if (!rec) return [r.questionId, ""] as const;
+          const url = URL.createObjectURL(rec.blob);
+          created.push(url);
+          return [r.questionId, url] as const;
+        }),
+      );
+      if (revoked) {
+        created.forEach((u) => URL.revokeObjectURL(u));
+        return;
+      }
+      setLiveUrls(Object.fromEntries(entries));
+    })();
+
+    return () => {
+      revoked = true;
+      created.forEach((u) => URL.revokeObjectURL(u));
+    };
+  }, [candidate.id]);
+
   const data = sessionData ?? seededData;
   if (!data) return null;
 
@@ -31,14 +64,20 @@ export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
-        <ResponsesRow data={data} />
+        <ResponsesRow data={data} liveUrls={liveUrls} />
         {data.analysis && <AnalysisBlock analysis={data.analysis} />}
       </CardContent>
     </Card>
   );
 }
 
-function ResponsesRow({ data }: { data: VideoInterviewData }) {
+function ResponsesRow({
+  data,
+  liveUrls,
+}: {
+  data: VideoInterviewData;
+  liveUrls: Record<string, string>;
+}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
@@ -48,11 +87,12 @@ function ResponsesRow({ data }: { data: VideoInterviewData }) {
         {data.responses.map((response, i) => {
           const prompt = getPromptById(response.questionId);
           const isActive = activeIndex === i;
+          const src = liveUrls[response.questionId] || response.videoUrl;
           return (
             <div key={response.questionId} className="border rounded-lg overflow-hidden">
-              {isActive ? (
+              {isActive && src ? (
                 <video
-                  src={response.videoUrl}
+                  src={src}
                   controls
                   autoPlay
                   className="w-full aspect-video bg-black"
