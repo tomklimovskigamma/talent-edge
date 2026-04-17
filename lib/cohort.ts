@@ -13,6 +13,10 @@ export const ASSESSED_PLUS_STAGES: ReadonlySet<StageName> = new Set<StageName>([
 
 export type Track = "Finance" | "Technology" | "People & Culture" | "Other";
 
+// Patterns are matched against the degree string padded with leading/trailing
+// spaces (see classifyTrack). This allows " it" (note the leading space) to
+// match "Information IT" as a word without false-positives on words that merely
+// contain the letters "it".
 const TRACK_KEYWORDS: { track: Exclude<Track, "Other">; patterns: string[] }[] = [
   { track: "Finance", patterns: ["finance", "commerce", "economics", "accounting", "business"] },
   { track: "Technology", patterns: ["engineering", "computer", "software", "data", "information technology", " it"] },

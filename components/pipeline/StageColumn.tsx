@@ -8,11 +8,13 @@ type Props = {
   candidates: Candidate[];
   accentClass: string;
   onAdvance?: (candidateId: string, currentStage: StageName) => void;
+  onRevert?: (candidateId: string, currentStage: StageName) => void;
+  recentMove?: { id: string; direction: "forward" | "back" } | null;
   selectedIds?: Set<string>;
   onSelect?: (candidateId: string, checked: boolean) => void;
 };
 
-export function StageColumn({ label, candidates, accentClass, onAdvance, selectedIds, onSelect }: Props) {
+export function StageColumn({ label, candidates, accentClass, onAdvance, onRevert, recentMove, selectedIds, onSelect }: Props) {
   return (
     <div className="flex flex-col min-w-[160px] max-w-[180px] flex-shrink-0">
       <div className={`flex items-center justify-between mb-3 pb-2 border-b-2 ${accentClass}`}>
@@ -29,6 +31,8 @@ export function StageColumn({ label, candidates, accentClass, onAdvance, selecte
               candidate={c}
               currentStage={label}
               onAdvance={onAdvance}
+              onRevert={onRevert}
+              recentMove={recentMove?.id === c.id ? recentMove : null}
               selected={selectedIds?.has(c.id) ?? false}
               onSelect={onSelect}
             />

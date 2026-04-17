@@ -32,8 +32,8 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 | AI candidate chat assistant | Answers candidate FAQs during the assessment — duration, what's measured, accessibility, data privacy | ✅ Live |
 | Accessibility accommodations | Candidate self-declares adjustment needs at registration; surfaces to recruiters automatically | ✅ Live |
 | Self-service assessment config | Recruiters edit question language, client branding, and scoring weights without developer involvement | ✅ Live |
-| Score percentile display | Shows "Top X% of cohort" on pipeline cards and candidate profiles | 🔜 Next |
-| Video interview capture | Candidates record responses; recruiters and AC assessors review in-platform | 📋 Planned |
+| Score percentile display | Shows "Top X% of cohort" on pipeline cards and candidate profiles | ✅ Live |
+| Video interview capture | Candidates record responses against preset prompts; audio-only AI analysis produces 5-dimension scores; recruiters review in-platform | ✅ Live |
 
 ---
 
@@ -51,9 +51,9 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 | Accessibility flag visibility | Candidates who requested accommodations show a badge on their pipeline card and profile | ✅ Live |
 | Pipeline stage advancement | Move any candidate to the next stage with one click | ✅ Live |
 | Self-booking interview scheduling | Candidates pick from available time slots; confirmation sent automatically | ✅ Live |
-| Interview scorecard | Rate interview candidates on Communication, Cultural Fit, Problem Solving, Overall Impression with notes | 📋 Planned |
-| Bulk reject with email preview | Select and reject multiple candidates with an editable email template | 📋 Planned |
-| Candidate notes | Add timestamped notes to any candidate profile | 📋 Planned |
+| Interview scorecard | Rate interview candidates on Communication, Cultural Fit, Problem Solving, Overall Impression with notes | ✅ Live |
+| Bulk reject with email preview | Select and reject multiple candidates with an editable email template | ✅ Live |
+| Candidate notes | Add timestamped notes to any candidate profile | ✅ Live |
 | Assessment Centre scoring tool | AC assessors enter structured scores via a form; scores flow into the candidate profile alongside psych data | 📋 Planned |
 
 ---
@@ -62,7 +62,7 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 
 | Capability | What it does | Status |
 |---|---|---|
-| Offer acceptance tracking | Track pending/accepted/declined offers with decline reasons | 📋 Planned |
+| Offer acceptance tracking | Track pending/accepted/declined offers with decline reasons | ✅ Live |
 
 ---
 
@@ -79,8 +79,8 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 | Capability | What it does | Status |
 |---|---|---|
 | Development goals | Active goals with status and due dates for hired candidates | ✅ Live |
-| AI-generated development plan | Auto-generate development goals from assessment scores — weakest dimensions get targeted activities | 📋 Planned |
-| Program analytics | Pipeline funnel, score distributions, time-in-stage averages, score band breakdowns | 📋 Planned |
+| AI-generated development plan | Auto-generate development goals from assessment scores — weakest dimensions get targeted activities | ✅ Live |
+| Program analytics | Pipeline funnel, score distributions, time-in-stage averages, score band breakdowns | ✅ Live |
 
 ---
 
@@ -97,17 +97,9 @@ Talent Edge is a full-service graduate recruitment partner. Our platform handles
 
 ## What's next
 
-Prioritised list of everything in flight or on the roadmap:
+The original prioritised backlog has shipped end-to-end. The remaining 📋 item is driven by Dave's positioning input — it closes the credibility gap between what Dave pitches and what the demo shows:
 
-1. Video interview capture (📋) — platform-side video capture and playback; the credibility item for sales
-2. Assessment Centre scoring tool (📋) — closes the loop between services team and platform; AC assessors enter scores that flow into candidate profiles
-3. Score percentile display (🔜) — "Top X% of cohort" on pipeline cards and profiles
-4. Interview scorecard (📋) — structured rating form for candidates at the interview stage
-5. Bulk reject with email preview (📋) — reject multiple candidates with an editable rejection email
-6. Candidate notes (📋) — timestamped notes on any candidate profile
-7. Offer acceptance tracking (📋) — mark offers accepted or declined with decline reasons
-8. AI-generated development plans (📋) — auto-generate goals for hired candidates from their assessment results
-9. Program analytics page (📋) — funnel, score distribution, time-in-stage, and score band views
+1. **Assessment Centre scoring tool** — closes the loop between the services team and the platform; AC assessors enter scores that flow into candidate profiles.
 
 ---
 

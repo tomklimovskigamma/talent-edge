@@ -1,5 +1,5 @@
-import { Candidate } from "@/lib/data/candidates";
-import { scoreLabel, stageColor } from "@/lib/utils";
+import { Candidate, candidates as allCandidates } from "@/lib/data/candidates";
+import { scoreLabel, scorePercentileLabel, stageColor } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { GraduationCap, Calendar, Accessibility } from "lucide-react";
 
@@ -54,6 +54,12 @@ export function ProfileHeader({ candidate }: { candidate: Candidate }) {
             candidate.potentialScore >= 80 ? "text-emerald-600" :
             candidate.potentialScore >= 65 ? "text-amber-600" : "text-rose-600"
           }`}>{scoreLabel(candidate.potentialScore)}</p>
+          {(() => {
+            const percentile = scorePercentileLabel(candidate, allCandidates);
+            return percentile ? (
+              <p className="text-xs text-slate-500 mt-0.5">{percentile}</p>
+            ) : null;
+          })()}
         </div>
       </div>
     </div>

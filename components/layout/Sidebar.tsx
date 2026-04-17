@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, GitBranch, ClipboardList, Settings } from "lucide-react";
+import { LayoutDashboard, GitBranch, ClipboardList, Settings, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePersona } from "@/lib/persona";
 
@@ -16,6 +16,7 @@ type NavItem = {
 const nav: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, graduateOnly: false, adminOnly: false },
   { href: "/pipeline", label: "Pipeline", icon: GitBranch, graduateOnly: false, adminOnly: false },
+  { href: "/analytics", label: "Analytics", icon: BarChart3, graduateOnly: false, adminOnly: true },
   { href: "/assessment", label: "Assessment", icon: ClipboardList, graduateOnly: true, adminOnly: false },
   { href: "/settings/assessment", label: "Settings", icon: Settings, graduateOnly: false, adminOnly: true },
 ];
@@ -32,9 +33,9 @@ export function Sidebar() {
 
   return (
     <aside className="w-56 min-h-screen bg-[#1E1B4B] flex flex-col">
-      <div className="px-5 py-6 border-b border-white/10">
+      <Link href="/" className="px-5 py-6 border-b border-white/10 block">
         <img src="/te-logo.svg" alt="Talent Edge" className="h-7 brightness-0 invert" />
-      </div>
+      </Link>
       <nav aria-label="Main navigation" className="flex-1 px-3 py-4 space-y-1">
         {visibleNav.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");

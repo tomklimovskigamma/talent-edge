@@ -1,13 +1,17 @@
 import { candidates } from "@/lib/data/candidates";
 import { AppShell } from "@/components/layout/AppShell";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
+import { OfferStatus } from "@/components/profile/OfferStatus";
 import { PotentialRadar } from "@/components/profile/PotentialRadar";
 import { AssessmentTimeline } from "@/components/profile/AssessmentTimeline";
 import { DevelopmentTracker } from "@/components/profile/DevelopmentTracker";
+import { generateDevelopmentGoals } from "@/lib/development";
 import { AiScreeningSummary } from "@/components/profile/AiScreeningSummary";
+import { InterviewScorecard } from "@/components/profile/InterviewScorecard";
 import { VideoInterviewPanel } from "@/components/profile/VideoInterviewPanel";
 import { FeedbackReportButton } from "@/components/profile/FeedbackReportButton";
 import { KeepWarmFeed } from "@/components/profile/KeepWarmFeed";
+import { CandidateNotes } from "@/components/profile/CandidateNotes";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Send } from "lucide-react";
@@ -45,21 +49,27 @@ export default async function CandidateProfilePage({
 
         <ProfileHeader candidate={candidate} />
 
+        <OfferStatus candidate={candidate} />
+
         <AiScreeningSummary candidate={candidate} />
 
         <VideoInterviewPanel candidate={candidate} />
+
+        <InterviewScorecard candidate={candidate} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PotentialRadar dimensions={candidate.dimensions} />
           <div className="space-y-4">
             <AssessmentTimeline history={candidate.assessmentHistory} />
-            {candidate.developmentGoals && (
-              <DevelopmentTracker goals={candidate.developmentGoals} />
+            {candidate.stage === "Hired" && (
+              <DevelopmentTracker goals={generateDevelopmentGoals(candidate)} />
             )}
           </div>
         </div>
 
         <KeepWarmFeed candidate={candidate} />
+
+        <CandidateNotes candidate={candidate} />
 
       </div>
     </AppShell>

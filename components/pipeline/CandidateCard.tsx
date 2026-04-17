@@ -2,19 +2,22 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Candidate } from "@/lib/data/candidates";
+import { Candidate, candidates as allCandidates } from "@/lib/data/candidates";
 import { type StageName } from "@/lib/data/program";
-import { scoreColor } from "@/lib/utils";
-import { Clock, Send, CalendarPlus, ArrowRight, Accessibility } from "lucide-react";
+import { scoreColor, scorePercentileLabel } from "@/lib/utils";
+import { getOfferState, type OfferStatus } from "@/lib/offer";
+import { Clock, Send, CalendarPlus, ArrowRight, ArrowLeft, Accessibility } from "lucide-react";
 import { ScheduleModal } from "@/components/pipeline/ScheduleModal";
 import { InviteToVideoInterviewButton } from "@/components/pipeline/InviteToVideoInterviewButton";
 import { usePersona } from "@/lib/persona";
-import { getNextStage } from "@/lib/pipeline";
+import { getNextStage, getPreviousStage } from "@/lib/pipeline";
 
 interface CandidateCardProps {
   candidate: Candidate;
   currentStage?: StageName;
   onAdvance?: (candidateId: string, currentStage: StageName) => void;
+  onRevert?: (candidateId: string, currentStage: StageName) => void;
+  recentMove?: { id: string; direction: "forward" | "back" } | null;
   selected?: boolean;
   onSelect?: (candidateId: string, checked: boolean) => void;
 }
@@ -23,6 +26,8 @@ export function CandidateCard({
   candidate,
   currentStage: currentStageProp,
   onAdvance,
+  onRevert,
+  recentMove,
   selected = false,
   onSelect,
 }: CandidateCardProps) {
@@ -34,9 +39,25 @@ export function CandidateCard({
 
   const currentStage: StageName = currentStageProp ?? (candidate.stage as StageName);
   const nextStage = getNextStage(currentStage);
+  const previousStage = getPreviousStage(currentStage);
   const showAdvance = mounted && persona === "admin" && !!onAdvance && !!nextStage;
-  const showCheckbox = mounted && persona === "admin" && currentStage === "Assessed" && !!onSelect;
+  const showRevert = mounted && persona === "admin" && !!onRevert && !!previousStage;
+  const SELECTABLE_STAGES: StageName[] = ["Applied", "Assessed", "Shortlisted", "Interview"];
+  const showCheckbox = mounted && persona === "admin" && SELECTABLE_STAGES.includes(currentStage) && !!onSelect;
   const showAccessibility = mounted && persona === "admin" && !!candidate.accessibilityNeeds;
+
+  const percentileLabel = scorePercentileLabel(candidate, allCandidates);
+  const showPercentile = mounted && persona === "admin" && percentileLabel !== null;
+  const offerState = currentStage === "Offer" ? getOfferState(candidate.id) : null;
+  const showOfferChip = mounted && persona === "admin" && offerState !== null;
+  const offerDimmed = mounted && persona === "admin" && offerState?.status === "declined";
+
+  const isJustMoved = recentMove?.id === candidate.id;
+  const moveAnimationClass = isJustMoved
+    ? recentMove?.direction === "forward"
+      ? "animate-in slide-in-from-left-8 fade-in duration-500 ring-2 ring-indigo-300"
+      : "animate-in slide-in-from-right-8 fade-in duration-500 ring-2 ring-slate-300"
+    : "";
 
   return (
     <>
@@ -54,19 +75,19 @@ export function CandidateCard({
         )}
 
         <Link href={`/candidates/${candidate.id}`}>
-          <div className={`bg-white border rounded-lg p-3 space-y-2 hover:shadow-md transition-all cursor-pointer ${
+          <div className={`bg-white border rounded-lg p-3 space-y-2 hover:shadow-md transition-all cursor-pointer overflow-hidden ${
             selected
               ? "border-indigo-400 bg-indigo-50/30"
               : "border-slate-200 hover:border-indigo-200"
-          }`}>
-            <div className="flex items-start justify-between">
-              <div className={`flex items-center gap-2 ${showCheckbox ? "pl-5" : ""}`}>
+          } ${offerDimmed ? "opacity-60" : ""} ${moveAnimationClass}`}>
+            <div className="flex items-start justify-between gap-2">
+              <div className={`flex items-center gap-2 min-w-0 flex-1 ${showCheckbox ? "pl-5" : ""}`}>
                 <div className="h-7 w-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700 flex-shrink-0">
                   {candidate.avatarInitials}
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-slate-800 leading-tight">{candidate.name}</p>
-                  <p className="text-xs text-slate-400 leading-tight truncate max-w-[120px]">{candidate.university}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold text-slate-800 leading-tight truncate">{candidate.name}</p>
+                  <p className="text-xs text-slate-400 leading-tight truncate">{candidate.university}</p>
                 </div>
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -81,9 +102,19 @@ export function CandidateCard({
                     </span>
                   </span>
                 )}
-                <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
-                  {candidate.potentialScore}
-                </span>
+                <div className="flex flex-col items-end gap-0.5">
+                  <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${scoreColor(candidate.potentialScore)}`}>
+                    {candidate.potentialScore}
+                  </span>
+                  {showPercentile && percentileLabel && (
+                    <span className="text-[10px] text-slate-400 font-medium leading-tight whitespace-nowrap">
+                      {percentileLabel.replace(" of cohort", "")}
+                    </span>
+                  )}
+                  {showOfferChip && offerState && (
+                    <OfferChip status={offerState.status} />
+                  )}
+                </div>
               </div>
             </div>
             <p className="text-xs text-slate-500 truncate">{candidate.degree}</p>
@@ -131,6 +162,17 @@ export function CandidateCard({
             Advance to {nextStage}
           </button>
         )}
+
+        {showRevert && (
+          <button
+            type="button"
+            onClick={() => onRevert?.(candidate.id, currentStage)}
+            className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity mt-1 flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700 px-1"
+          >
+            <ArrowLeft size={10} />
+            Move back to {previousStage}
+          </button>
+        )}
       </div>
 
       {showSchedule && (
@@ -140,5 +182,19 @@ export function CandidateCard({
         />
       )}
     </>
+  );
+}
+
+function OfferChip({ status }: { status: OfferStatus }) {
+  const config: Record<OfferStatus, { label: string; className: string }> = {
+    pending: { label: "Pending", className: "bg-amber-100 text-amber-800" },
+    accepted: { label: "Accepted", className: "bg-emerald-100 text-emerald-800" },
+    declined: { label: "Declined", className: "bg-rose-100 text-rose-800" },
+  };
+  const { label, className } = config[status];
+  return (
+    <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${className}`}>
+      {label}
+    </span>
   );
 }
