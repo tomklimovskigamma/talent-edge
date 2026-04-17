@@ -10,7 +10,7 @@ import type { Candidate, VideoInterviewData, VideoInterviewAnalysis, PotentialDi
 import { dimensionLabels } from "@/lib/data/candidates";
 import { getPromptById } from "@/lib/data/video-prompts";
 import { getSessionVideoInterview, getRecording } from "@/lib/video/storage";
-import { getAnalysisMode } from "@/lib/video-analysis";
+import { getAnalysisMode, runMockAnalysis } from "@/lib/video-analysis";
 
 export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
   const seededData = candidate.videoInterview;
@@ -61,22 +61,31 @@ export function VideoInterviewPanel({ candidate }: { candidate: Candidate }) {
     setAnalysing(true);
     setAnalyseError(null);
     try {
-      const form = new FormData();
-      form.append("candidateId", candidate.id);
+      const sections: string[] = [];
 
       for (let i = 0; i < data.responses.length; i++) {
         const response = data.responses[i];
         const src = liveUrls[response.questionId] || response.videoUrl;
         if (!src) continue;
+
         const videoRes = await fetch(src);
         const blob = await videoRes.blob();
-        form.append("videos", blob, `interview-q${i + 1}.webm`);
-        form.append("questionIds", response.questionId);
+
+        const form = new FormData();
+        form.append("video", blob, `interview-q${i + 1}.webm`);
+
+        const res = await fetch("/api/video-analysis", { method: "POST", body: form });
+        if (!res.ok) throw new Error(await res.text());
+        const { transcript } = (await res.json()) as { transcript: string };
+
+        const prompt = getPromptById(response.questionId);
+        const header = prompt ? `Question ${i + 1}: ${prompt.question}` : `Question ${i + 1}`;
+        sections.push(`${header}\n\n${transcript}`);
       }
 
-      const res = await fetch("/api/video-analysis", { method: "POST", body: form });
-      if (!res.ok) throw new Error(await res.text());
-      setLiveAnalysis((await res.json()) as VideoInterviewAnalysis);
+      const combined = sections.join("\n\n---\n\n");
+      const analysis = runMockAnalysis(candidate.id);
+      setLiveAnalysis({ ...analysis, transcript: combined });
     } catch (err) {
       setAnalyseError(err instanceof Error ? err.message : "Analysis failed.");
     } finally {
