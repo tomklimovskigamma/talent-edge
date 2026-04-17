@@ -38,7 +38,12 @@ export function pickMimeType(): string {
 
 export function startRecording(stream: MediaStream): RecorderHandle {
   const mimeType = pickMimeType();
-  const mediaRecorder = new MediaRecorder(stream, { mimeType });
+  // Bitrate cap keeps ~60s recordings well under Vercel's 4.5MB serverless body limit.
+  const mediaRecorder = new MediaRecorder(stream, {
+    mimeType,
+    videoBitsPerSecond: 500_000,
+    audioBitsPerSecond: 64_000,
+  });
   const chunks: BlobPart[] = [];
 
   mediaRecorder.ondataavailable = (event) => {

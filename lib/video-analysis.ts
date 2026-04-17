@@ -73,29 +73,8 @@ export function getAnalysisMode(): AnalysisMode {
   return "mock";
 }
 
-export async function runRealAnalysis(
-  candidateId: string,
-  videoBlob: Blob
-): Promise<VideoInterviewAnalysis> {
-  const form = new FormData();
-  form.append("video", videoBlob, "interview.webm");
-  form.append("candidateId", candidateId);
-  const res = await fetch("/api/video-analysis", { method: "POST", body: form });
-  if (!res.ok) throw new Error("Video analysis request failed");
-  return (await res.json()) as VideoInterviewAnalysis;
-}
-
-export async function runAnalysis(
-  candidateId: string,
-  videoBlob?: Blob
-): Promise<VideoInterviewAnalysis> {
-  if (getAnalysisMode() === "real" && videoBlob) {
-    try {
-      return await runRealAnalysis(candidateId, videoBlob);
-    } catch (err) {
-      console.warn("Real analysis failed; falling back to mock.", err);
-      return runMockAnalysis(candidateId);
-    }
-  }
+export async function runAnalysis(candidateId: string): Promise<VideoInterviewAnalysis> {
+  // Interview completion seeds mock scores; live Whisper analysis runs on-demand
+  // from the profile panel's "Analyse with AI" button (see VideoInterviewPanel).
   return runMockAnalysis(candidateId);
 }
