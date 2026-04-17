@@ -148,11 +148,14 @@ export function CandidateCard({
 
         {currentStage === "Shortlisted" && (
           <div className="opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity mt-2">
-            <InviteToVideoInterviewButton candidateId={candidate.id} />
+            <InviteToVideoInterviewButton
+              candidateId={candidate.id}
+              onInvite={() => onAdvance?.(candidate.id, currentStage)}
+            />
           </div>
         )}
 
-        {showAdvance && (
+        {showAdvance && currentStage !== "Shortlisted" && (
           <button
             type="button"
             onClick={() => onAdvance?.(candidate.id, currentStage)}
