@@ -1,3 +1,8 @@
+<!-- Space: TAL -->
+<!-- Parent: Talent Edge -->
+<!-- Parent: End to End Process Map -->
+<!-- Title: Mark/Tom thoughts on E2E Process Map -->
+
 # Talent Edge — Fusion-Aligned Product Map
 
 **Date:** 2026-04-21 (revised)
